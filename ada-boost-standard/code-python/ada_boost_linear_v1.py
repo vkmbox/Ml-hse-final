@@ -13,27 +13,33 @@ class AdaBoostLinear_v1:
         self.signs = (-1, 1)
         self.ensemble_coeffs = []
         self.ensemble_thresholds = []
+        self.sample_size = None
         #self.ensemble_signs = []
         #self.ensemble_fnumbers = []
 
-    def fit(self, X, y, trace=False):
-        time_start = datetime.now()
-        sample_size, features_count = X.shape[0], X.shape[1]
-        n_estimators = 2*sample_size * features_count
+    def fit(self, X, y, allow_nonseparable=False, trace=False):
+        self.ensemble_coeffs = []
+        self.ensemble_thresholds = []
+        #time_start = datetime.now()
+        self.sample_size, features_count = X.shape[0], X.shape[1]
+        n_estimators = 2*self.sample_size * features_count
         ind = np.argsort(X, axis=0)
+        order = self.get_order_columnwise(ind)
         c = np.zeros(n_estimators + 1)
         c[-1] = -1
-        a_ub = np.zeros((1, n_estimators + 1))
-        a_ub[-1] = 1
-        feature_step, order_step = len(self.signs)*sample_size, len(self.signs)
-        for feature_number in range(features_count):
-            for order_number in range(sample_size):
-                for sign_number in range(len(self.signs)):
-                    sign = self.signs[sign_number]
-                    h_k = sign if ind[order_number, feature_number] > order_number else -sign
-                    a_ub[0, feature_step*feature_number+order_step*order_number+sign] = -h_k * y[order_number]
+        a_ub = np.zeros((self.sample_size, n_estimators + 1))
+        a_ub[:, -1] = 1
+        feature_step, order_step = len(self.signs)*self.sample_size, len(self.signs)
+        for sample_number in range(self.sample_size):
+            for feature_number in range(features_count):
+                for order_number in range(self.sample_size):
+                    for sign_number in range(len(self.signs)):
+                        sign = self.signs[sign_number]
+                        h_k = sign if order[sample_number, feature_number] > order_number else -sign
+                        a_ub[sample_number, feature_step*feature_number+order_step*order_number+sign_number] \
+                            = -h_k * y[sample_number]
 
-        b_ub = [0]
+        b_ub = [0]*self.sample_size
         a_eq = np.ones((1, n_estimators+1))
         a_eq[0, -1] = 0
         b_eq = [1]
@@ -47,18 +53,21 @@ class AdaBoostLinear_v1:
 
         if not success:
             return False, message
-        if success and coeffs[-1] < 0:
+        if success and not allow_nonseparable and coeffs[-1] < 0:
             return False, "Failed to split data"
 
         self.ensemble_coeffs = coeffs[:-1]
-        tmp = np.repeat(X, repeats=2, axis=0)
+        tmp = np.take_along_axis(X, ind, axis=0)
+        tmp = np.repeat(tmp, repeats=2, axis=0)
         self.ensemble_thresholds = tmp.flatten('F')
         #self.ensemble_signs = [-1, +1]*n_estimators
+        if coeffs[-1] < 0:
+            message += " Training set is nonseparable."
         return True, message
 
     def predict(self, X):
-        sample_size_step, features_count, n_estimators = X.shape[0] * 2, X.shape[1], len(self.ensemble_coeffs)
-        buffer = np.zeros(int(sample_size_step/2))
+        sample_size_step, features_count, n_estimators = self.sample_size * 2, X.shape[1], len(self.ensemble_coeffs)
+        buffer = np.zeros(X.shape[0])
         for coeff, number, threshold, sign in \
                 zip(self.ensemble_coeffs, range(n_estimators), self.ensemble_thresholds, self.signs*(int(n_estimators/2))):
             feature_number = number // sample_size_step
@@ -73,6 +82,12 @@ class AdaBoostLinear_v1:
             history['error'].append(minimal_error)
             history['d_t'].append(d_t)
     '''
+    def get_order_columnwise(self, ind):
+        result = np.zeros_like(ind)
+        for column in range(ind.shape[1]):
+            for row in range(ind.shape[0]):
+                result[ind[row, column], column] = row
+        return result
 
     def print_ensemble(self):
         value = ""
@@ -89,10 +104,29 @@ if __name__ == '__main__':
                        [ 0.29484027, -0.79249401, -1.25279536,  0.77749036]])
 
     y_train = np.array([1, -1, -1, 1, 1, -1])
-    
+
+    '''
+    X_train = np.array([[0.1, 0.3],
+                        [0.2, 0.1],
+                        [0.3, 0.2]])
+
+
+    X_train = np.array([[0.3],
+                        [0.1],
+                        [0.2]])
+
+    X_train = np.array([[0.1],
+                        [0.2],
+                        [0.3]])
+
+    y_train = np.array([1, 1, -1])
+    '''
+
     clf = AdaBoostLinear_v1()
     result, message = clf.fit(X_train, y_train, trace=True)
     print(result, message)
-    y_pred = clf.predict(X_train)
+    y_pred = clf.predict(X_train[0:2])
     print(y_pred)
+    print(X_train[0:2])
 #    print(clf.print_ensemble())
+

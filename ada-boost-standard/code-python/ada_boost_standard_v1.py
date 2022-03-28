@@ -13,6 +13,7 @@ class AdaBoostStandardClassifier_v1:
         self.ensemble = []
 
     def fit(self, X, y, sample_weigh = None, trace=False):
+        self.ensemble = []
         time_start = datetime.now()
         sample_size = len(y)
         d_t = sample_weigh if sample_weigh is not None else np.full(sample_size, 1/sample_size)

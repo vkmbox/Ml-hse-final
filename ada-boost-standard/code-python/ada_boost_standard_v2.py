@@ -15,6 +15,7 @@ class AdaBoostStandardClassifier_v2:
 
     def fit(self, X, y, sample_weigh = None, trace=False):
         #y = np.asarray(y)
+        self.ensemble = []
         time_start = datetime.now()
         sample_size, features_count = len(y), X.shape[1]
         d_t = sample_weigh if sample_weigh is not None else np.full(sample_size, 1/sample_size)
