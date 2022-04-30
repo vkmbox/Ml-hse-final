@@ -4,7 +4,7 @@ from datetime import datetime
 from collections import defaultdict
 from decision_stump_continuous import DecisionStumpContinuous
 
-
+#This classifier is erroneous when features include repeated values between samples
 class AdaBoostStandardClassifier_v2:
     
     def __init__(self, n_estimators=50, tolerance=1e-10):
@@ -36,14 +36,29 @@ class AdaBoostStandardClassifier_v2:
             d_t = d_t/(np.sum(d_t)+self.tolerance)
             
         return 'iterations_exceeded', history
-    
-    def predict(self, X):
+
+    def get_esemble_result(self, X):
         sample_size = X.shape[0]
         buffer = np.zeros(sample_size)
         for elm in self.ensemble:
             buffer += elm[0]*np.array(elm[1].classify(X))
+
+        return buffer
+    
+    def get_margin_l1(self, X):
+        buffer = self.get_esemble_result(X)
+        alpha_modulo = sum([abs(elm[0]) for elm in self.ensemble]) + self.tolerance
+        return max(abs(buffer))/alpha_modulo
+
+    def predict(self, X):
+        '''
+        sample_size = X.shape[0]
+        buffer = np.zeros(sample_size)
+        for elm in self.ensemble:
+            buffer += elm[0]*np.array(elm[1].classify(X))
+        '''
             
-        return np.sign(buffer)
+        return np.sign(self.get_esemble_result(X))
     
     def get_decision_stump(self, X, yym, dd_tm):
         measurements, features_count = X.shape[0], X.shape[1]
@@ -115,9 +130,10 @@ if __name__ == '__main__':
     
     clf = AdaBoostStandardClassifier_v2(n_estimators=100)
     result, history = clf.fit(X_train, y_train, trace=True)
-    print(result)
-    print(history['error'])
-    print(history['d_t'])
+    #print(result)
+    #print(history['error'])
+    #print(history['d_t'])
     y_pred = clf.predict(X_train)
     print(y_pred)
-    print(clf.print_ensemble())
+    print("l1 margin: ", clf.get_margin_l1(X_train))
+    #print(clf.print_ensemble())

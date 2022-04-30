@@ -17,7 +17,12 @@ class DecisionStumpContinuous:
 
     @staticmethod
     def get_classification(X, feature_number, threshold, sign):
-        return [sign if value > threshold else -sign for value in X[:, feature_number]]
+        return [DecisionStumpContinuous.get_classification_scalar(value, threshold, sign) for value in X[:, feature_number]]
+        #return [sign if value > threshold else -sign for value in X[:, feature_number]]
+
+    @staticmethod
+    def get_classification_scalar(x_scalar, threshold, sign):
+        return sign if x_scalar > threshold else -sign
 
     @staticmethod
     def get_error(feature, y, d_t, sign, threshold):

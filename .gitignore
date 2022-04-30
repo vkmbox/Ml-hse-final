@@ -1,2 +1,12 @@
 /ada-boost-standard/code-python/__pycache__
 /ada-boost-standard/code-python/.vscode
+# Ignore Gradle project-specific cache directory
+.gradle
+
+# Ignore Gradle build output directory
+build
+/20220426.progress.txt
+/20220405.progress.txt
+/ada-boost-implementations/code-java/.gitignore
+/ada-boost-implementations/code-python/__pycache__
+/ada-boost-implementations/code-python/.vscode
