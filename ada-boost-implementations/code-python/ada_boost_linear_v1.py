@@ -8,7 +8,6 @@ from decision_stump_continuous import DecisionStumpContinuous as stump
 class AdaBoostLinear_v1:
     
     def __init__(self, tolerance=1e-10):
-        #self.n_estimators = -1
         self.tolerance = tolerance
         self.signs = (-1, 1)
         self.ensemble_coeffs = []
@@ -19,7 +18,6 @@ class AdaBoostLinear_v1:
     def fit(self, X, y, allow_nonseparable=False, trace=False):
         self.ensemble_coeffs = []
         self.ensemble_thresholds = []
-        #time_start = datetime.now()
         self.sample_size, features_count = X.shape[0], X.shape[1]
         n_estimators = 2*self.sample_size * features_count
         params = defaultdict(list) if trace else None
@@ -41,8 +39,6 @@ class AdaBoostLinear_v1:
                         sign, threshold = self.signs[sign_number], tmp_thresholds[classifier_pos] #X[ind[order_number, feature_number], feature_number]
                         h_k = stump.get_classification_scalar(X[sample_number, feature_number], threshold, sign) 
                         #sign if order[sample_number, feature_number] > order_number else -sign
-                        #a_ub[sample_number, feature_step*feature_number+order_step*order_number+sign_number] \
-                        #    = -h_k * y[sample_number]
                         a_ub[sample_number, classifier_pos] = -h_k * y[sample_number]
 
         b_ub = [0]*self.sample_size
@@ -73,13 +69,7 @@ class AdaBoostLinear_v1:
 
         self.ensemble_coeffs = coeffs[:-1]
         self.margin = coeffs[-1]
-        '''
-        tmp = np.take_along_axis(X, ind, axis=0)
-        tmp = np.repeat(tmp, repeats=2, axis=0)
-        self.ensemble_thresholds = tmp.flatten('F')
-        '''
         self.ensemble_thresholds = tmp_thresholds
-        #self.ensemble_signs = [-1, +1]*n_estimators
         if coeffs[-1] < 0:
             message += " Training set is nonseparable."
         return True, message, params
@@ -88,14 +78,6 @@ class AdaBoostLinear_v1:
         return self.margin
 
     def predict(self, X):
-        '''
-        sample_size_step, features_count, n_estimators = self.sample_size * 2, X.shape[1], len(self.ensemble_coeffs)
-        buffer = np.zeros(X.shape[0])
-        for coeff, number, threshold, sign in \
-                zip(self.ensemble_coeffs, range(n_estimators), self.ensemble_thresholds, self.signs*(int(n_estimators/2))):
-            feature_number = number // sample_size_step
-            buffer += coeff*np.array(stump.get_classification(X, feature_number, threshold, sign))
-        '''
         return np.sign(self.predict_raw(X))
 
     def predict_raw(self, X):
@@ -143,9 +125,7 @@ if __name__ == '__main__':
 
     clf = AdaBoostLinear_v1()
     result, message, log = clf.fit(X_train, y_train, trace=True)
+    y_pred = clf.predict(X_train)
+    assert (y_train==y_pred).all(), 'Wrong answer'
     print(result, message)
     print("Margin: ", clf.get_margin())
-    y_pred = clf.predict(X_train)
-    print(y_pred, y_train)
-#    print(X_train[0:2])
-#    print(clf.print_ensemble())

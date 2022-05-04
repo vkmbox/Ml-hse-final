@@ -18,7 +18,6 @@ class AdaBoostStandardClassifier_v1:
         sample_size = len(y)
         d_t = sample_weigh if sample_weigh is not None else np.full(sample_size, 1/sample_size)
         history = defaultdict(list) if trace else None
-        ##d_t1 =  None
         for _ in range(self.n_estimators):
             minimal_error, decision_stump = self.get_decision_stump(X, y, d_t)
             if minimal_error >= 0.5:
@@ -28,20 +27,11 @@ class AdaBoostStandardClassifier_v1:
             self.log(trace, history, minimal_error, d_t, time_start)
             if minimal_error == 0:
                 return 'error_free_classifier_found', history
-            #d_t = np.dot(d_t, np.exp(-1*alpha_t*np.dot(y, decision_stump.classify(X))))
             d_t = np.multiply(d_t, np.exp(-alpha_t * np.multiply(y, decision_stump.classify(X))))
             d_t = d_t/(np.sum(d_t)+self.tolerance)
             
         return 'iterations_exceeded', history
-    
-    def predict(self, X):
-        sample_size = X.shape[0]
-        buffer = np.zeros(sample_size)
-        for elm in self.ensemble:
-            buffer += elm[0]*np.array(elm[1].classify(X))
-            
-        return np.sign(buffer)
-    
+
     def get_decision_stump(self, X, y, d_t):
         features_count = X.shape[1]
         minimal_error, minimal_feature, minimal_sign, minimal_threshold \
@@ -64,6 +54,22 @@ class AdaBoostStandardClassifier_v1:
             history['error'].append(minimal_error)
             history['d_t'].append(d_t)
 
+    def get_esemble_result(self, X):
+        sample_size = X.shape[0]
+        buffer = np.zeros(sample_size)
+        for elm in self.ensemble:
+            buffer += elm[0]*np.array(elm[1].classify(X))
+
+        return buffer
+
+    def predict(self, X):
+        return np.sign(self.get_esemble_result(X))
+
+    def get_margin_l1(self, X):
+        buffer = self.get_esemble_result(X)
+        alpha_modulo = sum([abs(elm[0]) for elm in self.ensemble]) + self.tolerance
+        return min(abs(buffer))/alpha_modulo
+
     def print_ensemble(self):
         value = ""
         for elm in self.ensemble:
@@ -83,8 +89,6 @@ if __name__ == '__main__':
     clf = AdaBoostStandardClassifier_v1(n_estimators=100)
     result, history = clf.fit(X_train, y_train, trace=True)
     print(result)
-    print(history['error'])
-    print(history['d_t'])
     y_pred = clf.predict(X_train)
-    print(y_pred)
-    print(clf.print_ensemble())
+    assert (y_train==y_pred).all(), 'Wrong answer'
+    print("Margin L1:", clf.get_margin_l1(X_train))
