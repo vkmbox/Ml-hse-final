@@ -28,20 +28,24 @@ class AdaBoostStandardClassifier_v1:
             if minimal_error == 0:
                 return 'error_free_classifier_found', history
             d_t = np.multiply(d_t, np.exp(-alpha_t * np.multiply(y, decision_stump.classify(X))))
-            d_t = d_t/(np.sum(d_t)+self.tolerance)
+            d_t_sum = np.sum(d_t)+self.tolerance
+            d_t = d_t/d_t_sum
             
         return 'iterations_exceeded', history
 
     def get_decision_stump(self, X, y, d_t):
-        features_count = X.shape[1]
+        samples_count, features_count = X.shape[0], X.shape[1]
         minimal_error, minimal_feature, minimal_sign, minimal_threshold \
             = None, None, None, None
         for feature_number in range(features_count):
-            feature = X[:, feature_number]
-            for threshold in feature:
+            #feature = X[:, feature_number]
+            #for threshold in feature:
+            for sample_number in range(samples_count):
+                threshold = X[sample_number, feature_number]
                 for sign in self.signs:
                     current_error = DecisionStumpContinuous.get_error\
-                        (feature, y, d_t, sign, threshold)
+                        (X, y, feature_number, d_t, sign, threshold)
+                        #(feature, y, d_t, sign, threshold)
                     if minimal_error is None or minimal_error > current_error:
                         minimal_error, minimal_feature, minimal_sign, minimal_threshold\
                             = current_error, feature_number, sign, threshold

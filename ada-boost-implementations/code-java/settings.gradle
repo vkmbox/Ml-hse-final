@@ -8,4 +8,4 @@
  */
 
 rootProject.name = 'ada-boost'
-include('lib')
+include('lib-adaboost')

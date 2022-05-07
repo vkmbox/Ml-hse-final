@@ -21,10 +21,12 @@ class DecisionStumpContinuous:
     def get_classification_scalar(x_scalar, threshold, sign):
         return sign if x_scalar > threshold else -sign
 
+    #(X, y, feature_number, d_t, sign, threshold)
     @staticmethod
-    def get_error(feature, y, d_t, sign, threshold):
+    def get_error(X, y, feature_number, d_t, sign, threshold):
         error = 0
-        for arg, fn, weight in zip(feature, y, d_t):
+        for num in range(len(y)): #arg, fn, weight in zip(feature, y, d_t):
+            arg, fn, weight = X[num, feature_number], y[num], d_t[num]
             val = sign if arg > threshold else -1*sign
             error += abs((val-fn)/2)*weight
             
