@@ -1,6 +1,9 @@
 package vkmbox.classifier.ensemble;
 
+import static org.nd4j.common.util.MathUtils.sum;
+
 import lombok.Getter;
+import lombok.extern.slf4j.Slf4j;
 import lombok.RequiredArgsConstructor;
 import org.nd4j.linalg.factory.Nd4j;
 import org.nd4j.linalg.api.buffer.DataType;
@@ -16,7 +19,10 @@ import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Objects;
 import java.util.ArrayList;
+import java.util.function.BiFunction;
+import vkmbox.classifier.util.RademacherUtil;
 
+@Slf4j
 public class AdaBoostStandardClassifier {
     
     private static final int[] SIGNS = {-1, 1};
@@ -26,6 +32,7 @@ public class AdaBoostStandardClassifier {
     private final double tolerance;
     private final List<Double> ensembleAlphas = new ArrayList<>();
     private final List<DecisionStumpContinuous> ensembleClassifiers = new ArrayList<>();
+    private double alphaNorm1;
     
     public AdaBoostStandardClassifier(int estimators, double tolerance) {
         this.estimators = estimators;
@@ -48,7 +55,7 @@ public class AdaBoostStandardClassifier {
         }
         Map<String, List> history = trace? new HashMap<>(): null;
 
-        for (int dummy = 0; dummy < estimators; dummy++) { // in range(self.n_estimators)
+        for (int dummy = 0; dummy < estimators; dummy++) {
             //INDArray weightsMulti = Nd4j.tile(weights, featuresCount); //(1, features_count)); //dd_t
             var optimum = getDecisionStump(dataX, dataY, weights);
             if (optimum.minimalError >= 0.5) {
@@ -59,6 +66,7 @@ public class AdaBoostStandardClassifier {
             ensembleClassifiers.add(optimum.decisionStump);
             log(trace, history, optimum.minimalError, weights, timeStart);
             if (optimum.minimalError == 0) {
+                alphaNorm1 = ensembleAlphas.stream().mapToDouble(Double::doubleValue).sum() + tolerance;
                 return FitResult.of("error_free_classifier_found", history);
             }
             int[] forecast = optimum.decisionStump.classify(dataX);
@@ -70,40 +78,80 @@ public class AdaBoostStandardClassifier {
                 weights[sampleNumber] = weights[sampleNumber]/(weightSum+tolerance);
             }
         }
+        alphaNorm1 = ensembleAlphas.stream().mapToDouble(Double::doubleValue).sum() + tolerance;
         return FitResult.of("iterations_exceeded", history);
     }
     
-    public FitResult fitIND(INDArray dataX, INDArray dataY) {
-        return fitIND(dataX, dataY, null, false);
+    public String fitIND(INDArray dataX, INDArray dataY) {
+        var response = fitIND(dataX, dataY, null, false);
+        return response.result;
     }
     
     public FitResult fitIND(INDArray dataX, INDArray dataY, boolean trace) {
         return fitIND(dataX, dataY, null, trace);
     }
     
-    public INDArray getEsembleResult(INDArray dataX) {
+    public String fit(double[][] dataX, int[] dataY) {
+        log.info("fit is called. Data: {} rows, {} columns", dataX.length, dataX[0].length);
+        INDArray indY = Nd4j.create(dataY, new long[]{dataY.length}, DataType.INT32);
+        var response = fitIND(Nd4j.create(dataX), indY, null, false);
+        return response.result;
+    }
+    
+    public INDArray predictRaw(INDArray dataX) {
         int samplesCount = dataX.rows();
-        //org.nd4j.linalg.factory.DataType aa;
-        INDArray buffer = Nd4j.zeros(new int[]{samplesCount}); //, DataType.INT32);
+        INDArray buffer = Nd4j.zeros(new int[]{samplesCount});
         for (int index = 0; index < ensembleAlphas.size(); index++) {
             buffer.addi(ensembleClassifiers.get(index)
                 .classifyIND(dataX, DataType.DOUBLE).mul(ensembleAlphas.get(index)));
         }
-        return buffer;
+        return buffer.divi(alphaNorm1);
     }
 
     public INDArray predictIND(INDArray dataX) {
-        return Transforms.sign(getEsembleResult(dataX));
+        return Transforms.sign(predictRaw(dataX));
     }
     
-    public int[] predict(INDArray dataX) {
-        return predictIND(dataX).toIntVector();
+    public int[] predict(double[][] dataX) {
+        return predictIND(Nd4j.create(dataX)).toIntVector();
+    }
+
+    public double getMarginL1(double[][] dataX) {
+        return getMarginL1IND(Nd4j.create(dataX));
     }
     
-    public double getMarginL1(INDArray dataX) {
-        INDArray buffer = getEsembleResult(dataX);
-        double alphaModulo = ensembleAlphas.stream().mapToDouble(Double::doubleValue).sum() + tolerance;
-        return buffer.aminNumber().doubleValue()/alphaModulo;
+    public double getMarginL1IND(INDArray dataX) {
+        INDArray buffer = predictRaw(dataX);
+        //double alphaModulo = ensembleAlphas.stream().mapToDouble(Double::doubleValue).sum() + tolerance;
+        return buffer.aminNumber().doubleValue();//alphaModulo;
+    }
+    
+    public double calculateRademacherForBiclassifiers(double[][] dataX, long subsetSize) {
+        return calculateRademacherForBiclassifiersIND(Nd4j.create(dataX), subsetSize);
+    }
+    
+    public double calculateRademacherForBiclassifiersIND(INDArray dataX, long subsetSize) {
+        return RademacherUtil.calculateForBiclassifiers(dataX, subsetSize);
+    }
+    
+    public double calculateMarginLoss(double[][] dataX, int[] dataY, double rho) {
+        INDArray indY = Nd4j.create(dataY, new long[]{dataY.length}, DataType.INT32);
+        return calculateMarginLossIND(Nd4j.create(dataX), indY, rho);
+    }
+    
+    public double calculateMarginLossIND(INDArray dataX, INDArray dataY, double rho) {
+        int samplesCount = dataX.rows();
+        INDArray indY = Nd4j.create(dataY.toDoubleVector());
+        double[] buffer = indY.mul(predictRaw(dataX)).toDoubleVector();
+        double sum = 0.0;
+        for (double value: buffer) {
+            if (value <= 0) {
+                sum += 1.0;
+            } else if (value <= rho) {
+                sum += 1.0 - (value/rho);
+            }
+        }
+        return sum/samplesCount;
     }
     
     private StampResult getDecisionStump(INDArray dataX, INDArray dataY, double[] weights) {
@@ -139,27 +187,7 @@ public class AdaBoostStandardClassifier {
             history.computeIfAbsent("d_t", arg -> new ArrayList<double[]>()).add(weights);
         }
     }
-    
-    public static double sum(double...values) {
-        double result = 0;
-        for (double value:values)
-            result += value;
-        return result;
-    }
 
-    /*def print_ensemble(self):
-        value = ""
-        for elm in self.ensemble:
-            value += "alpha={}, classifier=<{}>;".format(elm[0], elm[1].str())
-        return value
-    */
-    
-    /*@Builder
-    public static class EnsembleItem {
-        private final double alpha;
-        private final DecisionStumpContinuous classifier;
-    }*/
-    
     @Getter
     @RequiredArgsConstructor
     public static class StampResult {

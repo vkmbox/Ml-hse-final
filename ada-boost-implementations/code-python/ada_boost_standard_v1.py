@@ -10,10 +10,12 @@ class AdaBoostStandardClassifier_v1:
         self.n_estimators = n_estimators
         self.tolerance = tolerance
         self.signs = (-1, 1)
-        self.ensemble = []
+        self.ensemble_alphas = []
+        self.ensemble_classifiers = []
+        #self.ensemble = []
 
     def fit(self, X, y, sample_weigh = None, trace=False):
-        self.ensemble = []
+        self.ensemble_alphas, self.ensemble_classifiers = [], []
         time_start = datetime.now()
         sample_size = len(y)
         d_t = sample_weigh if sample_weigh is not None else np.full(sample_size, 1/sample_size)
@@ -23,7 +25,8 @@ class AdaBoostStandardClassifier_v1:
             if minimal_error >= 0.5:
                 return 'error_level_exceeded', history
             alpha_t = 0.5 * np.log((1-minimal_error)/(minimal_error+self.tolerance))
-            self.ensemble.append((alpha_t, decision_stump))
+            self.ensemble_alphas.append(alpha_t)
+            self.ensemble_classifiers.append(decision_stump)
             self.log(trace, history, minimal_error, d_t, time_start)
             if minimal_error == 0:
                 return 'error_free_classifier_found', history
@@ -61,23 +64,23 @@ class AdaBoostStandardClassifier_v1:
     def get_esemble_result(self, X):
         sample_size = X.shape[0]
         buffer = np.zeros(sample_size)
-        for elm in self.ensemble:
-            buffer += elm[0]*np.array(elm[1].classify(X))
+        for alpha, classifier in zip(self.ensemble_alphas, self.ensemble_classifiers): #self.ensemble:
+            buffer += alpha*np.array(classifier.classify(X))
 
-        return buffer
+        return buffer #!!!Not divided by L1 norm of alphas!
 
     def predict(self, X):
         return np.sign(self.get_esemble_result(X))
 
     def get_margin_l1(self, X):
         buffer = self.get_esemble_result(X)
-        alpha_modulo = sum([abs(elm[0]) for elm in self.ensemble]) + self.tolerance
+        alpha_modulo = sum([abs(alpha) for alpha in self.ensemble_alphas]) + self.tolerance
         return min(abs(buffer))/alpha_modulo
 
     def print_ensemble(self):
         value = ""
-        for elm in self.ensemble:
-            value += "alpha={}, classifier=<{}>;".format(elm[0], elm[1].str())
+        for alpha, classifier in zip(self.ensemble_alphas, self.ensemble_classifiers): #self.ensemble:
+            value += "alpha={}, classifier=<{}>;".format(alpha, classifier.str())
         return value
 
 if __name__ == '__main__':
