@@ -1,5 +1,5 @@
-/ada-boost-standard/code-python/__pycache__
-/ada-boost-standard/code-python/.vscode
+/ada-boost-implementations/code-python/__pycache__
+/ada-boost-implementations/code-python/.vscode
 # Ignore Gradle project-specific cache directory
 .gradle
 

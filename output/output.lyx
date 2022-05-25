@@ -5,9 +5,6 @@
 \save_transient_properties true
 \origin unavailable
 \textclass article
-\begin_preamble
-\thispagestyle{empty}
-\end_preamble
 \use_default_options true
 \maintain_unincluded_children false
 \language english
@@ -60,10 +57,10 @@
 \shortcut idx
 \color #008000
 \end_index
-\leftmargin 5mm
-\topmargin 10mm
-\rightmargin 5mm
-\bottommargin 10mm
+\leftmargin 25mm
+\topmargin 25mm
+\rightmargin 25mm
+\bottommargin 25mm
 \secnumdepth 3
 \tocdepth 3
 \paragraph_separation indent
@@ -124,22 +121,392 @@ Supervisor: Bruno Frederik Bauwens
 \end_layout
 
 \begin_layout Standard
-\begin_inset VSpace 6cm
+\begin_inset VSpace 4cm
 \end_inset
 
 
 \begin_inset space \hspace{}
-\length 80mm
+\length 70mm
 \end_inset
 
 Moscow, 2022
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+thispagestyle{empty}
 \end_layout
 
-\begin_layout Standard
+\end_inset
+
+
 \begin_inset Newpage newpage
 \end_inset
 
+
+\end_layout
+
+\begin_layout Part*
+Abstract
+\end_layout
+
+\begin_layout Standard
+In line with current thinking on AdaBoost classifier explanation
+\begin_inset CommandInset citation
+LatexCommand cite
+key "Mohri2018"
+literal "true"
+
+\end_inset
+
+, the estimation of the classifier error relies on the margin theory.
+ More specifically, classifiers with larger margin on training set are expected
+ to work with less generalisation error.
+ However, this is not always confirmed by experiments on real data
+\begin_inset CommandInset citation
+LatexCommand cite
+key "Breiman1997"
+literal "true"
+
+\end_inset
+
+.
+ In addition, a theory for estimating the generalization error based on
+ marginal loss and Radamacher complexity has been developed in the form
+ of appropriate inequalities.
+ The purpose of this thesis is to investigate the error estimation inequalities
+ on real datasets in order to verify the estimates given by these inequalities
+ and to try to explain the above contradiction.
+ For this, two versions of the AdaBoost algorithm were implemented and experimen
+ts were performed on datasets of different types and sizes.
+\begin_inset Newpage newpage
+\end_inset
+
+
+\begin_inset CommandInset toc
+LatexCommand tableofcontents
+
+\end_inset
+
+
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+thispagestyle{empty}
+\end_layout
+
+\end_inset
+
+
+\begin_inset Newpage newpage
+\end_inset
+
+
+\end_layout
+
+\begin_layout Section
 Introduction
+\end_layout
+
+\begin_layout Standard
+AdaBoost, short for Adaptive boosting, is an classification algorithm that
+ proposes to benefit from linear combination of elementary classifiers to
+ reduce the generalisation error.
+ At the same time, elementary classifiers can be simple, for example decision
+ stumps or hyperplanes into two classes
+\begin_inset CommandInset citation
+LatexCommand cite
+key "Freund1999"
+literal "true"
+
+\end_inset
+
+.
+ This study investigates the task of 2-class classification on a real-values
+ features set.
+ Suppose, there is a set of elementary 
+\begin_inset Quotes eld
+\end_inset
+
+weak
+\begin_inset Quotes erd
+\end_inset
+
+ classifiers:
+\end_layout
+
+\begin_layout Standard
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+smallskip
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula 
+\begin{equation}
+H={h_{t}(x)},t=1..N\label{eq:}
+\end{equation}
+
+\end_inset
+
+ 
+\end_layout
+
+\begin_layout Standard
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+smallskip
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\noindent
+In other words, H is a hypothesis set.
+ The resulting classifier is constructed as a sign-function of the elementary
+ classifier essemble:
+\end_layout
+
+\begin_layout Standard
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+smallskip
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula 
+\begin{equation}
+f(x)=sign(\sum{}_{t\text{=1}}^{T}\alpha_{t}h_{t}(x)),\alpha_{t}\ge0
+\end{equation}
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+smallskip
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\noindent
+The value T in the final essemble is a number of boosting rounds and typically
+ is much less than number N of classifiers.
+ The scale of the coefficients 
+\family roman
+\series medium
+\shape up
+\size normal
+\emph off
+\bar no
+\strikeout off
+\xout off
+\uuline off
+\uwave off
+\noun off
+\color none
+α
+\begin_inset script subscript
+
+\begin_layout Plain Layout
+t
+\end_layout
+
+\end_inset
+
+is insufficient for the result and in the following conclusions we consider
+ such combinations that 
+\begin_inset Formula $\sum{}_{t\text{=1}}^{N}α_{t}=1$
+\end_inset
+
+.
+ Let the training set 
+\begin_inset Formula $S_{m}=\{(x_{t,}y_{t})\},t=1..m$
+\end_inset
+
+, with 
+\begin_inset Formula $(x_{t,}y_{t})∈X×{−1,+1}$
+\end_inset
+
+ and 
+\family default
+\series default
+\shape default
+\size default
+\emph default
+\bar default
+\strikeout default
+\xout default
+\uuline default
+\uwave default
+\noun default
+\color inherit
+a set of elementary classifiers 
+\begin_inset Formula $H$
+\end_inset
+
+ be given.
+ Then, the learning algorithm's goal is to
+\family roman
+\series medium
+\shape up
+\size normal
+\emph off
+\bar no
+\strikeout off
+\xout off
+\uuline off
+\uwave off
+\noun off
+\color none
+ find 
+\begin_inset Formula ${α_{t}(x)}$
+\end_inset
+
+ such that an ensemble 
+\begin_inset Formula $f(x)$
+\end_inset
+
+ has low generalisation error.
+ 
+\end_layout
+
+\begin_layout Standard
+\noindent
+Originally, AdaBoost was implemented as an iterative process, when in each
+ interation the boosting round selects some specific weak classifier to
+ minimize the resulting error.
+ Apart from that, the margin in the separable case for the training set
+ can be defined and maximised explicitly, e.g.
+ by using the lnear programming method.
+ Thus, we obtain two ideas for the classifier essemble implementation and
+ moreover the second version is a margin maximiser.
+ If it is true that maximising the margin yields a smaller generalisation
+ error, the second version classifier should give better results.
+ The following paragraphs discuss this statement in more detail.
+\end_layout
+
+\begin_layout Section
+\noindent
+Theoretical basis and implementation specifics
+\end_layout
+
+\begin_layout Subsection
+\noindent
+AdaBoost algorithm
+\end_layout
+
+\begin_layout Standard
+\noindent
+As it is mentioned in Introduction, original AdaBoost is an iterative algorithm
+ which selects a week classifier on each boosting round and adds it to the
+ resulting essemble with the appropriate weight 
+\begin_inset Formula $\alpha_{t}$
+\end_inset
+
+.
+ Firstly, the hypothesis set for the studying case must be defined.
+ 
+\end_layout
+
+\begin_layout Subsection
+\noindent
+Linear progrmming algorithm
+\end_layout
+
+\begin_layout Standard
+\noindent
+test
+\end_layout
+
+\begin_layout Subsection
+\noindent
+Margin theory
+\end_layout
+
+\begin_layout Standard
+\noindent
+test
+\end_layout
+
+\begin_layout Section
+\noindent
+Experiments
+\end_layout
+
+\begin_layout Standard
+\noindent
+test
+\end_layout
+
+\begin_layout Section
+\noindent
+Conclusions
+\end_layout
+
+\begin_layout Standard
+\noindent
+test
+\begin_inset Newpage newpage
+\end_inset
+
+
+\begin_inset CommandInset bibtex
+LatexCommand bibtex
+btprint "btPrintCited"
+bibfiles "content"
+options "unsrt"
+
+\end_inset
+
+
 \end_layout
 
 \end_body
