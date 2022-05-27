@@ -218,9 +218,16 @@ Introduction
 \begin_layout Standard
 AdaBoost, short for Adaptive boosting, is an classification algorithm that
  proposes to benefit from linear combination of elementary classifiers to
- reduce the generalisation error.
- At the same time, elementary classifiers can be simple, for example decision
- stumps or hyperplanes into two classes
+ reduce generalisation error.
+ At the same time, elementary classifiers can be simple or 
+\begin_inset Quotes eld
+\end_inset
+
+weak
+\begin_inset Quotes erd
+\end_inset
+
+ classifiers, for example decision stumps or hyperplanes into two classes
 \begin_inset CommandInset citation
 LatexCommand cite
 key "Freund1999"
@@ -243,42 +250,10 @@ weak
 \end_layout
 
 \begin_layout Standard
-\begin_inset ERT
-status open
-
-\begin_layout Plain Layout
-
-
-\backslash
-smallskip
-\end_layout
-
-\end_inset
-
-
-\end_layout
-
-\begin_layout Standard
 \begin_inset Formula 
 \begin{equation}
-H={h_{t}(x)},t=1..N\label{eq:}
+ℋ={h_{t}(x)},t=1..N\label{eq:hypothesis_set}
 \end{equation}
-
-\end_inset
-
- 
-\end_layout
-
-\begin_layout Standard
-\begin_inset ERT
-status open
-
-\begin_layout Plain Layout
-
-
-\backslash
-smallskip
-\end_layout
 
 \end_inset
 
@@ -287,31 +262,19 @@ smallskip
 
 \begin_layout Standard
 \noindent
-In other words, H is a hypothesis set.
+In other words, 
+\begin_inset Formula $ℋ$
+\end_inset
+
+ is a hypothesis set.
  The resulting classifier is constructed as a sign-function of the elementary
- classifier essemble:
-\end_layout
-
-\begin_layout Standard
-\begin_inset ERT
-status open
-
-\begin_layout Plain Layout
-
-
-\backslash
-smallskip
-\end_layout
-
-\end_inset
-
-
+ classifier ensemble:
 \end_layout
 
 \begin_layout Standard
 \begin_inset Formula 
 \begin{equation}
-f(x)=sign(\sum{}_{t\text{=1}}^{T}\alpha_{t}h_{t}(x)),\alpha_{t}\ge0
+f(x)=sign(\sum{}_{k=1}^{T}\alpha_{k}h_{k}(x)),\alpha_{k}\ge0\label{eq:adaboost_ensemble}
 \end{equation}
 
 \end_inset
@@ -320,24 +283,8 @@ f(x)=sign(\sum{}_{t\text{=1}}^{T}\alpha_{t}h_{t}(x)),\alpha_{t}\ge0
 \end_layout
 
 \begin_layout Standard
-\begin_inset ERT
-status open
-
-\begin_layout Plain Layout
-
-
-\backslash
-smallskip
-\end_layout
-
-\end_inset
-
-
-\end_layout
-
-\begin_layout Standard
 \noindent
-The value T in the final essemble is a number of boosting rounds and typically
+The value T in the final ensemble is a number of boosting rounds and typically
  is much less than number N of classifiers.
  The scale of the coefficients 
 \family roman
@@ -362,8 +309,8 @@ t
 \end_inset
 
 is insufficient for the result and in the following conclusions we consider
- such combinations that 
-\begin_inset Formula $\sum{}_{t\text{=1}}^{N}α_{t}=1$
+ their combinations satisfying the condition 
+\begin_inset Formula $\sum{}_{k\text{=1}}^{N}α_{k}=1$
 \end_inset
 
 .
@@ -389,7 +336,7 @@ is insufficient for the result and in the following conclusions we consider
 \noun default
 \color inherit
 a set of elementary classifiers 
-\begin_inset Formula $H$
+\begin_inset Formula $ℋ$
 \end_inset
 
  be given.
@@ -407,7 +354,7 @@ a set of elementary classifiers
 \noun off
 \color none
  find 
-\begin_inset Formula ${α_{t}(x)}$
+\begin_inset Formula ${α_{k}(x)}$
 \end_inset
 
  such that an ensemble 
@@ -415,7 +362,6 @@ a set of elementary classifiers
 \end_inset
 
  has low generalisation error.
- 
 \end_layout
 
 \begin_layout Standard
@@ -453,7 +399,229 @@ As it is mentioned in Introduction, original AdaBoost is an iterative algorithm
 
 .
  Firstly, the hypothesis set for the studying case must be defined.
+ As a weak classifier for the real-values features input we consider decision
+ stump which is efffectively a one-level decision tree clasifier.
+ A decision stamp has a threshold value and takes only one of the features
+ for classification.
+ It compares the input value with the threshold and returns one of two classes
+ after comparison.
+ Thus, for a feature with m different values in train set there are 2∙m
+ decision stumps which are distinguishable in terms of classification result.
+ Finally, for a train set with n features and m samples there are 2∙n∙m
+ different weak classifiers and the hypothesis set 
+\begin_inset Formula $ℋ$
+\end_inset
+
+ is finite.
+ To build 
+\begin_inset Formula $ℋ$
+\end_inset
+
+ for the given test set we should consider decision stumps for all features
+ and in each feature - 2 different stamps for each feature's value.
+\end_layout
+
+\begin_layout Standard
+\noindent
+Further, the selection from the hypothesis set on each boosting round is
+ performed.
+ For this, the distribution 
+\family roman
+\series medium
+\shape up
+\size normal
+\emph off
+\bar no
+\strikeout off
+\xout off
+\uuline off
+\uwave off
+\noun off
+\color none
+
+\begin_inset Formula $\{D_{k}(t)\},t=1..m$
+\end_inset
+
+
+\family default
+\series default
+\shape default
+\size default
+\emph default
+\bar default
+\strikeout default
+\xout default
+\uuline default
+\uwave default
+\noun default
+\color inherit
+ is maintained, which is initially uniform.
+ On each iteration the weak classifier is selected to minimize the error:
+\begin_inset Formula 
+\[
+\underset{h\inℋ}{h_{k}=arg\,min}\sum{}_{t\text{=1}}^{m}D_{k}(t)[h(x_{t})≠y_{t}]\,
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\noindent
+The error of the selected classifier 
+\begin_inset Formula $ɛ_{k}$
+\end_inset
+
+ must be less than 1/2, otherwise the algorithm stops.
+ Then, the coefficient in composition is calculated: 
+\begin_inset Formula 
+\[
+α_{k}=0.5log((1-ɛ_{k})/ɛ_{k})
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\noindent
+Thus, 
+\begin_inset Formula $α_{k}$
+\end_inset
+
+ is positive and the less error 
+\begin_inset Formula $ɛ_{k}$
+\end_inset
+
+, the bigger this coefficient.
+ Afrer that, next distribution 
+\begin_inset Formula $D_{k+1}$
+\end_inset
+
+is being calculated such that elements in position with wrong prediction
+ of 
+\begin_inset Formula $h_{k}$
+\end_inset
+
+are increasing, while all other - decreasing:
+\begin_inset Formula 
+\[
+D_{k+1}(t)=D_{k}(t)·exp(-α_{k}·y_{t}·h_{k}(x_{t}))/Z_{t}
+\]
+
+\end_inset
+
+Value 
+\begin_inset Formula $Z_{t}$
+\end_inset
+
+ is a normalization factor for the distribution 
+\begin_inset Formula $D_{k+1}$
+\end_inset
+
+.
+ Therefore, the algoritm on each iteration tries to get a weak classifiers
+ minimizing errors of previously selected ones, the empirical error of AdaBoost
+ classifier decreases exponentially fast as a function of the number of
+ boosting rounds 
+\begin_inset Formula $T$
+\end_inset
+
+ in formula
+\begin_inset CommandInset ref
+LatexCommand eqref
+reference "eq:adaboost_ensemble"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+
+\begin_inset CommandInset citation
+LatexCommand cite
+key "Mohri2018"
+literal "true"
+
+\end_inset
+
+.
+ In this study the separarable datasets are explored, more specificly, the
+ training set is expected to be labeled by the final classifier without
+ errors, i.e.
  
+\begin_inset Formula $y_{t}∙f(x_{t})>0,t=1..m$
+\end_inset
+
+.
+ For this case we may define 
+\begin_inset Formula $L_{1}$
+\end_inset
+
+
+\family roman
+\series medium
+\shape up
+\size normal
+\emph off
+\bar no
+\strikeout off
+\xout off
+\uuline off
+\uwave off
+\noun off
+\color none
+- geometric
+\family default
+\series default
+\shape default
+\size default
+\emph default
+\bar default
+\strikeout default
+\xout default
+\uuline default
+\uwave default
+\noun default
+\color inherit
+ margin, which characterises a confidence of classifier 
+\begin_inset Formula $f$
+\end_inset
+
+ on the training data set:
+\begin_inset Formula 
+\begin{equation}
+ρ_{f}=\underset{t=1..m}{min}|α·h(x_{t})|/\|α\|_{1}\label{eq:ro_f}
+\end{equation}
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\noindent
+In other words, 
+\begin_inset Formula $ρ_{f}$
+\end_inset
+
+ is a minimum among norm-1 distances from 
+\begin_inset Formula $h(x_{t})$
+\end_inset
+
+ vectors to the hyperplane of equation 
+\begin_inset Formula $α∙x=0$
+\end_inset
+
+ in 
+\begin_inset Formula $R^{T}$
+\end_inset
+
+.
+ In the following paragraphs we will explore the geometric margin value
+ and its relationship to other parameters in different experiments.
 \end_layout
 
 \begin_layout Subsection
@@ -463,7 +631,365 @@ Linear progrmming algorithm
 
 \begin_layout Standard
 \noindent
-test
+The 
+\begin_inset Formula $L_{1}$
+\end_inset
+
+
+\family roman
+\series medium
+\shape up
+\size normal
+\emph off
+\bar no
+\strikeout off
+\xout off
+\uuline off
+\uwave off
+\noun off
+\color none
+- geometric
+\family default
+\series default
+\shape default
+\size default
+\emph default
+\bar default
+\strikeout default
+\xout default
+\uuline default
+\uwave default
+\noun default
+\color inherit
+ margin
+\begin_inset CommandInset ref
+LatexCommand eqref
+reference "eq:ro_f"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+ which is obtained as a parameter of the original AdaBoost can be maximised
+ explicitly.
+ For this, in separable case the linear programming problem can be formulated
+ for the 
+\begin_inset Formula $ρ$
+\end_inset
+
+ maximisation:
+\begin_inset Formula 
+\begin{align}
+\underset{α}{max}ρ\label{eq:max_1}\\
+subject\,to: & y_{t}(α·h(x_{t}))/\|α\|_{1}≥ρ,t=1..m\nonumber 
+\end{align}
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\noindent
+In this problem vectors 
+\begin_inset Formula $α$
+\end_inset
+
+ and 
+\begin_inset Formula $h(x_{t})$
+\end_inset
+
+ must have dimensionality equal to size of set 
+\begin_inset Formula $ℋ$
+\end_inset
+
+.
+ As described in paragraph 2.1, for training set with n features and m samples
+ 
+\begin_inset Formula $ℋ$
+\end_inset
+
+ consists of 2∙n∙m classifiers.
+ Also, in view of formula
+\begin_inset CommandInset ref
+LatexCommand eqref
+reference "eq:ro_f"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+ it is reasonable to add condition 
+\begin_inset Formula $\|α\|_{1}=1$
+\end_inset
+
+ and get rid of the denomenator in the constraint.
+ As a variables of the task a scalar value 
+\begin_inset Formula $ρ$
+\end_inset
+
+ and vector 
+\begin_inset Formula $α$
+\end_inset
+
+ must be taken.
+ Coordinates of 
+\begin_inset Formula $α$
+\end_inset
+
+ should be non-negative for model unambiguity, because a base classifier
+ with a negative coefficient is equivalent to the symmetric classifier with
+ the same modulo positive coefficient.
+ The parameter 
+\begin_inset Formula $ρ$
+\end_inset
+
+ is expected to be positive as a result of optimisation in separable case.
+\end_layout
+
+\begin_layout Standard
+\noindent
+For this problem the implementation in Python with library scipy.optimize.linprog
+ is used.
+ However, this library does not allow variables in right sides of inequalities
+ and accepts only minimisation problems.
+ Thus, the original problem
+\begin_inset CommandInset ref
+LatexCommand eqref
+reference "eq:max_1"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+ must be slightly transformed.
+ Firstly, a vector of variables must be defined, let's denote it as 
+\begin_inset Formula $u$
+\end_inset
+
+, with first coordinates coinsiding with 
+\begin_inset Formula $α$
+\end_inset
+
+ and the latest coordinate equal to 
+\begin_inset Formula $ρ$
+\end_inset
+
+, 2
+\family roman
+\series medium
+\shape up
+\size normal
+\emph off
+\bar no
+\strikeout off
+\xout off
+\uuline off
+\uwave off
+\noun off
+\color none
+·
+\family default
+\series default
+\shape default
+\size default
+\emph default
+\bar default
+\strikeout default
+\xout default
+\uuline default
+\uwave default
+\noun default
+\color inherit
+n
+\family roman
+\series medium
+\shape up
+\size normal
+\emph off
+\bar no
+\strikeout off
+\xout off
+\uuline off
+\uwave off
+\noun off
+\color none
+·
+\family default
+\series default
+\shape default
+\size default
+\emph default
+\bar default
+\strikeout default
+\xout default
+\uuline default
+\uwave default
+\noun default
+\color inherit
+m+1 coordinates in total.
+ Let's denote 2
+\family roman
+\series medium
+\shape up
+\size normal
+\emph off
+\bar no
+\strikeout off
+\xout off
+\uuline off
+\uwave off
+\noun off
+\color none
+·
+\family default
+\series default
+\shape default
+\size default
+\emph default
+\bar default
+\strikeout default
+\xout default
+\uuline default
+\uwave default
+\noun default
+\color inherit
+n
+\family roman
+\series medium
+\shape up
+\size normal
+\emph off
+\bar no
+\strikeout off
+\xout off
+\uuline off
+\uwave off
+\noun off
+\color none
+·
+\family default
+\series default
+\shape default
+\size default
+\emph default
+\bar default
+\strikeout default
+\xout default
+\uuline default
+\uwave default
+\noun default
+\color inherit
+m as N.
+ Then, the target function is as follows:
+\begin_inset Formula 
+\[
+\underset{u}{min}-u_{N+1}
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\noindent
+Next, there are m constraints for each sample from test set:
+\begin_inset Formula 
+\[
+u_{1}(-y_{t}·h_{1}(x_{t}))+...+u_{N}(-y_{t}·h_{N}(x_{t}))+u_{N+1}≤0,t=1..m
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\noindent
+and constraint 
+\begin_inset Formula $\|α\|_{1}=1$
+\end_inset
+
+:
+\begin_inset Formula 
+\[
+\sum{}_{k\text{=1}}^{N}u_{k}=1
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\noindent
+On top of that, bounds for 
+\begin_inset Formula $α$
+\end_inset
+
+ must be defined:
+\begin_inset Formula 
+\[
+u_{k}≥0,k=1..N
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\noindent
+To formulate the task, all classifiers from 
+\begin_inset Formula $ℋ$
+\end_inset
+
+ on all test samples must be calculated.
+ In the current example for training set with n features and m samples there
+ are 
+\begin_inset Formula $N·m=2·n·m^{2}$
+\end_inset
+
+ values which is a big value in real experiments.
+ Nevertheless, the linear algorithm directly maximises 
+\begin_inset Formula $L_{1}$
+\end_inset
+
+
+\family roman
+\series medium
+\shape up
+\size normal
+\emph off
+\bar no
+\strikeout off
+\xout off
+\uuline off
+\uwave off
+\noun off
+\color none
+- geometric
+\family default
+\series default
+\shape default
+\size default
+\emph default
+\bar default
+\strikeout default
+\xout default
+\uuline default
+\uwave default
+\noun default
+\color inherit
+ margin for the given hypothesis set 
+\begin_inset Formula $ℋ$
+\end_inset
+
+ and therefore is of theoretical interest.
 \end_layout
 
 \begin_layout Subsection
