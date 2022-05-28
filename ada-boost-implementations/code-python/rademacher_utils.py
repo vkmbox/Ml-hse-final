@@ -65,5 +65,5 @@ if __name__ == '__main__':
     result, history = clf.fit(X_train, y_train, trace=True)
     print("Rademacher:", calc_rademacher_biclassifiers(X_train, 64)) #, clf.ensemble_classifiers
     print("Margin loss:"
-        , calc_margin_loss(X_train, y_train, clf.get_esemble_result, clf.get_margin_l1(X_train)))
+        , calc_margin_loss(X_train, y_train, clf.predict_raw, clf.get_margin_l1(X_train)))
 

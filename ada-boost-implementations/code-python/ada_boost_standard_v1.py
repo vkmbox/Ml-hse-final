@@ -69,6 +69,11 @@ class AdaBoostStandardClassifier_v1:
 
         return buffer #!!!Not divided by L1 norm of alphas!
 
+    def predict_raw(self, X):
+        buffer = self.get_esemble_result(X)
+        alpha_modulo = sum([abs(alpha) for alpha in self.ensemble_alphas]) + self.tolerance
+        return buffer/alpha_modulo
+
     def predict(self, X):
         return np.sign(self.get_esemble_result(X))
 

@@ -182,6 +182,8 @@ literal "true"
  and to try to explain the above contradiction.
  For this, two versions of the AdaBoost algorithm were implemented and experimen
 ts were performed on datasets of different types and sizes.
+ The software code used in the experiments is available in repository https://gi
+thub.com/vkmbox/Ml-hse-final.
 \begin_inset Newpage newpage
 \end_inset
 
@@ -711,7 +713,7 @@ In this problem vectors
 \end_inset
 
  consists of 2∙n∙m classifiers.
- Also, in view of formula
+ Also, in view of formula 
 \begin_inset CommandInset ref
 LatexCommand eqref
 reference "eq:ro_f"
@@ -755,7 +757,7 @@ For this problem the implementation in Python with library scipy.optimize.linpro
  is used.
  However, this library does not allow variables in right sides of inequalities
  and accepts only minimisation problems.
- Thus, the original problem
+ Thus, the original problem 
 \begin_inset CommandInset ref
 LatexCommand eqref
 reference "eq:max_1"
@@ -999,7 +1001,339 @@ Margin theory
 
 \begin_layout Standard
 \noindent
-test
+In line with statistical learning theory, there are estimations of generalisatio
+n error for real-valued hypothesis.
+ At the beginning, some notions need to be defined.
+ The following definitions are generally accepted in statistic learning
+ theory and cited according to the book 
+\begin_inset Quotes eld
+\end_inset
+
+Foundations of Machine Learning
+\begin_inset Quotes erd
+\end_inset
+
+
+\begin_inset CommandInset citation
+LatexCommand cite
+key "Mohri2018"
+literal "true"
+
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Standard
+\noindent
+Generalisation error: for a given hypothesis 
+\begin_inset Formula $h\inℋ$
+\end_inset
+
+ , true classifier 
+\begin_inset Formula $c$
+\end_inset
+
+ and distribution 
+\begin_inset Formula $𝒟$
+\end_inset
+
+, the generalisation error 
+\begin_inset Formula $R$
+\end_inset
+
+ is defined as follows:
+\begin_inset Formula 
+\begin{equation}
+R(h)=\underset{x\sim𝒟}{𝕇}[h(x)≠c(x)]=\underset{x\sim𝒟}{𝔼}[1_{h(x)≠c(x)}]\label{eq:gen_err}
+\end{equation}
+
+\end_inset
+
+Empirical Rademacher complexity for hypothesis set: Let 
+\begin_inset Formula $ℋ$
+\end_inset
+
+ be a family of functions taking values in {−1, +1}, then for sample 
+\begin_inset Formula $S_{m}$
+\end_inset
+
+
+\begin_inset Formula 
+\begin{equation}
+\hat{𝔑_{s}}(ℋ)=\frac{1}{m}\underset{σ}{𝔼}[\underset{h\inℋ}{sup}\sum{}_{t\text{=1}}^{m}σ_{t}·h(x_{t})]\label{eq:rad_h}
+\end{equation}
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\noindent
+In the formula above 
+\begin_inset Formula $σ=(σ_{1},...,σ_{m})$
+\end_inset
+
+, where 
+\begin_inset Formula $σ_{t},t=1..m$
+\end_inset
+
+ are independent uniform random variables taking values in {−1, +1}.
+\end_layout
+
+\begin_layout Standard
+\noindent
+Empirical margin loss for sample 
+\begin_inset Formula $S_{m}$
+\end_inset
+
+:
+\begin_inset Formula 
+\begin{equation}
+\hat{R}_{S,ρ}(h)=\frac{1}{m}\sum{}_{t\text{=1}}^{m}𝛷_{ρ}(y_{t}·h(x_{t}))\label{eq:mg_loss}
+\end{equation}
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\noindent
+In this formula 
+\begin_inset Formula $𝛷_{ρ}(x)=min(1,max(0,1-x/ρ))$
+\end_inset
+
+, the graph of the function is illustrated by figure 1.
+\begin_inset Float figure
+wide false
+sideways false
+status open
+
+\begin_layout Plain Layout
+\noindent
+\align center
+\begin_inset Graphics
+	filename pic1.png
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\begin_inset Caption Standard
+
+\begin_layout Plain Layout
+Marging loss function
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\noindent
+Finally, the estimate of the upper limit of the overall error is as follows.
+ Let 
+\begin_inset Formula $ℋ$
+\end_inset
+
+ be a family of real-valued functions and the non-negative value 
+\begin_inset Formula $ρ$
+\end_inset
+
+ of margin is fixed.
+ Then, for any 
+\begin_inset Formula $δ>0$
+\end_inset
+
+, with probability at least 
+\begin_inset Formula $1−δ$
+\end_inset
+
+, the following holds for all 
+\begin_inset Formula $h∈ℋ$
+\end_inset
+
+:
+\begin_inset Formula 
+\begin{equation}
+R(h)≤\hat{R}_{S,ρ}(h)+\frac{2}{ρ}\hat{𝔑_{s}}(ℋ)+3\sqrt{\frac{log\frac{1}{δ}}{2m}}\label{eq:est_1}
+\end{equation}
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\noindent
+Remarkably, that this formula remains valid if we consider convex linear
+ combinations of classifiers in 
+\begin_inset Formula $ℋ$
+\end_inset
+
+ , i.
+ e.
+ if 
+\begin_inset Formula $h(x)\in conv(ℋ)$
+\end_inset
+
+
+\begin_inset CommandInset citation
+LatexCommand cite
+key "Mohri2018"
+literal "true"
+
+\end_inset
+
+, where 
+\begin_inset Formula $conv(ℋ)$
+\end_inset
+
+ is:
+\begin_inset Formula 
+\begin{equation}
+conv(ℋ)=\{\sum{}_{t\text{=1}}^{m}µ_{t}h_{t}:m≥1,∀t=1..m,\text{µ}_{t}≥0,h_{t}\inℋ,\sum{}_{t\text{=1}}^{m}\text{µ}_{t}≤1\}\label{eq:conv}
+\end{equation}
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\noindent
+As AdaBoost classifiers 
+\begin_inset CommandInset ref
+LatexCommand eqref
+reference "eq:adaboost_ensemble"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+ of both previously described versions are ensembles satisfying condition
+ 
+\begin_inset CommandInset ref
+LatexCommand eqref
+reference "eq:conv"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+, the inequality 
+\begin_inset CommandInset ref
+LatexCommand eqref
+reference "eq:est_1"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+ is applicable for their generalisation error estimation.
+ Since both versions work with the same hypothesis set 
+\begin_inset Formula $ℋ$
+\end_inset
+
+ and we may fix 
+\begin_inset Formula $ρ$
+\end_inset
+
+ value for all experiments, the difference between them depends on margin
+ loss term 
+\begin_inset Formula $\hat{R}_{S,ρ}(h)$
+\end_inset
+
+.
+ According to the theory, for marging lost calculation we use the final
+ classifier's ansemble 
+\begin_inset CommandInset ref
+LatexCommand eqref
+reference "eq:adaboost_ensemble"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+ but without an external sign operator.
+ Thus, in separable case expression 
+\begin_inset CommandInset ref
+LatexCommand eqref
+reference "eq:mg_loss"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+ can be rewrittern as follows:
+\begin_inset Formula 
+\begin{equation}
+\hat{R}_{S,ρ}(h)=\frac{1}{m}\sum{}_{t\text{=1}}^{m}𝛷_{ρ}(α·h(x_{t}))\label{eq:mg_loss_sep}
+\end{equation}
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\noindent
+A comparison of formulae 
+\begin_inset CommandInset ref
+LatexCommand eqref
+reference "eq:ro_f"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+ and 
+\begin_inset CommandInset ref
+LatexCommand eqref
+reference "eq:mg_loss_sep"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+ shows that for 
+\begin_inset Formula $ρ<ρ_{f}$
+\end_inset
+
+ 
+\begin_inset Formula $\hat{R}_{S,ρ}(h)=0$
+\end_inset
+
+.
+ Obviously, linear programming algorithm yields larger margin, but question
+ if this specificity is decisive in estimating 
+\begin_inset CommandInset ref
+LatexCommand eqref
+reference "eq:est_1"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+ is debatable and will be addressed in subsequent experiments.
 \end_layout
 
 \begin_layout Section
@@ -1009,7 +1343,104 @@ Experiments
 
 \begin_layout Standard
 \noindent
-test
+In the previous paragraphs, several questions have been posed for investigation
+ in real-data experiments.
+ Firstly, there is a 
+\begin_inset Formula $L_{1}$
+\end_inset
+
+
+\family roman
+\series medium
+\shape up
+\size normal
+\emph off
+\bar no
+\strikeout off
+\xout off
+\uuline off
+\uwave off
+\noun off
+\color none
+- geometric
+\family default
+\series default
+\shape default
+\size default
+\emph default
+\bar default
+\strikeout default
+\xout default
+\uuline default
+\uwave default
+\noun default
+\color inherit
+ margin 
+\begin_inset CommandInset ref
+LatexCommand eqref
+reference "eq:ro_f"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+ which reflects the classifier's confidence on train dataset, and question
+ is whether greater 
+\begin_inset Formula $L_{1}$
+\end_inset
+
+
+\family roman
+\series medium
+\shape up
+\size normal
+\emph off
+\bar no
+\strikeout off
+\xout off
+\uuline off
+\uwave off
+\noun off
+\color none
+- geometric
+\family default
+\series default
+\shape default
+\size default
+\emph default
+\bar default
+\strikeout default
+\xout default
+\uuline default
+\uwave default
+\noun default
+\color inherit
+ margin provides less generalisation error on test data.
+ Secondly, we need to check terms of 
+\begin_inset CommandInset ref
+LatexCommand eqref
+reference "eq:est_1"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+ on real data and estimate gap between the right-hand side of this inequality
+ and the errors in the test samples.
+\end_layout
+
+\begin_layout Subsection
+Estimation of 
+\begin_inset Formula $L_{1}$
+\end_inset
+
+- geometric margin
+\end_layout
+
+\begin_layout Subsection
+Estimation of generalisation error
 \end_layout
 
 \begin_layout Section
