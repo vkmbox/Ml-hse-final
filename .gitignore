@@ -11,3 +11,5 @@ build
 /ada-boost-implementations/code-python/__pycache__
 /ada-boost-implementations/code-python/.vscode
 /examples
+/output/*.lyx#
+/output/*.lyx~

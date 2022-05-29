@@ -1439,6 +1439,13 @@ Estimation of
 - geometric margin
 \end_layout
 
+\begin_layout Standard
+Estimations for geometric margin have been performed on generated and real
+ data sets, results are represented in .
+ For data generation the Python sklearn.datasets.make_classification library
+ was used
+\end_layout
+
 \begin_layout Subsection
 Estimation of generalisation error
 \end_layout
