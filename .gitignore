@@ -13,3 +13,4 @@ build
 /examples
 /output/*.lyx#
 /output/*.lyx~
+/20220531.progress.txt

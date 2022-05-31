@@ -416,10 +416,86 @@ As it is mentioned in Introduction, original AdaBoost is an iterative algorithm
  for classification.
  It compares the input value with the threshold and returns one of two classes
  after comparison.
- Thus, for a feature with m different values in train set there are 2∙m
- decision stumps which are distinguishable in terms of classification result.
- Finally, for a train set with n features and m samples there are 2∙n∙m
- different weak classifiers and the hypothesis set 
+ Thus, for a feature with m different values in train set there are 2
+\family roman
+\series medium
+\shape up
+\size normal
+\emph off
+\bar no
+\strikeout off
+\xout off
+\uuline off
+\uwave off
+\noun off
+\color none
+·
+\family default
+\series default
+\shape default
+\size default
+\emph default
+\bar default
+\strikeout default
+\xout default
+\uuline default
+\uwave default
+\noun default
+\color inherit
+m decision stumps which are distinguishable in terms of classification result.
+ Finally, for a train set with n features and m samples there are 2
+\family roman
+\series medium
+\shape up
+\size normal
+\emph off
+\bar no
+\strikeout off
+\xout off
+\uuline off
+\uwave off
+\noun off
+\color none
+·
+\family default
+\series default
+\shape default
+\size default
+\emph default
+\bar default
+\strikeout default
+\xout default
+\uuline default
+\uwave default
+\noun default
+\color inherit
+n
+\family roman
+\series medium
+\shape up
+\size normal
+\emph off
+\bar no
+\strikeout off
+\xout off
+\uuline off
+\uwave off
+\noun off
+\color none
+·
+\family default
+\series default
+\shape default
+\size default
+\emph default
+\bar default
+\strikeout default
+\xout default
+\uuline default
+\uwave default
+\noun default
+\color inherit
+m different weak classifiers and the hypothesis set 
 \begin_inset Formula $ℋ$
 \end_inset
 
@@ -721,7 +797,59 @@ In this problem vectors
 \begin_inset Formula $ℋ$
 \end_inset
 
- consists of 2∙n∙m classifiers.
+ consists of 2
+\family roman
+\series medium
+\shape up
+\size normal
+\emph off
+\bar no
+\strikeout off
+\xout off
+\uuline off
+\uwave off
+\noun off
+\color none
+·
+\family default
+\series default
+\shape default
+\size default
+\emph default
+\bar default
+\strikeout default
+\xout default
+\uuline default
+\uwave default
+\noun default
+\color inherit
+n
+\family roman
+\series medium
+\shape up
+\size normal
+\emph off
+\bar no
+\strikeout off
+\xout off
+\uuline off
+\uwave off
+\noun off
+\color none
+·
+\family default
+\series default
+\shape default
+\size default
+\emph default
+\bar default
+\strikeout default
+\xout default
+\uuline default
+\uwave default
+\noun default
+\color inherit
+m classifiers.
  Also, in view of formula 
 \begin_inset CommandInset ref
 LatexCommand eqref
@@ -1114,7 +1242,7 @@ In this formula
 \begin_inset Formula $𝛷_{ρ}(x)=min(1,max(0,1-x/ρ))$
 \end_inset
 
-, the graph of the function is illustrated by figure 1.
+, the graph of the function is shown in figure 1.
 \begin_inset Float figure
 wide false
 sideways false
@@ -1124,7 +1252,8 @@ status open
 \noindent
 \align center
 \begin_inset Graphics
-	filename pic1.png
+	filename pic/loss_function.png
+	width 50col%
 
 \end_inset
 
@@ -1449,8 +1578,8 @@ Estimation of
 \end_layout
 
 \begin_layout Standard
-Estimations for geometric margin have been performed on generated and real
- data sets, results are represented in 
+Estimations for geometric margin have been performed on synthetic or generated
+ and real data sets, results are represented in 
 \begin_inset CommandInset href
 LatexCommand href
 name "Geometric_Margin_Estimations.ipynb"
@@ -1465,14 +1594,15 @@ literal "false"
 \end_inset
 
 sklearn.datasets.make_classification was used with the following default parameter
-s: number of samples=200, total number of features=50, number of informative
- features=20, number of redundant features=20, number of clusters per class=5.
+s: number of samples=300, total number of features=50, number of informative
+ features=20, number of redundant features=20, number of duplicated features=10,
+ number of clusters per class=5.
  Since we plan to perform experiments on separable data sets, labels for
  samples X are artificially separated.
  For this, a random vector is generated and the labels {-1, +1} are created
  according to the projection of X onto this vector.
  Moreover, samples X are artificially extended from the hyperplane perpendicular
- to the random vector by a gap value, the default gap is 0.1.
+ to the vector by a gap value, the default gap is 0.1.
  Varying the gap we may simulate different kinds of separable or non-separable
  data sets.
  Default splitting of generated data is 
@@ -1483,44 +1613,19 @@ s: number of samples=200, total number of features=50, number of informative
 \begin_inset Formula $\frac{1}{3}$
 \end_inset
 
- test set.
+ for test set.
 \end_layout
 
 \begin_layout Standard
 \noindent
 In the first experiment, there are data sets on 200 rows with the number
  of features changing from 25 to 500 in increments of 25.
- For each number of features 3 data sets are generated and the results are
+ For each number of features 5 data sets are generated and the results are
  averaged.
  Both version of classifiers (linear and AdaBoost) are learned on subset
- of 134 rows and then empirical risk is estimated on 66 rows set.
- The 
-\family roman
-\series medium
-\shape up
-\size normal
-\emph off
-\bar no
-\strikeout off
-\xout off
-\uuline off
-\uwave off
-\noun off
-\color none
-geometric
-\family default
-\series default
-\shape default
-\size default
-\emph default
-\bar default
-\strikeout default
-\xout default
-\uuline default
-\uwave default
-\noun default
-\color inherit
- margin in the experiments turns out to be as follows:
+ of 200 rows and then empirical risk is estimated on 100 rows set.
+ The margin value and empirical risk in the experiments is illustrated by
+ figure 2.
 \begin_inset Float figure
 wide false
 sideways false
@@ -1529,7 +1634,14 @@ status open
 \begin_layout Plain Layout
 \align center
 \begin_inset Graphics
-	filename pic_features_margin.png
+	filename pic/features_margin.png
+	width 50col%
+
+\end_inset
+
+
+\begin_inset Graphics
+	filename pic/features_risk.png
 	width 50col%
 
 \end_inset
@@ -1541,7 +1653,8 @@ status open
 \begin_inset Caption Standard
 
 \begin_layout Plain Layout
-Margin depending on features count in the experiment with 200 samples datasets
+Margin and empirical risk depending on features count in experiments with
+ 300 samples datasets
 \end_layout
 
 \end_inset
@@ -1560,7 +1673,238 @@ Margin depending on features count in the experiment with 200 samples datasets
 
 \begin_layout Standard
 \noindent
-test
+As can be seen from the graphs, geometrical margin for the linear algorithm
+ is higher, which is explained by the different principles of the algorithms.
+ For AdaBoost the number of non-zero coefficients in the linear combination
+ 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "eq:adaboost_ensemble"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+ is limited by the quantity of boosting rounds, while in linear algorithm
+ version a coefficient of any weak classifier from hypotesis set 
+\begin_inset Formula $ℋ$
+\end_inset
+
+ can be non-zero and set of possible combinations is obviously larger in
+ the latter case.
+ At the same time, empirical risk does not differ significantly between
+ the versions of the classifiers, as can be seen from the right-hand grap.
+\end_layout
+
+\begin_layout Standard
+\noindent
+Also, in this experiment we can investigate if there is a statically significant
+ difference between empirical risks of AdaBoost and linear classifiers.
+ For analysis we have two sets of risk values with the corresponding values
+ referring to the results of the classifiers on the same dataset.
+ It is difficult to determine the type of distribution of risk values, however,
+ it can be hypothesised that these values has equal median.
+ In other words, the main hypothesis of no difference on median 
+\begin_inset Formula $H_{0}$
+\end_inset
+
+ can be tested against the alternative hypothesis 
+\begin_inset Formula $H_{1}$
+\end_inset
+
+ of a statistical significant difference for the two-sided criterion.
+ Since the distribution of variables is unknown, we may apply two sample
+ non-parametric methods such as the sign
+\begin_inset CommandInset citation
+LatexCommand cite
+key "Sign"
+literal "true"
+
+\end_inset
+
+ and Wilcoxon
+\begin_inset CommandInset citation
+LatexCommand cite
+key "Wilcoxon"
+literal "true"
+
+\end_inset
+
+ tests.
+ For sign test p–value=0.33 and for Wilcoxon test p–value=0.29 
+\begin_inset CommandInset href
+LatexCommand href
+name "(link)"
+target "https://github.com/vkmbox/Ml-hse-final/blob/master/ada-boost-implementations/code-python/notebooks/Geometric_Margin_Estimations.ipynb"
+literal "false"
+
+\end_inset
+
+ and hypothesis 
+\begin_inset Formula $H_{1}$
+\end_inset
+
+ is rejected.
+ Also, we can apply Mann–Whitney U test which tests as 
+\begin_inset Formula $H_{0}$
+\end_inset
+
+ that, for randomly selected values X and Y from two samples, the probability
+ of X being greater than Y is equal to the probability of Y being greater
+ than X
+\begin_inset CommandInset citation
+LatexCommand cite
+key "Mann_Whitney"
+literal "true"
+
+\end_inset
+
+.
+ For this test p–value=0.66 and hypothesis 
+\begin_inset Formula $H_{1}$
+\end_inset
+
+ is also rejected.
+\end_layout
+
+\begin_layout Standard
+\noindent
+Second experiment is performed with default number of features=50 and varying
+ number of samples from 100 to 500 with step 50.
+ Results are on figure 3.
+\begin_inset Float figure
+wide false
+sideways false
+status open
+
+\begin_layout Plain Layout
+\align center
+\begin_inset Graphics
+	filename pic/samples_margin.png
+	width 50col%
+
+\end_inset
+
+
+\begin_inset Graphics
+	filename pic/samples_risk.png
+	width 50col%
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\begin_inset Caption Standard
+
+\begin_layout Plain Layout
+Margin and empirical risk depending on samples number, 50 features
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\noindent
+Again, the significant difference in margin values can be seen, which does
+ not, however, affect the empirical risk values.
+ In this experiment sign test gives positive criterion value with p–value=0.006,
+ which leads one to assume that, according to the way the criterion is calculate
+d, hypotesis that empirical risk median for linear algorithm is larger than
+ ada-boost's one is true at a significance level of 0.05.
+ Wilcoxon test supports the hypothesis of medians unequality with a p-value=0.015.
+ However, Mann-Whitney test gives p–value=0.284 which supports 
+\begin_inset Formula $H_{0}$
+\end_inset
+
+ hypothesis of risk values equality.
+\end_layout
+
+\begin_layout Standard
+\noindent
+In the next experiment number of samples=300 and features=100 is fixed,
+ and the percent of informative features is varying from 10% to 90% with
+ the appropriate change of redundant features from 80% to 0%, number of
+ repeated features is fixed to 10%.
+ Results are shown on figure 4.
+\begin_inset Float figure
+wide false
+sideways false
+status open
+
+\begin_layout Plain Layout
+\align center
+\begin_inset Graphics
+	filename pic/informative_margin.png
+	width 50col%
+
+\end_inset
+
+
+\begin_inset Graphics
+	filename pic/informative_risk.png
+	width 50col%
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\begin_inset Caption Standard
+
+\begin_layout Plain Layout
+Margin depending on percent of informative features, 300 samples and 100
+ features
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\noindent
+The ratio of the data is similar to previous experiments, difference in
+ margin doesn't lead to better empirical risk.
+ ...
+\end_layout
+
+\begin_layout Standard
+\noindent
+Of particular interest is a study on real data sets.
+ Several experiments with real data sets from the UCI repository are described
+ in 
+\begin_inset CommandInset citation
+LatexCommand cite
+key "Breiman1997"
+literal "true"
+
+\end_inset
+
+, here some of these datasets are retested.
 \end_layout
 
 \begin_layout Subsection
