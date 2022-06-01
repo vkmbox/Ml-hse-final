@@ -5,8 +5,8 @@ from py4j.java_gateway import JavaGateway
 class AdaBoostJavaClassifier_v1:
     def __init__(self, path):
         self.path = path
-        self.gateway = JavaGateway() #JavaGateway.launch_gateway(classpath=path, die_on_exit=True)
-        self.classifier = self.gateway.entry_point #.jvm.vkmbox.classifier.ensemble.AdaBoostStandardClassifier(n_estimators)
+        self.gateway = JavaGateway()
+        self.classifier = self.gateway.entry_point
 
     def getX(self, X):
         samples_count, features_count = X.shape[0], X.shape[1]
@@ -24,37 +24,18 @@ class AdaBoostJavaClassifier_v1:
         return dataY
 
     def fit(self, X, y):
-        '''
-        samples_count, features_count = X.shape[0], X.shape[1]
-        dataX = self.gateway.new_array(self.gateway.jvm.double, samples_count, features_count)
-        dataY = self.gateway.new_array(self.gateway.jvm.int, samples_count)
-        for row in range(samples_count):
-            dataY[row] = y[row].item()
-            for col in range(features_count):
-                dataX[row][col] = X[row, col].item()
-        '''
         dataX, dataY = self.getX(X), self.getY(y)
         return self.classifier.fit(dataX, dataY)
 
+    def fit(self, X, y, n_estimators):
+        dataX, dataY = self.getX(X), self.getY(y)
+        return self.classifier.fit(dataX, dataY, n_estimators)
+
     def predict(self, X):
-        '''
-        samples_count, features_count = X.shape[0], X.shape[1]
-        dataX = self.gateway.new_array(self.gateway.jvm.double, samples_count, features_count)
-        for row in range(samples_count):
-            for col in range(features_count):
-                dataX[row][col] = X[row, col].item()
-        '''
         dataX = self.getX(X)
         return np.array(self.classifier.predict(dataX))
 
     def get_margin_l1(self, X):
-        '''
-        samples_count, features_count = X.shape[0], X.shape[1]
-        dataX = self.gateway.new_array(self.gateway.jvm.double, samples_count, features_count)
-        for row in range(samples_count):
-            for col in range(features_count):
-                dataX[row][col] = X[row, col].item()
-        '''
         dataX = self.getX(X)
         return self.classifier.getMarginL1(dataX)
 
@@ -77,7 +58,7 @@ if __name__ == '__main__':
 
     y_train = np.array([1, -1, -1, 1, 1, -1])
     clf = AdaBoostJavaClassifier_v1(path=classpath)
-    result = clf.fit(X_train, y_train)
+    result = clf.fit(X_train, y_train, 146)
     print(result)
     y_pred = clf.predict(X_train)
     assert (y_train==y_pred).all(), 'Wrong answer'

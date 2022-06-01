@@ -1889,7 +1889,13 @@ Margin depending on percent of informative features, 300 samples and 100
 \noindent
 The ratio of the data is similar to previous experiments, difference in
  margin doesn't lead to better empirical risk.
- ...
+ For this experiments, p–value are as follows: sign test - 0.26, Wilcoxon
+ - 0.49, Mann-Whitney - 0.58.
+ In all tests the hypotesis 
+\begin_inset Formula $H_{1}$
+\end_inset
+
+ of difference in empirical risk between classifiers is rejected.
 \end_layout
 
 \begin_layout Standard
@@ -1905,6 +1911,16 @@ literal "true"
 \end_inset
 
 , here some of these datasets are retested.
+ The first date set in question is breast cancer
+\begin_inset CommandInset citation
+LatexCommand cite
+key "Breast_Cancer"
+literal "true"
+
+\end_inset
+
+.
+ 
 \end_layout
 
 \begin_layout Subsection

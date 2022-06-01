@@ -9,6 +9,7 @@ import org.nd4j.linalg.factory.Nd4j;
 import org.nd4j.linalg.api.buffer.DataType;
 import org.nd4j.linalg.api.ndarray.INDArray;
 import org.nd4j.linalg.ops.transforms.Transforms;
+import vkmbox.classifier.util.RademacherUtil;
 import vkmbox.classifier.base.DecisionStumpContinuous;
 
 import java.util.Map;
@@ -19,7 +20,6 @@ import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Objects;
 import java.util.ArrayList;
-import vkmbox.classifier.util.RademacherUtil;
 
 @Slf4j
 public class AdaBoostStandardClassifier {
@@ -27,7 +27,7 @@ public class AdaBoostStandardClassifier {
     private static final int[] SIGNS = {-1, 1};
     private static final Clock CLOCK = Clock.system(ZoneId.systemDefault());
     
-    private final int estimators;
+    private int estimators;
     private final double tolerance;
     private final List<Double> ensembleAlphas = new ArrayList<>();
     private final List<DecisionStumpContinuous> ensembleClassifiers = new ArrayList<>();
@@ -88,6 +88,11 @@ public class AdaBoostStandardClassifier {
     
     public FitResult fitIND(INDArray dataX, INDArray dataY, boolean trace) {
         return fitIND(dataX, dataY, null, trace);
+    }
+    
+    public String fit(double[][] dataX, int[] dataY, int estimators) {
+        this.estimators = estimators;
+        return fit(dataX, dataY);
     }
     
     public String fit(double[][] dataX, int[] dataY) {
