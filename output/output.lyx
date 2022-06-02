@@ -393,6 +393,13 @@ Originally, AdaBoost was implemented as an iterative process, when in each
 \begin_layout Section
 \noindent
 Theoretical basis and implementation specifics
+\begin_inset CommandInset label
+LatexCommand label
+name "sec:Theoretical-basis"
+
+\end_inset
+
+
 \end_layout
 
 \begin_layout Subsection
@@ -1589,7 +1596,7 @@ literal "false"
 \end_inset
 
  notebook.
- For data generation the Python library 
+ For data generation the Python function 
 \begin_inset Newline newline
 \end_inset
 
@@ -1614,6 +1621,10 @@ s: number of samples=300, total number of features=50, number of informative
 \end_inset
 
  for test set.
+\end_layout
+
+\begin_layout Subsubsection
+Synthetic datasets with a varying number of properties
 \end_layout
 
 \begin_layout Standard
@@ -1746,26 +1757,12 @@ literal "false"
 \end_inset
 
  is rejected.
- Also, we can apply Mann–Whitney U test which tests as 
-\begin_inset Formula $H_{0}$
-\end_inset
+ The criterion Mann–Whitney U is not applicable here since error samples
+ are dependent.
+\end_layout
 
- that, for randomly selected values X and Y from two samples, the probability
- of X being greater than Y is equal to the probability of Y being greater
- than X
-\begin_inset CommandInset citation
-LatexCommand cite
-key "Mann_Whitney"
-literal "true"
-
-\end_inset
-
-.
- For this test p–value=0.66 and hypothesis 
-\begin_inset Formula $H_{1}$
-\end_inset
-
- is also rejected.
+\begin_layout Subsubsection
+Synthetic datasets with a varying number of samples
 \end_layout
 
 \begin_layout Standard
@@ -1826,11 +1823,10 @@ Again, the significant difference in margin values can be seen, which does
 d, hypotesis that empirical risk median for linear algorithm is larger than
  ada-boost's one is true at a significance level of 0.05.
  Wilcoxon test supports the hypothesis of medians unequality with a p-value=0.015.
- However, Mann-Whitney test gives p–value=0.284 which supports 
-\begin_inset Formula $H_{0}$
-\end_inset
+\end_layout
 
- hypothesis of risk values equality.
+\begin_layout Subsubsection
+Synthetic datasets with a varying percent of informative features
 \end_layout
 
 \begin_layout Standard
@@ -1867,8 +1863,8 @@ status open
 \begin_inset Caption Standard
 
 \begin_layout Plain Layout
-Margin depending on percent of informative features, 300 samples and 100
- features
+Margin and empirical risk depending on percent of informative features,
+ 300 samples and 100 features
 \end_layout
 
 \end_inset
@@ -1890,12 +1886,17 @@ Margin depending on percent of informative features, 300 samples and 100
 The ratio of the data is similar to previous experiments, difference in
  margin doesn't lead to better empirical risk.
  For this experiments, p–value are as follows: sign test - 0.26, Wilcoxon
- - 0.49, Mann-Whitney - 0.58.
- In all tests the hypotesis 
+ - 0.49.
+ In both tests the hypotesis 
 \begin_inset Formula $H_{1}$
 \end_inset
 
  of difference in empirical risk between classifiers is rejected.
+\end_layout
+
+\begin_layout Subsubsection
+\noindent
+Breast cancer dataset
 \end_layout
 
 \begin_layout Standard
@@ -1911,7 +1912,7 @@ literal "true"
 \end_inset
 
 , here some of these datasets are retested.
- The first date set in question is breast cancer
+ The first date set is Breast cancer
 \begin_inset CommandInset citation
 LatexCommand cite
 key "Breast_Cancer"
@@ -1919,12 +1920,517 @@ literal "true"
 
 \end_inset
 
+, this data set has 9 informative features and 699 rows.
+ There are 458 rows for benign and 241 rows for malignant cases, the data
+ can be considered broadly balanced.
+ To test that the data set is separable, a support vector classifier is
+ used.
+ After training on the whole dataset, the svm classifier correctly predicts
+ class for all samples, i.e.
+ it is possible to construct a hyperplane in the feature space separating
+ the data.
+ The complete data set is splitted 20 times at random into training and
+ test samples, with 1/4 of the records for the test, for each split geometric
+ margin and empirical risk are calculated, results are in table 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "tab:breast-cancer"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
 .
+\begin_inset Float table
+wide false
+sideways false
+status open
+
+\begin_layout Plain Layout
+\align center
+\begin_inset Tabular
+<lyxtabular version="3" rows="5" columns="3">
+<features tabularvalignment="middle">
+<column alignment="left" valignment="top">
+<column alignment="right" valignment="top">
+<column alignment="right" valignment="top">
+<row>
+<cell alignment="left" valignment="top" topline="true" bottomline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+Parameter name
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="right" valignment="top" topline="true" bottomline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+Average value
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="right" valignment="top" topline="true" bottomline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+Standard deviation
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="left" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+Empirical error for linear algorithm
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="right" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+0.0622857143
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="right" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+0.0133889994
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="left" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+Empirical error for ada boost algorithm
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="right" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+0.0517142857
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="right" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+0.0096425926
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="left" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+Geometric margin for linear algorithm
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="right" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+0.0380784851
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="right" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+0.0104855946
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="left" valignment="top" topline="true" bottomline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+Geometric margin for ada boost algorithm
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="right" valignment="top" topline="true" bottomline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+0.0166040126
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="right" valignment="top" topline="true" bottomline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+0.0141669141
+\end_layout
+
+\end_inset
+</cell>
+</row>
+</lyxtabular>
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\begin_inset Caption Standard
+
+\begin_layout Plain Layout
+\begin_inset CommandInset label
+LatexCommand label
+name "tab:breast-cancer"
+
+\end_inset
+
+Empirical error and geometric margin in experiments with breast cancer data
+ set
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\noindent
+For two sets of errors, 20 measurements for each classifiers, we apply statistic
+ criteria to check significant difference between classifiers similar to
+ previous experiments.
+ Sign test gives p–value = 0.049 and Wilcoxon - p–value = 0.0046, both tests
+ reject hypotesis 
+\begin_inset Formula $H_{0}$
+\end_inset
+
+ about error median equality at 0.05 significance level.
+ Finaly, since the hypotheses of equality are rejected for the two-sided
+ criterion and the error results are higher for the linear algorithm, we
+ can accept the hypothesis of a larger error for the linear algorithm at
+ the 0.05 significance level.
+\end_layout
+
+\begin_layout Subsubsection
+\noindent
+Ionosphere dataset
+\end_layout
+
+\begin_layout Standard
+\noindent
+Second studying real data set is Ionosphere
+\begin_inset CommandInset citation
+LatexCommand cite
+key "Ionosphere"
+literal "true"
+
+\end_inset
+
+, there are 351 rows and 34 features there, The set includes 126 rows for
+ good and 225 rows for bad cases, data are quite balanced.
+ Since the set is relatively small, 50 splitting are performed with 1/4
+ of the records for the test with the calculation of geometric margin and
+ empirical risk for each splitting.
+ Results are collected in table 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "tab:Ionosphere"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+:
+\begin_inset Float table
+wide false
+sideways false
+status open
+
+\begin_layout Plain Layout
+\align center
+\begin_inset Tabular
+<lyxtabular version="3" rows="5" columns="3">
+<features tabularvalignment="middle">
+<column alignment="left" valignment="top">
+<column alignment="right" valignment="top">
+<column alignment="right" valignment="top">
+<row>
+<cell alignment="left" valignment="top" topline="true" bottomline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+Parameter name
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="right" valignment="top" topline="true" bottomline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+Average value
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="right" valignment="top" topline="true" bottomline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+Standard deviation
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="left" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+Empirical error for linear algorithm
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="right" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+0.1020454545
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="right" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+0.0280651912
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="left" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+Empirical error for ada boost algorithm
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="right" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+0.0931818182
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="right" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+0.0280200636
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="left" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+Geometric margin for linear algorithm
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="right" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+0.1096625957
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="right" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+0.0050373506
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="left" valignment="top" topline="true" bottomline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+Geometric margin for ada boost algorithm
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="right" valignment="top" topline="true" bottomline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+0.0961726663
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="right" valignment="top" topline="true" bottomline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+0.0054469719
+\end_layout
+
+\end_inset
+</cell>
+</row>
+</lyxtabular>
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\begin_inset Caption Standard
+
+\begin_layout Plain Layout
+\begin_inset CommandInset label
+LatexCommand label
+name "tab:Ionosphere"
+
+\end_inset
+
+Empirical error and geometric margin in experiments with breast cancer data
+ set
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\noindent
+Statistical criteria for two sets of errors with 50 measurements for each
+ classifiers give p–values as follows: sign test - 6.96e-05, Wilcoxon - pvalue=0.0
+002.
+ Thus, both criteria reject hypothesis 
+\begin_inset Formula $H_{0}$
+\end_inset
+
+ about error median equality with high significance.
+\end_layout
+
+\begin_layout Subsubsection
+\noindent
+Conclusions on the dependence of the empirial error from 
+\begin_inset Formula $L_{1}$
+\end_inset
+
+- geometric margin
+\end_layout
+
+\begin_layout Standard
+No experiment described above shows a smaller error for a linear algorithm
+ classifier in comparison with ada-boost one, though it has always larger
  
+\begin_inset Formula $L_{1}$
+\end_inset
+
+- geometric margin value on the training set.
+ Conversely, in experiments with real datasets we get a statistically significan
+t difference in favour of a smaller empirical error in the ada-boost case.
+ To summarise, higher margin value on training set doesn't guarantee lower
+ error in the considered case of comparison of ada-boost and linear algorithm
+ classifiers.
 \end_layout
 
 \begin_layout Subsection
 Estimation of generalisation error
+\end_layout
+
+\begin_layout Standard
+As already mentioned in 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "sec:Theoretical-basis"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+, statistical learning theory gives estimations of generalisation error,
+ in this study the enequality 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "eq:est_1"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+ is examined.
 \end_layout
 
 \begin_layout Section
