@@ -1141,6 +1141,13 @@ To formulate the task, all classifiers from
 \begin_layout Subsection
 \noindent
 Margin theory
+\begin_inset CommandInset label
+LatexCommand label
+name "subsec:Margin-theory"
+
+\end_inset
+
+
 \end_layout
 
 \begin_layout Standard
@@ -1394,7 +1401,7 @@ noprefix "false"
 \end_inset
 
  and we may fix 
-\begin_inset Formula $ρ$
+\begin_inset Formula $δ$
 \end_inset
 
  value for all experiments, the difference between them depends on margin
@@ -2409,18 +2416,8 @@ Estimation of generalisation error
 \end_layout
 
 \begin_layout Standard
-As already mentioned in 
-\begin_inset CommandInset ref
-LatexCommand ref
-reference "sec:Theoretical-basis"
-plural "false"
-caps "false"
-noprefix "false"
-
-\end_inset
-
-, statistical learning theory gives estimations of generalisation error,
- in this study the enequality 
+This section discusses the empirical error estimates derived from inequality
+ 
 \begin_inset CommandInset ref
 LatexCommand ref
 reference "eq:est_1"
@@ -2430,7 +2427,295 @@ noprefix "false"
 
 \end_inset
 
- is examined.
+.
+ For analysis of this inequality, we present it here again:
+\begin_inset Formula 
+\[
+R(h)≤\hat{R}_{S,ρ}(h)+\frac{2}{ρ}\hat{𝔑_{s}}(ℋ)+3\sqrt{\frac{log\frac{1}{δ}}{2m}}
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\noindent
+The inequality holds for any classifier 
+\begin_inset Formula $h\inℋ$
+\end_inset
+
+ where 
+\begin_inset Formula $ℋ$
+\end_inset
+
+ is a family of real-valued functions, with probability at least 
+\begin_inset Formula $1−δ$
+\end_inset
+
+.
+ As it is already discuss in paragraph 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "sec:Theoretical-basis"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+, both ada-boost and linear algorithms work with the same hypothesis set
+ 
+\begin_inset Formula $ℋ$
+\end_inset
+
+ and fixing 
+\begin_inset Formula $δ=0.05$
+\end_inset
+
+ in subsequent experiments we ensure the equality of right-hand second and
+ third terms between the algorithms.
+ Thus, the difference in calculation between classifiers is only in the
+ value of the Emperical margin loss 
+\begin_inset Formula $\hat{R}$
+\end_inset
+
+, which is evaluated by formula 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "eq:mg_loss_sep"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Subsubsection
+\noindent
+Rademacher empirical complexity calculation on real data set
+\end_layout
+
+\begin_layout Standard
+Rademacher empirical complexity is calculated by formula 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "eq:rad_h"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+:
+\begin_inset Formula 
+\begin{equation}
+\hat{𝔑_{s}}(ℋ)=\frac{1}{m}\underset{σ}{𝔼}[\underset{h\inℋ}{sup}\sum{}_{t\text{=1}}^{m}σ_{t}·h(x_{t})]\label{eq:rad_empirical_2}
+\end{equation}
+
+\end_inset
+
+In this formula 
+\begin_inset Formula $σ=(σ_{1},...,σ_{m})$
+\end_inset
+
+, where 
+\begin_inset Formula $σ_{t},t=1..m$
+\end_inset
+
+ are independent uniform random variables taking values in {−1, +1}.
+ Full sample space has size 
+\begin_inset Formula $2^{m}$
+\end_inset
+
+ which is a quite big number on real training sets.
+ However the calculation can be performed on a subset of the full space
+ with satisfactory accuracy, this can be proved with usage of Hoeffding’s
+ inequality
+\begin_inset CommandInset citation
+LatexCommand cite
+key "Mohri2018"
+literal "true"
+
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Standard
+\noindent
+Hoeffding’s inequality: Let 
+\begin_inset Formula $X_{1},...,X_{n}$
+\end_inset
+
+ be independent random variables with 
+\begin_inset Formula $X_{k}$
+\end_inset
+
+ taking values in 
+\begin_inset Formula $[a_{k},b_{k}],k=1...n$
+\end_inset
+
+.
+ Then, for any 
+\begin_inset Formula $ε>0$
+\end_inset
+
+, the following inequalities hold for 
+\begin_inset Formula $S_{n}=\sum{}_{k\text{=1}}^{n}X_{k}$
+\end_inset
+
+:
+\begin_inset Formula 
+\begin{align}
+P[(S−E[S_{n}]≥ε)≤e^{-2ε^{2}/\sum{}_{k=1}^{n}(b_{k}-a_{k})^{2}}\label{eq:hoeffding-ineq}\\
+P(S_{n}−E[S_{n}]≤-ε)≤e^{-2ε^{2}/\sum{}_{k=1}^{n}(b_{k}-a_{k})^{2}}\nonumber 
+\end{align}
+
+\end_inset
+
+Then, сonsider the space of events 
+\begin_inset Formula $Ω=\{σ=(σ_{1},...,σ_{m})\},P(σ)=\frac{1}{2^{m}}$
+\end_inset
+
+, and random variable 
+\begin_inset Formula $X_{k}(σ)=\underset{h\inℋ}{\frac{1}{m}sup}\sum{}_{t\text{=1}}^{m}σ_{t}·h(x_{t})$
+\end_inset
+
+.
+ In this case 
+\begin_inset Formula $X_{k}(σ)\in[-1,1]$
+\end_inset
+
+.
+ Also, if 
+\begin_inset Formula $σ_{k}$
+\end_inset
+
+ is selected from 
+\begin_inset Formula $Ω$
+\end_inset
+
+ whith returning, then 
+\begin_inset Formula $X_{k}=X(σ_{k})$
+\end_inset
+
+ are independent for different k since different measurements do not affect
+ each other.
+ Thus, 
+\begin_inset Formula $X_{k}$
+\end_inset
+
+ variables are i.i.d.
+ Finally, we may use 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "eq:hoeffding-ineq"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+ as follows:
+\begin_inset Formula 
+\[
+P(S_{n}−E[S_{n}]≥nε)=P(S_{n}/n−E[S_{n}]/n≥ε)≤e^{-2ε^{2}n^{2}/4n}=e^{-nε^{2}/2}
+\]
+
+\end_inset
+
+Notiice, that due to linearity of the mathematical expectation and by defenition
+ of Rademacher empirical complexity 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "eq:rad_empirical_2"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+, 
+\begin_inset Formula $E[S_{n}]/n=E[X_{k}(σ)]=\hat{𝔑_{s}}(ℋ)$
+\end_inset
+
+.
+ Considering the symmetry of 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "eq:hoeffding-ineq"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+ with respect to 
+\begin_inset Formula $E[S_{n}]$
+\end_inset
+
+, it can be concluded that
+\begin_inset Formula 
+\[
+P(|S_{n}/n−\hat{𝔑_{s}}(ℋ)|≥ε)≤2e^{-nε^{2}/2}
+\]
+
+\end_inset
+
+Setting the level of significance 
+\begin_inset Formula $δ$
+\end_inset
+
+, we obtain the following estimate of the value 
+\begin_inset Formula $Δ=|S_{n}/n−\hat{𝔑_{s}}(ℋ)|$
+\end_inset
+
+:
+\begin_inset Formula 
+\[
+2e^{-nε^{2}/2}≤δ;n≥\frac{2}{ε^{2}}ln\frac{2}{δ}
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\noindent
+For 
+\begin_inset Formula $ε=0.1$
+\end_inset
+
+ and 
+\begin_inset Formula $δ=0.05$
+\end_inset
+
+ we obtain 
+\begin_inset Formula $n≥737.775$
+\end_inset
+
+, thus, substituting 
+\begin_inset Formula $\hat{𝔑_{s}}(ℋ)$
+\end_inset
+
+ with 
+\begin_inset Formula $S_{n}/n$
+\end_inset
+
+ on 1000 randomly selected Rademacher vectors should give a deviation within
+ 
+\begin_inset Formula $±0.1$
+\end_inset
+
+ with 
+\begin_inset Formula $P≥0.95$
+\end_inset
+
+.
 \end_layout
 
 \begin_layout Section
