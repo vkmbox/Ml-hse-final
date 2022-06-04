@@ -1293,7 +1293,8 @@ Marging loss function
 
 \begin_layout Standard
 \noindent
-Finally, the estimate of the upper limit of the overall error is as follows.
+Finally, the estimate of the upper limit of the generalisation error is
+ as follows.
  Let 
 \begin_inset Formula $ℋ$
 \end_inset
@@ -1474,7 +1475,7 @@ noprefix "false"
 \end_inset
 
 .
- Obviously, linear programming algorithm yields larger margin, but question
+ Obviously, linear programming algorithm yields larger margin, but the question
  if this specificity is decisive in estimating 
 \begin_inset CommandInset ref
 LatexCommand eqref
@@ -1537,7 +1538,7 @@ noprefix "false"
 
 \end_inset
 
- which reflects the classifier's confidence on train dataset, and question
+ which reflects the classifier's confidence on train dataset, and the question
  is whether greater 
 \begin_inset Formula $L_{1}$
 \end_inset
@@ -1579,8 +1580,8 @@ noprefix "false"
 
 \end_inset
 
- on real data and estimate gap between the right-hand side of this inequality
- and the errors in the test samples.
+ on real data and estimate the gap between the right-hand side of this inequalit
+y and the errors in the test samples.
 \end_layout
 
 \begin_layout Subsection
@@ -1911,6 +1912,13 @@ The ratio of the data is similar to previous experiments, difference in
 \begin_layout Subsubsection
 \noindent
 Breast cancer dataset
+\begin_inset CommandInset label
+LatexCommand label
+name "subsec:breast-cancer-l1"
+
+\end_inset
+
+
 \end_layout
 
 \begin_layout Standard
@@ -2165,6 +2173,13 @@ For two sets of errors, 20 measurements for each classifiers, we apply statistic
 \begin_layout Subsubsection
 \noindent
 Ionosphere dataset
+\begin_inset CommandInset label
+LatexCommand label
+name "subsec:Ionosphere-l1"
+
+\end_inset
+
+
 \end_layout
 
 \begin_layout Standard
@@ -2405,7 +2420,7 @@ Conclusions on the dependence of the empirial error from
 
 \begin_layout Standard
 No experiment described above shows a smaller error for a linear algorithm
- classifier in comparison with ada-boost one, though it has always larger
+ classifier in comparison with ada-boost one, though it always has larger
  
 \begin_inset Formula $L_{1}$
 \end_inset
@@ -2430,8 +2445,8 @@ name "subsec:estimation-error"
 \end_layout
 
 \begin_layout Standard
-This section discusses the empirical error estimates derived from inequality
- 
+This section discusses the generalisation error estimations derived from
+ inequality 
 \begin_inset CommandInset ref
 LatexCommand ref
 reference "eq:est_1"
@@ -2442,11 +2457,11 @@ noprefix "false"
 \end_inset
 
 .
- For analysis of this inequality, we present it here again:
+ For analysis of this inequality, it is presented here again:
 \begin_inset Formula 
-\[
-R(h)≤\hat{R}_{S,ρ}(h)+\frac{2}{ρ}\hat{𝔑_{s}}(ℋ)+3\sqrt{\frac{log\frac{1}{δ}}{2m}}
-\]
+\begin{equation}
+R(h)≤\hat{R}_{S,ρ}(h)+\frac{2}{ρ}\hat{𝔑_{s}}(ℋ)+3\sqrt{\frac{log\frac{1}{δ}}{2m}}\label{eq:est_1_dub}
+\end{equation}
 
 \end_inset
 
@@ -2502,6 +2517,82 @@ plural "false"
 caps "false"
 noprefix "false"
 
+\end_inset
+
+.
+ To obtain an estimate of 
+\begin_inset Formula $R(h)$
+\end_inset
+
+ from inequality 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "eq:est_1_dub"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+, it is useful to consider the right-hand side of the inequality as a function
+ of 
+\begin_inset Formula $ρ:$
+\end_inset
+
+
+\begin_inset Formula 
+\begin{equation}
+U(ρ)=\hat{R}_{S,ρ}(h)+\frac{2}{ρ}\hat{𝔑_{s}}(ℋ)+3\sqrt{\frac{log\frac{1}{δ}}{2m}}\label{eq:up_rho}
+\end{equation}
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\noindent
+It may be noted that 
+\begin_inset Formula $U(ρ)$
+\end_inset
+
+, contains differently directed terms: 
+\begin_inset Formula $\hat{R}_{S,ρ}(h)$
+\end_inset
+
+ is a growing function of 
+\begin_inset Formula $ρ$
+\end_inset
+
+ while 
+\begin_inset Formula $\frac{2}{ρ}\hat{𝔑_{s}}(ℋ)$
+\end_inset
+
+ is decreasing.
+ Obviously, to estimate 
+\begin_inset Formula $R(h)$
+\end_inset
+
+ the lowerest possible value of 
+\begin_inset Formula $U(ρ)$
+\end_inset
+
+ is required.
+ It is difficult to solve this optimising task analytically because of the
+ undifferentiated 
+\begin_inset Formula $\hat{R}_{S,ρ}$
+\end_inset
+
+ as function of 
+\begin_inset Formula $ρ$
+\end_inset
+
+, thus in the following experiments the value 
+\begin_inset Formula $U(ρ)$
+\end_inset
+
+ is estimating empirically by variating of variable 
+\begin_inset Formula $ρ$
 \end_inset
 
 .
@@ -2641,7 +2732,7 @@ P(S_{n}−E[S_{n}]≥nε)=P(S_{n}/n−E[S_{n}]/n≥ε)≤e^{-2ε^{2}n^{2}/4n}=e^
 
 \end_inset
 
-Notiice, that due to linearity of the mathematical expectation and by defenition
+Notice, that due to linearity of the mathematical expectation and by defenition
  of Rademacher empirical complexity 
 \begin_inset CommandInset ref
 LatexCommand ref
@@ -2701,7 +2792,7 @@ Setting the level of significance
 \begin_layout Standard
 \noindent
 For 
-\begin_inset Formula $ε=0.03$
+\begin_inset Formula $ε=0.1$
 \end_inset
 
  and 
@@ -2709,7 +2800,7 @@ For
 \end_inset
 
  we obtain 
-\begin_inset Formula $n≥8197.51$
+\begin_inset Formula $n≥737.776$
 \end_inset
 
 , thus, substituting 
@@ -2720,9 +2811,9 @@ For
 \begin_inset Formula $S_{n}/n$
 \end_inset
 
- on 10000 randomly selected Rademacher vectors should give a deviation within
+ on 1000 randomly selected Rademacher vectors should give a deviation within
  
-\begin_inset Formula $±0.03$
+\begin_inset Formula $±0.1$
 \end_inset
 
  with 
@@ -2733,7 +2824,15 @@ For
 \end_layout
 
 \begin_layout Subsubsection
-Experiment on synthetic datasets with 2 features and 3000 samples
+Experiment on synthetic normally distributed data with 2 features and 3000
+ samples
+\begin_inset CommandInset label
+LatexCommand label
+name "subsec:3000_2"
+
+\end_inset
+
+
 \end_layout
 
 \begin_layout Standard
@@ -2764,7 +2863,1051 @@ noprefix "false"
 
 \end_inset
 
- are represented by  notebook.
+ are represented by 
+\begin_inset CommandInset href
+LatexCommand href
+name "Rademacher_complexity_based_estimations.ipynb"
+target "https://github.com/vkmbox/Ml-hse-final/blob/master/ada-boost-implementations/code-python/notebooks/Rademacher_complexity_based_estimations.ipynb"
+literal "false"
+
+\end_inset
+
+ notebook.
+\end_layout
+
+\begin_layout Standard
+\noindent
+To find the value of the upper estimate of the generalisation error 
+\begin_inset Formula $U(ρ)$
+\end_inset
+
+ 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "eq:up_rho"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+, a data set is generated and split into training and test samples.
+ Then, varying value 
+\begin_inset Formula $ρ$
+\end_inset
+
+ from 0 to 1 with step 0.05, the value of 
+\begin_inset Formula $U(ρ)$
+\end_inset
+
+ is calculated.
+ For clarity, the graphs show the values of functions 
+\begin_inset Formula $U(ρ)$
+\end_inset
+
+ and separately emperical margin loss 
+\begin_inset Formula $\hat{R}_{S,ρ}$
+\end_inset
+
+ since the latter actually determines the difference in estimation between
+ the versions of the classifier.
+ For the experiment the data set with 2 features and 3000 samples is generated,
+ then five different splittings are performed with test size equal to 
+\begin_inset Formula $\frac{1}{3}$
+\end_inset
+
+ of all rows and results are averaged.
+ The results of the experiment are shown in figure 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "fig:3000_2"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+.
+\begin_inset Float figure
+wide false
+sideways false
+status open
+
+\begin_layout Plain Layout
+\align center
+\begin_inset Graphics
+	filename pic/3000-2-sum.png
+	width 50col%
+
+\end_inset
+
+
+\begin_inset Graphics
+	filename pic/3000-2-margin.png
+	width 50col%
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\begin_inset Caption Standard
+
+\begin_layout Plain Layout
+Generalisation error estimation and empirical margin loss on synthetic datasets
+ with 2 features and 3000 samples
+\begin_inset CommandInset label
+LatexCommand label
+name "fig:3000_2"
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\noindent
+Also, the following values for empirical risk are obtained (table
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "tab:3000_2"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+):
+\begin_inset Float table
+wide false
+sideways false
+status open
+
+\begin_layout Plain Layout
+\align center
+\begin_inset Tabular
+<lyxtabular version="3" rows="3" columns="3">
+<features tabularvalignment="middle">
+<column alignment="left" valignment="top">
+<column alignment="right" valignment="top">
+<column alignment="right" valignment="top">
+<row>
+<cell alignment="left" valignment="top" topline="true" bottomline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+Parameter name
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="right" valignment="top" topline="true" bottomline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+Average value
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="right" valignment="top" topline="true" bottomline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+Standard deviation
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="left" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+Empirical error for linear algorithm
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="right" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+0.0054
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="right" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+0.0030066593
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="left" valignment="top" topline="true" bottomline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+Empirical error for ada boost algorithm
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="right" valignment="top" topline="true" bottomline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+0.0036
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="right" valignment="top" topline="true" bottomline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+0.0012000000
+\end_layout
+
+\end_inset
+</cell>
+</row>
+</lyxtabular>
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\begin_inset Caption Standard
+
+\begin_layout Plain Layout
+Empirical error in experiments on synthetic datasets with 2 features and
+ 3000 samples
+\begin_inset CommandInset label
+LatexCommand label
+name "tab:3000_2"
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+
+It can be seen from results that generalisation error estimation 
+\begin_inset Formula $U(ρ)$
+\end_inset
+
+ for ada-boost and linear classifiers are much more than their empirical
+ errors: the estimation of the generalisation error does not take values
+ below 0.5, while the empirical error of the classifiers is 0.0036 and 0.0054
+ in average.
+ Also, it is noticeable that despite the fact that linear algorithm ensures
+ larger 
+\begin_inset Formula $L_{1}$
+\end_inset
+
+- geometric margin, it gives a consistently higher value for empirical margin
+ loss as can be observed from the right-hand graph in figure 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "fig:3000_2"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+.
+ To sum up, according to experimental data, the expression of the right-hand
+ side of the inequality 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "eq:est_1_dub"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+ as a function of ро has a pronounced minimum on the interval (0,1), however,
+ the value of this minimum is approximately 10 times higher than the empirical
+ error values obtained in the experiments.
+ Thus, we cannot rely on an estimate from this inequality in the current
+ experiment.
+\end_layout
+
+\begin_layout Subsubsection
+\noindent
+Experiment on synthetic normally distributed data with 2 features and 10000
+ samples
+\end_layout
+
+\begin_layout Standard
+It can be supposed that the overestimation of generalisation error in the
+ previous experiment can be explained by the insufficient number of samples
+ in the training set.
+ This experiment repeats the previous one on a larger data set of 10000
+ samples.
+ Thus, the data set with 2 features and 10000 samples is generated, then
+ three different splittings are performed and results are averaged, all
+ other conditions are the same as in the previous experiment.
+ Figure 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "fig:10000_2"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+ shows the results.
+\begin_inset Float figure
+wide false
+sideways false
+status open
+
+\begin_layout Plain Layout
+\align center
+\begin_inset Graphics
+	filename pic/10000-2-sum.png
+	width 50col%
+
+\end_inset
+
+
+\begin_inset Graphics
+	filename pic/10000-2-margin.png
+	width 50col%
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\begin_inset Caption Standard
+
+\begin_layout Plain Layout
+Generalisation error estimation and empirical margin loss on synthetic datasets
+ with 2 features and 10000 samples
+\begin_inset CommandInset label
+LatexCommand label
+name "fig:10000_2"
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\noindent
+The table 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "tab:10000_2"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+ shows the values of the empirical error obtained in the experiment.
+\begin_inset Float table
+wide false
+sideways false
+status open
+
+\begin_layout Plain Layout
+\align center
+\begin_inset Tabular
+<lyxtabular version="3" rows="3" columns="3">
+<features tabularvalignment="middle">
+<column alignment="left" valignment="top">
+<column alignment="right" valignment="top">
+<column alignment="right" valignment="top">
+<row>
+<cell alignment="left" valignment="top" topline="true" bottomline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+Parameter name
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="right" valignment="top" topline="true" bottomline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+Average value
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="right" valignment="top" topline="true" bottomline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+Standard deviation
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="left" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+Empirical error for linear algorithm
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="right" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+0.0013997201
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="right" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+0.0009271764
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="left" valignment="top" topline="true" bottomline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+Empirical error for ada boost algorithm
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="right" valignment="top" topline="true" bottomline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+0.0011997600
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="right" valignment="top" topline="true" bottomline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+0.0006479445
+\end_layout
+
+\end_inset
+</cell>
+</row>
+</lyxtabular>
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\begin_inset Caption Standard
+
+\begin_layout Plain Layout
+Empirical error in experiments on synthetic datasets with 2 features and
+ 10000 samples
+\begin_inset CommandInset label
+LatexCommand label
+name "tab:10000_2"
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+
+It can be observed from the graphics and the table that results are mostly
+ similar to ones from the previous experiment.
+ Now, the generalisation error estimate has decreased to approximately value
+ 0.4 but is still several times larger than the empirical error from the
+ experiments.
+ From the comparison of the results of this and previous experiments, it
+ can be concluded that as the number of samples in the training set increases,
+ the estimate of generalisation error given by 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "eq:est_1_dub"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+ will be more accurate.
+ From this perspective, the generalisation error estimation for the linear
+ programming algorithm is expected to be higher (see right-hand graph on
+ figure 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "fig:10000_2"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+) which is consistent with the values of the empirical error obtained in
+ the experiments.
+\end_layout
+
+\begin_layout Subsubsection
+Experiment on synthetic data with 5 features and 3000 samples
+\end_layout
+
+\begin_layout Standard
+The previous two experiments were performed on data sets with a simple structure
+ taken from a normal distribution, with no repeating or redundant features.
+ This time the error estimation is checked on data X generated by the Python
+ function sklearn.datasets.make_classification with parameters: total number
+ of features=5, number of informative features=2, number of redundant features=2
+, number of duplicated features=1, number of clusters per class=2.
+ To obtain a separable dataset, labels for samples X are created similarly
+ to the previous cases according to the projection of X onto a randomly
+ generated vector.
+ The purpose of this experiment is to check if additional complexity of
+ data such as redundant an duplicated features affects the result of error
+ evaluation.
+ Similarily to experiment in paragraph 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "subsec:3000_2"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+, data with 3000 samples is generated and 5 splitting is performed, then
+ results are averaged.
+ Results of the experiment are on figure 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "fig:3000_5"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+.
+\begin_inset Float figure
+wide false
+sideways false
+status open
+
+\begin_layout Plain Layout
+\align center
+\begin_inset Graphics
+	filename pic/3000-5-sum.png
+	width 50col%
+
+\end_inset
+
+
+\begin_inset Graphics
+	filename pic/3000-5-margin.png
+	width 50col%
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\begin_inset Caption Standard
+
+\begin_layout Plain Layout
+Generalisation error estimation and empirical margin loss on synthetic datasets
+ with 5 features and 3000 samples
+\begin_inset CommandInset label
+LatexCommand label
+name "fig:3000_5"
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\noindent
+Also, empirical errors obtained in the experiments are in table 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "tab:3000_5"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+.
+\begin_inset Float table
+wide false
+sideways false
+status open
+
+\begin_layout Plain Layout
+\align center
+\begin_inset Tabular
+<lyxtabular version="3" rows="3" columns="3">
+<features tabularvalignment="middle">
+<column alignment="left" valignment="top">
+<column alignment="right" valignment="top">
+<column alignment="right" valignment="top">
+<row>
+<cell alignment="left" valignment="top" topline="true" bottomline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+Parameter name
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="right" valignment="top" topline="true" bottomline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+Average value
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="right" valignment="top" topline="true" bottomline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+Standard deviation
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="left" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+Empirical error for linear algorithm
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="right" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="right" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="left" valignment="top" topline="true" bottomline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+Empirical error for ada boost algorithm
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="right" valignment="top" topline="true" bottomline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="right" valignment="top" topline="true" bottomline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+</cell>
+</row>
+</lyxtabular>
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\begin_inset Caption Standard
+
+\begin_layout Plain Layout
+Empirical error in experiments on synthetic datasets with 5 features and
+ 3000 samples
+\begin_inset CommandInset label
+LatexCommand label
+name "tab:3000_5"
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\noindent
+In comparison with the analogous experiment with 2 features it is can be
+ observed that the minimum on the generalisation error estimation curve
+ is now less pronounced and the estimation itself has deteriorated significantly
+ to around 1.0.
+ Thus, we may conclude that estimation based on the inequality 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "eq:est_1_dub"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+ is not robust to an increase in the amount of redundant data in the training
+ sample.
+\end_layout
+
+\begin_layout Subsubsection
+\noindent
+Experiments on real datasets
+\end_layout
+
+\begin_layout Standard
+\noindent
+Finally, the inequality 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "eq:est_1_dub"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+ is checked on real data sets.
+ First data set is Ionosphere
+\begin_inset CommandInset citation
+LatexCommand cite
+key "Ionosphere"
+literal "true"
+
+\end_inset
+
+, this data set was already used in paragraph 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "subsec:Ionosphere-l1"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+ for estimation of 
+\begin_inset Formula $L_{1}$
+\end_inset
+
+- geometric margin.
+ For this data 10 sequentual splittings are created with test size equal
+ to 
+\begin_inset Formula $\frac{1}{4}$
+\end_inset
+
+ of all rows and results are averaged.
+ As usually, we calculate generalisation error estimation and empirical
+ margin loss for 
+\begin_inset Formula $ρ$
+\end_inset
+
+ from 0 to 1 with step 0.05.
+ Results are presented on figure 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "fig:iono_risk"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+.
+\begin_inset Float figure
+wide false
+sideways false
+status open
+
+\begin_layout Plain Layout
+\align center
+\begin_inset Graphics
+	filename pic/iono-sum.png
+	width 50col%
+
+\end_inset
+
+
+\begin_inset Graphics
+	filename pic/iono-margin.png
+	width 50col%
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\begin_inset Caption Standard
+
+\begin_layout Plain Layout
+Generalisation error estimation and empirical margin loss on Ionosphere
+ dataset
+\begin_inset CommandInset label
+LatexCommand label
+name "fig:iono_risk"
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\noindent
+As the right-hand graph shows, the generalisation error estimation curve
+ does not even reach a value of 1 and thus this estimation is not suitable
+ for practical application.
+ The same situation applies to the Breast cancer dataset
+\begin_inset CommandInset citation
+LatexCommand cite
+key "Breast_Cancer"
+literal "true"
+
+\end_inset
+
+ already explored in paragraph 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "subsec:breast-cancer-l1"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+.
+ In a similar experiment to the previous one, the obtained results are shown
+ in figure 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "fig:breast_cancer_risk"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+.
+\begin_inset Float figure
+wide false
+sideways false
+status open
+
+\begin_layout Plain Layout
+\align center
+\begin_inset Graphics
+	filename pic/breast-sum.png
+	width 50col%
+
+\end_inset
+
+
+\begin_inset Graphics
+	filename pic/breast-margin.png
+	width 50col%
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\begin_inset Caption Standard
+
+\begin_layout Plain Layout
+Generalisation error estimation and empirical margin loss on Breast cancer
+ dataset
+\begin_inset CommandInset label
+LatexCommand label
+name "fig:breast_cancer_risk"
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+
+From experiments on real datasets, it follows that the estimate 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "eq:est_1_dub"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+ for these cases is greater than 1.0 and therefore not applicable.
+\end_layout
+
+\begin_layout Subsubsection
+Conclusions on the section
+\end_layout
+
+\begin_layout Standard
+As the experiments have shown, 
 \end_layout
 
 \begin_layout Section
