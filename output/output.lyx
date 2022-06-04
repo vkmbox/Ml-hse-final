@@ -1589,6 +1589,13 @@ Estimation of
 \end_inset
 
 - geometric margin
+\begin_inset CommandInset label
+LatexCommand label
+name "subsec:estimation-l1"
+
+\end_inset
+
+
 \end_layout
 
 \begin_layout Standard
@@ -2413,6 +2420,13 @@ t difference in favour of a smaller empirical error in the ada-boost case.
 
 \begin_layout Subsection
 Estimation of generalisation error
+\begin_inset CommandInset label
+LatexCommand label
+name "subsec:estimation-error"
+
+\end_inset
+
+
 \end_layout
 
 \begin_layout Standard
@@ -2687,7 +2701,7 @@ Setting the level of significance
 \begin_layout Standard
 \noindent
 For 
-\begin_inset Formula $ε=0.1$
+\begin_inset Formula $ε=0.03$
 \end_inset
 
  and 
@@ -2695,7 +2709,7 @@ For
 \end_inset
 
  we obtain 
-\begin_inset Formula $n≥737.775$
+\begin_inset Formula $n≥8197.51$
 \end_inset
 
 , thus, substituting 
@@ -2706,9 +2720,9 @@ For
 \begin_inset Formula $S_{n}/n$
 \end_inset
 
- on 1000 randomly selected Rademacher vectors should give a deviation within
+ on 10000 randomly selected Rademacher vectors should give a deviation within
  
-\begin_inset Formula $±0.1$
+\begin_inset Formula $±0.03$
 \end_inset
 
  with 
@@ -2716,6 +2730,41 @@ For
 \end_inset
 
 .
+\end_layout
+
+\begin_layout Subsubsection
+Experiment on synthetic datasets with 2 features and 3000 samples
+\end_layout
+
+\begin_layout Standard
+First experiment is performed on synthetic data sampled from bivariate normal
+ distribtion.
+ 3000 samples from the distribution provide features data set X.
+ Then, similarily to experiments in 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "subsec:estimation-l1"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+, a random vector is generated and the labels {-1, +1} are created according
+ to the projection of X onto this vector.
+ Also, rows from X are artificially extended from the hyperplane perpendicular
+ to the generated vector by a gap value with the default gap 0.1.
+ Results of this and subsequent experiments of paragraph 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "subsec:estimation-error"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+ are represented by  notebook.
 \end_layout
 
 \begin_layout Section

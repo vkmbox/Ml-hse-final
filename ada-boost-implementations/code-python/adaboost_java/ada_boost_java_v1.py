@@ -22,12 +22,12 @@ class AdaBoostJavaClassifier_v1:
         for row in range(samples_count):
             dataY[row] = y[row].item()
         return dataY
-
+    '''
     def fit(self, X, y):
         dataX, dataY = self.getX(X), self.getY(y)
         return self.classifier.fit(dataX, dataY)
-
-    def fit(self, X, y, n_estimators):
+    '''
+    def fit(self, X, y, n_estimators=150):
         dataX, dataY = self.getX(X), self.getY(y)
         return self.classifier.fit(dataX, dataY, n_estimators)
 
