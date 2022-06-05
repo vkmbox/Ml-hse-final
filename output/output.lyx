@@ -1256,7 +1256,17 @@ In this formula
 \begin_inset Formula $𝛷_{ρ}(x)=min(1,max(0,1-x/ρ))$
 \end_inset
 
-, the graph of the function is shown in figure 1.
+, the graph of the function is shown in figure 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "fig:Ф_func"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+.
 \begin_inset Float figure
 wide false
 sideways false
@@ -1279,6 +1289,13 @@ status open
 
 \begin_layout Plain Layout
 Marging loss function
+\begin_inset CommandInset label
+LatexCommand label
+name "fig:Ф_func"
+
+\end_inset
+
+
 \end_layout
 
 \end_inset
@@ -1386,7 +1403,8 @@ noprefix "false"
 
 \end_inset
 
-, the inequality 
+, the hypothesis set of base classifiers can be used instead of ofiginal
+ ada-boost ensembles in 
 \begin_inset CommandInset ref
 LatexCommand eqref
 reference "eq:est_1"
@@ -1396,7 +1414,7 @@ noprefix "false"
 
 \end_inset
 
- is applicable for their generalisation error estimation.
+ , which simplifies calculation.
  Since both versions work with the same hypothesis set 
 \begin_inset Formula $ℋ$
 \end_inset
@@ -2416,6 +2434,13 @@ Conclusions on the dependence of the empirial error from
 \end_inset
 
 - geometric margin
+\begin_inset CommandInset label
+LatexCommand label
+name "subsec:conclusions_l1"
+
+\end_inset
+
+
 \end_layout
 
 \begin_layout Standard
@@ -3454,8 +3479,9 @@ noprefix "false"
 
 \end_inset
 
-, data with 3000 samples is generated and 5 splitting is performed, then
- results are averaged.
+, data with 3000 samples is generated and using three different splitting
+ the generalisation error estimation and empirical margin loss is calculated,
+ then results are averaged.
  Results of the experiment are on figure 
 \begin_inset CommandInset ref
 LatexCommand ref
@@ -3588,7 +3614,7 @@ Empirical error for linear algorithm
 \begin_inset Text
 
 \begin_layout Plain Layout
-
+0.0026666667
 \end_layout
 
 \end_inset
@@ -3597,7 +3623,7 @@ Empirical error for linear algorithm
 \begin_inset Text
 
 \begin_layout Plain Layout
-
+0.0012472191
 \end_layout
 
 \end_inset
@@ -3617,7 +3643,7 @@ Empirical error for ada boost algorithm
 \begin_inset Text
 
 \begin_layout Plain Layout
-
+0.0033333333
 \end_layout
 
 \end_inset
@@ -3626,7 +3652,7 @@ Empirical error for ada boost algorithm
 \begin_inset Text
 
 \begin_layout Plain Layout
-
+0.0012472191
 \end_layout
 
 \end_inset
@@ -3904,20 +3930,392 @@ noprefix "false"
 
 \begin_layout Subsubsection
 Conclusions on the section
+\begin_inset CommandInset label
+LatexCommand label
+name "subsec:сonclusion_error"
+
+\end_inset
+
+
 \end_layout
 
 \begin_layout Standard
-As the experiments have shown, 
+As the experiments have shown, the generalised error estimate based on inequalit
+y 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "eq:est_1_dub"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+ gives overestimated values not applicable in practice.
+ As the samples number in the data set increases to several tens of thousands,
+ the estimate decreases to 0.5 and below, but remains several times higher
+ than the empirical error.
+ In addition, the experiment with redundant and duplicate attributes shows
+ that the estimate is not robust to increasing data complexity.
 \end_layout
 
 \begin_layout Section
 \noindent
-Conclusions
+CONCLUSIONS
 \end_layout
 
 \begin_layout Standard
 \noindent
-test
+Experiments with real data show that generalisation error estimation approaches
+ based on 
+\begin_inset Formula $L_{1}$
+\end_inset
+
+- geometric margin and inequality (
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "eq:est_1"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+) do not demonstrate simple patterns.
+ The study compares the classical aba-boost algorithm with a linear programming
+ version, which explicitly maximises geometric margin for the standard AdaBoost
+ ensemble of base classifiers (
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "eq:adaboost_ensemble"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+).
+ However, aba-boost demonstrates mostly better empirical error on synthetic
+ and real data sets as shown in section 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "subsec:conclusions_l1"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+.
+ Moreover, aba-boost provides better empirical margin loss values, although
+ an estimate of generalisation error based on margin loss is overestimated
+ and not practically applicable.
+ The next conclusion of this study is regarding the minimum of 
+\begin_inset Formula $U(ρ)$
+\end_inset
+
+ (
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "eq:up_rho"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+), which is an upper boundary of generalisation error estimation according
+ to (
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "eq:est_1"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+).
+ All experiments show that the minimum of 
+\begin_inset Formula $U(ρ)$
+\end_inset
+
+ is several time larger than empirical error of both classifiers as as described
+ in section 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "subsec:сonclusion_error"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+.
+ These facts motivate further research on the topic, the possible directions
+ of which are described in the following paragraph.
+\end_layout
+
+\begin_layout Subsection
+Future work
+\end_layout
+
+\begin_layout Standard
+\noindent
+Unsatisfactory generalisation error estimation derived from inequality (
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "eq:est_1"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+) raises the question of how to improve it.
+ Firstly, there are several intermediate inequation which are obtained during
+ the prove of (
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "eq:est_1"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+), one of them is formulated as follows
+\begin_inset CommandInset citation
+LatexCommand cite
+key "Mohri2018"
+literal "true"
+
+\end_inset
+
+:
+\begin_inset Formula 
+\begin{align}
+R(h)≤\hat{R}_{S,ρ}(h)+2𝔑_{m}(ℋ^{*})+\sqrt{\frac{log\frac{1}{δ}}{2m},}\\
+ℋ^{*}=\{z=(x,y)⟼𝛷_{ρ}(y·h(x)):h\inℋ)\label{eq:H_hat}
+\end{align}
+
+\end_inset
+
+In this formula 
+\begin_inset Formula $𝛷_{ρ}(x)$
+\end_inset
+
+ is a marging loss function with graph in figure 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "fig:Ф_func"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+.
+ Further, to obtain the final (
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "eq:est_1"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+) from this, the Talagrand’s lemma is applied
+\begin_inset CommandInset citation
+LatexCommand cite
+key "Mohri2018"
+literal "true"
+
+\end_inset
+
+, according to which the following relationship holds: 
+\begin_inset Formula $𝔑_{m}(ℋ^{*})≤\frac{1}{ρ}𝔑_{m}(ℋ),h\inℋ$
+\end_inset
+
+.
+ Recall from paragraph 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "subsec:Margin-theory"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+ that for (
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "eq:est_1"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+) it is possible to use the hypothesis set of base classifiers instead of
+ original ada-boost ensembles when the 
+\begin_inset Formula $\hat{𝔑_{s}}(ℋ)$
+\end_inset
+
+ is calculated.
+ However, this possibility has not been proven for the composition 
+\begin_inset Formula $𝛷_{ρ}(y·h(x))$
+\end_inset
+
+, where 
+\family roman
+\series medium
+\shape up
+\size normal
+\emph off
+\bar no
+\strikeout off
+\xout off
+\uuline off
+\uwave off
+\noun off
+\color none
+
+\begin_inset Formula $h$
+\end_inset
+
+ is an 
+\family default
+\series default
+\shape default
+\size default
+\emph default
+\bar default
+\strikeout default
+\xout default
+\uuline default
+\uwave default
+\noun default
+\color inherit
+ada-boost ensemble, and similar substitution cannot be used for hypothesis
+ set 
+\begin_inset Formula $ℋ^{*}$
+\end_inset
+
+.
+ Calculating of 
+\begin_inset Formula $\hat{𝔑_{s}}(ℋ^{*})$
+\end_inset
+
+ could be performed directly, however, it requires to solve the maximisation
+ problem 
+\begin_inset Formula $𝛷_{ρ}(\sigma·y·h(x)),h\inℋ$
+\end_inset
+
+ for each Rademacher vector 
+\begin_inset Formula $σ$
+\end_inset
+
+, which is not obvious on infinite set 
+\begin_inset Formula $ℋ$
+\end_inset
+
+ of ada-boost ensembles.
+\end_layout
+
+\begin_layout Standard
+\noindent
+Besides, new publications on the topic of margin explanation have been appearing
+ recently, for example article 
+\begin_inset Quotes cld
+\end_inset
+
+On the doubt about margin explanation of boosting
+\begin_inset Quotes frd
+\end_inset
+
+
+\begin_inset CommandInset citation
+LatexCommand cite
+key "Doubt2013"
+literal "true"
+
+\end_inset
+
+.
+ In this master thesis a 
+\begin_inset Formula $L_{1}$
+\end_inset
+
+
+\family roman
+\series medium
+\shape up
+\size normal
+\emph off
+\bar no
+\strikeout off
+\xout off
+\uuline off
+\uwave off
+\noun off
+\color none
+- geometric
+\family default
+\series default
+\shape default
+\size default
+\emph default
+\bar default
+\strikeout default
+\xout default
+\uuline default
+\uwave default
+\noun default
+\color inherit
+ margin (
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "eq:ro_f"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+) was investigated which is actually a minimum among norm-1 distances from
+ 
+\begin_inset Formula $h(x_{t})$
+\end_inset
+
+ vectors to the hyperplane of equation 
+\begin_inset Formula $α·x=0$
+\end_inset
+
+.
+ However, we observed that larger margin of linear algorithm does not ensure
+ a lower value of error and margin loss, which would suggest that ada-boost
+ version generates better margins 
+\begin_inset Quotes cld
+\end_inset
+
+in average
+\begin_inset Quotes frd
+\end_inset
+
+.
+ In the article the idea of whole margin distribution is studied in connection
+ with average margin and variance.
+ Also, there are some promising empirical error estimations in this work,
+ for example theorem 10 proposes the bound decreasing proportionately 
+\begin_inset Formula $\frac{1}{m}$
+\end_inset
+
+ with m equal to number of samples in training set.
+ This theory implies hypothesis set with finite VC-dimension, thus we need
+ to accurately calculate this value for the considering case.
 \begin_inset Newpage newpage
 \end_inset
 
