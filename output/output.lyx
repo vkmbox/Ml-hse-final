@@ -163,9 +163,9 @@ literal "true"
 
 \end_inset
 
-, the estimation of the classifier error relies on the margin theory.
- More specifically, classifiers with larger margin on training set are expected
- to work with less generalisation error.
+, the estimation of the classifier risk relies on the margin theory.
+ More specifically, classifiers with larger margin on training set could
+ be expected to work with less risk.
  However, this is not always confirmed by experiments on real data
 \begin_inset CommandInset citation
 LatexCommand cite
@@ -175,10 +175,10 @@ literal "true"
 \end_inset
 
 .
- In addition, a theory for estimating the generalization error based on
- marginal loss and Radamacher complexity has been developed in the form
- of appropriate inequalities.
- The purpose of this thesis is to investigate the error estimation inequalities
+ In addition, a theory for estimating the risk based on marginal loss and
+ Radamacher complexity has been developed in the form of appropriate inequalitie
+s.
+ The purpose of this thesis is to investigate the risk estimation inequalities
  on real datasets in order to verify the estimates given by these inequalities
  and to try to explain the above contradiction.
  For this, two versions of the AdaBoost algorithm were implemented and experimen
@@ -706,7 +706,7 @@ In other words,
 \end_inset
 
  vectors to the hyperplane of equation 
-\begin_inset Formula $α∙x=0$
+\begin_inset Formula $α·x=0$
 \end_inset
 
  in 
@@ -716,6 +716,47 @@ In other words,
 .
  In the following paragraphs we will explore the geometric margin value
  and its relationship to other parameters in different experiments.
+\end_layout
+
+\begin_layout Standard
+\noindent
+For the purposes of this study, the algorithm described above is implemented
+ as a 
+\begin_inset CommandInset href
+LatexCommand href
+name "Java application"
+target "https://github.com/vkmbox/Ml-hse-final/tree/master/ada-boost-implementations/code-java"
+literal "false"
+
+\end_inset
+
+ with Python proxy-class 
+\begin_inset CommandInset href
+LatexCommand href
+name "ada_boost_java_v1.py"
+target "https://github.com/vkmbox/Ml-hse-final/blob/master/ada-boost-implementations/code-python/adaboost_java/ada_boost_java_v1.py"
+literal "false"
+
+\end_inset
+
+, library py4j.java_gateway is used to make calls to the Java process from
+ Python code.
+ The advantage of this approach is its performance; when using Java code,
+ the execution time is reduced several times.
+ However, in the current implementation, due to the specificity of py4j.java_gate
+way, only one instance of the classifier can be handled at a time, also,
+ the java process must be started manually before calculations.
+ This implementation uses ND4J library
+\begin_inset CommandInset citation
+LatexCommand cite
+key "nd4j"
+literal "true"
+
+\end_inset
+
+ on Java side which is functionally similar to Python's NumPy and SciPy.
+ Among other things, this implementation can serve as an example of the
+ recently improving support on the Java stack for data science computing.
 \end_layout
 
 \begin_layout Subsection
@@ -1138,6 +1179,25 @@ To formulate the task, all classifiers from
  and therefore is of theoretical interest.
 \end_layout
 
+\begin_layout Standard
+\noindent
+This version of the algorithm is implemented as a Python class 
+\begin_inset CommandInset href
+LatexCommand href
+name "ada_boost_linear_v1.py"
+target "https://github.com/vkmbox/Ml-hse-final/blob/master/ada-boost-implementations/code-python/ada_boost_linear_v1.py"
+literal "false"
+
+\end_inset
+
+.
+ It implements standard classifier method, also, 
+\begin_inset Formula $L_{1}$
+\end_inset
+
+- geometric margin calculation is realised in this class.
+\end_layout
+
 \begin_layout Subsection
 \noindent
 Margin theory
@@ -1177,7 +1237,12 @@ literal "true"
 
 \begin_layout Standard
 \noindent
-Generalisation error: for a given hypothesis 
+
+\emph on
+Risk which is also called generalisation error.
+
+\emph default
+ For a given hypothesis 
 \begin_inset Formula $h\inℋ$
 \end_inset
 
@@ -1201,7 +1266,109 @@ R(h)=\underset{x\sim𝒟}{𝕇}[h(x)≠c(x)]=\underset{x\sim𝒟}{𝔼}[1_{h(x)�
 
 \end_inset
 
-Empirical Rademacher complexity for hypothesis set: Let 
+
+\end_layout
+
+\begin_layout Standard
+\noindent
+
+\emph on
+Empirical risk or empirical error.
+
+\emph default
+ For a given hypothesis 
+\begin_inset Formula $h\inℋ$
+\end_inset
+
+ , true classifier 
+\begin_inset Formula $c$
+\end_inset
+
+ and a sample 
+\begin_inset Formula $S_{m}=(x_{1},...,x_{m})$
+\end_inset
+
+, the empirical error or empirical risk of 
+\begin_inset Formula $h$
+\end_inset
+
+ is defined by
+\begin_inset Formula 
+\begin{equation}
+\hat{R}_{S}(h)=\frac{1}{m}\sum{}_{t\text{=1}}^{m}1_{h(x)≠c(x)}\label{eq:emp_err}
+\end{equation}
+
+\end_inset
+
+Remarkably, that 
+\begin_inset Formula $𝔼\hat{R}_{S}(h)=R(h)$
+\end_inset
+
+ and 
+\begin_inset Formula $\hat{R}_{S}(h)$
+\end_inset
+
+ is unbiased estimate of 
+\begin_inset Formula $R(h)$
+\end_inset
+
+.
+ Also, since samples in 
+\begin_inset Formula $S_{m}$
+\end_inset
+
+ are independent and random variable 
+\begin_inset Formula $1(x)=1_{h(x)≠c(x)}$
+\end_inset
+
+ has finite expectation value, 
+\begin_inset Formula $\hat{R}_{S}(h)$
+\end_inset
+
+ converges to 
+\begin_inset Formula $R(h)$
+\end_inset
+
+ by measure 
+\begin_inset Formula $𝕇$
+\end_inset
+
+ which can be proven for example by Khinchin theorem
+\begin_inset CommandInset citation
+LatexCommand cite
+key "Borovkov1998"
+literal "true"
+
+\end_inset
+
+.
+ Consequently, 
+\begin_inset Formula $\hat{R}_{S}(h)$
+\end_inset
+
+ is an unbiased and consistent estimator of 
+\begin_inset Formula $R(h)$
+\end_inset
+
+, in subsequent experiments 
+\begin_inset Formula $\hat{R}_{S}(h)$
+\end_inset
+
+ is used for 
+\begin_inset Formula $R(h)$
+\end_inset
+
+ estimations.
+\end_layout
+
+\begin_layout Standard
+\noindent
+
+\emph on
+Empirical Rademacher complexity for hypothesis set.
+
+\emph default
+ Let 
 \begin_inset Formula $ℋ$
 \end_inset
 
@@ -1235,7 +1402,11 @@ In the formula above
 
 \begin_layout Standard
 \noindent
-Empirical margin loss for sample 
+
+\emph on
+Empirical margin loss
+\emph default
+ for sample 
 \begin_inset Formula $S_{m}$
 \end_inset
 
@@ -1346,7 +1517,7 @@ R(h)≤\hat{R}_{S,ρ}(h)+\frac{2}{ρ}\hat{𝔑_{s}}(ℋ)+3\sqrt{\frac{log\frac{1
 
 \begin_layout Standard
 \noindent
-Remarkably, that this formula remains valid if we consider convex linear
+Importantly, that this formula remains valid if we consider convex linear
  combinations of classifiers in 
 \begin_inset Formula $ℋ$
 \end_inset
@@ -1428,7 +1599,7 @@ noprefix "false"
 \begin_inset Formula $\hat{R}_{S,ρ}(h)$
 \end_inset
 
-.
+ only.
  According to the theory, for marging lost calculation we use the final
  classifier's ansemble 
 \begin_inset CommandInset ref
@@ -1722,7 +1893,7 @@ As can be seen from the graphs, geometrical margin for the linear algorithm
  For AdaBoost the number of non-zero coefficients in the linear combination
  
 \begin_inset CommandInset ref
-LatexCommand ref
+LatexCommand eqref
 reference "eq:adaboost_ensemble"
 plural "false"
 caps "false"
@@ -2473,7 +2644,7 @@ name "subsec:estimation-error"
 This section discusses the generalisation error estimations derived from
  inequality 
 \begin_inset CommandInset ref
-LatexCommand ref
+LatexCommand eqref
 reference "eq:est_1"
 plural "false"
 caps "false"
@@ -2536,7 +2707,7 @@ noprefix "false"
 
 , which is evaluated by formula 
 \begin_inset CommandInset ref
-LatexCommand ref
+LatexCommand eqref
 reference "eq:mg_loss_sep"
 plural "false"
 caps "false"
@@ -2551,7 +2722,7 @@ noprefix "false"
 
  from inequality 
 \begin_inset CommandInset ref
-LatexCommand ref
+LatexCommand eqref
 reference "eq:est_1_dub"
 plural "false"
 caps "false"
@@ -2631,7 +2802,7 @@ Rademacher empirical complexity calculation on real data set
 \begin_layout Standard
 Rademacher empirical complexity is calculated by formula 
 \begin_inset CommandInset ref
-LatexCommand ref
+LatexCommand eqref
 reference "eq:rad_h"
 plural "false"
 caps "false"
@@ -2741,7 +2912,7 @@ Then, сonsider the space of events
  variables are i.i.d.
  Finally, we may use 
 \begin_inset CommandInset ref
-LatexCommand ref
+LatexCommand eqref
 reference "eq:hoeffding-ineq"
 plural "false"
 caps "false"
@@ -2760,7 +2931,7 @@ P(S_{n}−E[S_{n}]≥nε)=P(S_{n}/n−E[S_{n}]/n≥ε)≤e^{-2ε^{2}n^{2}/4n}=e^
 Notice, that due to linearity of the mathematical expectation and by defenition
  of Rademacher empirical complexity 
 \begin_inset CommandInset ref
-LatexCommand ref
+LatexCommand eqref
 reference "eq:rad_empirical_2"
 plural "false"
 caps "false"
@@ -2775,7 +2946,7 @@ noprefix "false"
 .
  Considering the symmetry of 
 \begin_inset CommandInset ref
-LatexCommand ref
+LatexCommand eqref
 reference "eq:hoeffding-ineq"
 plural "false"
 caps "false"
@@ -2799,8 +2970,8 @@ Setting the level of significance
 \begin_inset Formula $δ$
 \end_inset
 
-, we obtain the following estimate of the value 
-\begin_inset Formula $Δ=|S_{n}/n−\hat{𝔑_{s}}(ℋ)|$
+, we obtain the following upper estimate of the value 
+\begin_inset Formula $P(|S_{n}/n−\hat{𝔑_{s}}(ℋ)|≥ε)$
 \end_inset
 
 :
@@ -2908,7 +3079,7 @@ To find the value of the upper estimate of the generalisation error
 
  
 \begin_inset CommandInset ref
-LatexCommand ref
+LatexCommand eqref
 reference "eq:up_rho"
 plural "false"
 caps "false"
@@ -3007,7 +3178,7 @@ name "fig:3000_2"
 
 \begin_layout Standard
 \noindent
-Also, the following values for empirical risk are obtained (table
+Also, the following values for empirical risk are obtained (table 
 \begin_inset CommandInset ref
 LatexCommand ref
 reference "tab:3000_2"
@@ -3151,11 +3322,16 @@ name "tab:3000_2"
 
 \end_inset
 
-It can be seen from results that generalisation error estimation 
+
+\end_layout
+
+\begin_layout Standard
+\noindent
+It can be seen from results that generalisation error estimations 
 \begin_inset Formula $U(ρ)$
 \end_inset
 
- for ada-boost and linear classifiers are much more than their empirical
+ for ada-boost and linear classifiers are much larger than their empirical
  errors: the estimation of the generalisation error does not take values
  below 0.5, while the empirical error of the classifiers is 0.0036 and 0.0054
  in average.
@@ -3179,7 +3355,7 @@ noprefix "false"
  To sum up, according to experimental data, the expression of the right-hand
  side of the inequality 
 \begin_inset CommandInset ref
-LatexCommand ref
+LatexCommand eqref
 reference "eq:est_1_dub"
 plural "false"
 caps "false"
@@ -3187,9 +3363,13 @@ noprefix "false"
 
 \end_inset
 
- as a function of ро has a pronounced minimum on the interval (0,1), however,
- the value of this minimum is approximately 10 times higher than the empirical
- error values obtained in the experiments.
+ as a function of 
+\begin_inset Formula $ρ$
+\end_inset
+
+ has a pronounced minimum on the interval (0,1), however, the value of this
+ minimum is approximately 10 times higher than the empirical error values
+ obtained in the experiments.
  Thus, we cannot rely on an estimate from this inequality in the current
  experiment.
 \end_layout
@@ -3427,7 +3607,7 @@ It can be observed from the graphics and the table that results are mostly
  can be concluded that as the number of samples in the training set increases,
  the estimate of generalisation error given by 
 \begin_inset CommandInset ref
-LatexCommand ref
+LatexCommand eqref
 reference "eq:est_1_dub"
 plural "false"
 caps "false"
@@ -3699,10 +3879,10 @@ name "tab:3000_5"
 In comparison with the analogous experiment with 2 features it is can be
  observed that the minimum on the generalisation error estimation curve
  is now less pronounced and the estimation itself has deteriorated significantly
- to around 1.0.
+ to around 0.8.
  Thus, we may conclude that estimation based on the inequality 
 \begin_inset CommandInset ref
-LatexCommand ref
+LatexCommand eqref
 reference "eq:est_1_dub"
 plural "false"
 caps "false"
@@ -3723,7 +3903,7 @@ Experiments on real datasets
 \noindent
 Finally, the inequality 
 \begin_inset CommandInset ref
-LatexCommand ref
+LatexCommand eqref
 reference "eq:est_1_dub"
 plural "false"
 caps "false"
@@ -3917,7 +4097,7 @@ name "fig:breast_cancer_risk"
 
 From experiments on real datasets, it follows that the estimate 
 \begin_inset CommandInset ref
-LatexCommand ref
+LatexCommand eqref
 reference "eq:est_1_dub"
 plural "false"
 caps "false"
@@ -3943,7 +4123,7 @@ name "subsec:сonclusion_error"
 As the experiments have shown, the generalised error estimate based on inequalit
 y 
 \begin_inset CommandInset ref
-LatexCommand ref
+LatexCommand eqref
 reference "eq:est_1_dub"
 plural "false"
 caps "false"
@@ -3971,9 +4151,9 @@ Experiments with real data show that generalisation error estimation approaches
 \begin_inset Formula $L_{1}$
 \end_inset
 
-- geometric margin and inequality (
+- geometric margin and inequality 
 \begin_inset CommandInset ref
-LatexCommand ref
+LatexCommand eqref
 reference "eq:est_1"
 plural "false"
 caps "false"
@@ -3981,12 +4161,12 @@ noprefix "false"
 
 \end_inset
 
-) do not demonstrate simple patterns.
+ do not demonstrate simple patterns.
  The study compares the classical aba-boost algorithm with a linear programming
  version, which explicitly maximises geometric margin for the standard AdaBoost
- ensemble of base classifiers (
+ ensemble of base classifiers 
 \begin_inset CommandInset ref
-LatexCommand ref
+LatexCommand eqref
 reference "eq:adaboost_ensemble"
 plural "false"
 caps "false"
@@ -3994,7 +4174,7 @@ noprefix "false"
 
 \end_inset
 
-).
+.
  However, aba-boost demonstrates mostly better empirical error on synthetic
  and real data sets as shown in section 
 \begin_inset CommandInset ref
@@ -4014,9 +4194,9 @@ noprefix "false"
 \begin_inset Formula $U(ρ)$
 \end_inset
 
- (
+ 
 \begin_inset CommandInset ref
-LatexCommand ref
+LatexCommand eqref
 reference "eq:up_rho"
 plural "false"
 caps "false"
@@ -4024,10 +4204,10 @@ noprefix "false"
 
 \end_inset
 
-), which is an upper boundary of generalisation error estimation according
- to (
+, which is an upper boundary of generalisation error estimation according
+ to 
 \begin_inset CommandInset ref
-LatexCommand ref
+LatexCommand eqref
 reference "eq:est_1"
 plural "false"
 caps "false"
@@ -4035,7 +4215,7 @@ noprefix "false"
 
 \end_inset
 
-).
+.
  All experiments show that the minimum of 
 \begin_inset Formula $U(ρ)$
 \end_inset
@@ -4062,9 +4242,9 @@ Future work
 
 \begin_layout Standard
 \noindent
-Unsatisfactory generalisation error estimation derived from inequality (
+Unsatisfactory generalisation error estimation derived from inequality 
 \begin_inset CommandInset ref
-LatexCommand ref
+LatexCommand eqref
 reference "eq:est_1"
 plural "false"
 caps "false"
@@ -4072,11 +4252,11 @@ noprefix "false"
 
 \end_inset
 
-) raises the question of how to improve it.
+ raises the question of how to improve it.
  Firstly, there are several intermediate inequation which are obtained during
- the prove of (
+ the prove of 
 \begin_inset CommandInset ref
-LatexCommand ref
+LatexCommand eqref
 reference "eq:est_1"
 plural "false"
 caps "false"
@@ -4084,7 +4264,7 @@ noprefix "false"
 
 \end_inset
 
-), one of them is formulated as follows
+, one of them is formulated as follows
 \begin_inset CommandInset citation
 LatexCommand cite
 key "Mohri2018"
@@ -4116,9 +4296,9 @@ noprefix "false"
 \end_inset
 
 .
- Further, to obtain the final (
+ Further, to obtain the final 
 \begin_inset CommandInset ref
-LatexCommand ref
+LatexCommand eqref
 reference "eq:est_1"
 plural "false"
 caps "false"
@@ -4126,7 +4306,7 @@ noprefix "false"
 
 \end_inset
 
-) from this, the Talagrand’s lemma is applied
+ from this, the Talagrand’s lemma is applied
 \begin_inset CommandInset citation
 LatexCommand cite
 key "Mohri2018"
@@ -4149,9 +4329,9 @@ noprefix "false"
 
 \end_inset
 
- that for (
+ that for 
 \begin_inset CommandInset ref
-LatexCommand ref
+LatexCommand eqref
 reference "eq:est_1"
 plural "false"
 caps "false"
@@ -4159,7 +4339,7 @@ noprefix "false"
 
 \end_inset
 
-) it is possible to use the hypothesis set of base classifiers instead of
+ it is possible to use the hypothesis set of base classifiers instead of
  original ada-boost ensembles when the 
 \begin_inset Formula $\hat{𝔑_{s}}(ℋ)$
 \end_inset
@@ -4275,9 +4455,9 @@ literal "true"
 \uwave default
 \noun default
 \color inherit
- margin (
+ margin 
 \begin_inset CommandInset ref
-LatexCommand ref
+LatexCommand eqref
 reference "eq:ro_f"
 plural "false"
 caps "false"
@@ -4285,7 +4465,7 @@ noprefix "false"
 
 \end_inset
 
-) was investigated which is actually a minimum among norm-1 distances from
+ was investigated which is actually a minimum among norm-1 distances from
  
 \begin_inset Formula $h(x_{t})$
 \end_inset
