@@ -5,6 +5,9 @@
 \save_transient_properties true
 \origin unavailable
 \textclass article
+\begin_preamble
+
+\end_preamble
 \use_default_options true
 \maintain_unincluded_children false
 \language english
@@ -34,7 +37,7 @@
 \use_hyperref false
 \papersize default
 \use_geometry true
-\use_package amsmath 1
+\use_package amsmath 2
 \use_package amssymb 1
 \use_package cancel 1
 \use_package esint 1
@@ -155,7 +158,18 @@ Abstract
 \end_layout
 
 \begin_layout Standard
-In line with current thinking on AdaBoost classifier explanation
+Current explanations for the success of AdaBoost relies on the margin theory
+ in statistical learning theory, see 
+\begin_inset CommandInset citation
+LatexCommand cite
+key "Freund1999"
+literal "true"
+
+\end_inset
+
+.
+ In this thesis we follow the explanations of the theory as given in Mohri's
+ book
 \begin_inset CommandInset citation
 LatexCommand cite
 key "Mohri2018"
@@ -163,10 +177,16 @@ literal "true"
 
 \end_inset
 
-, the estimation of the classifier risk relies on the margin theory.
- More specifically, classifiers with larger margin on training set could
- be expected to work with less risk.
- However, this is not always confirmed by experiments on real data
+.
+ More specifically, a common interpretation of risk bounds states that classifie
+rs with a larger 
+\begin_inset Formula $L1$
+\end_inset
+
+-margin on the training set have a smaller generalization term, and hence
+ are less likely to overfit the training data.
+ However, this interpretation is not consistent with observations from real
+ data as explained in 
 \begin_inset CommandInset citation
 LatexCommand cite
 key "Breiman1997"
@@ -175,14 +195,48 @@ literal "true"
 \end_inset
 
 .
- In addition, a theory for estimating the risk based on marginal loss and
- Radamacher complexity has been developed in the form of appropriate inequalitie
-s.
- The purpose of this thesis is to investigate the risk estimation inequalities
- on real datasets in order to verify the estimates given by these inequalities
- and to try to explain the above contradiction.
- For this, two versions of the AdaBoost algorithm were implemented and experimen
-ts were performed on datasets of different types and sizes.
+ In this paper, classifiers are trained that directly optimize the 
+\begin_inset Formula $L1$
+\end_inset
+
+-margin, and they perform worse than AdaBoost on real datasets.
+ Our first aim is to reproduce these experiments.
+ We confirm that AdaBoost produce 
+\begin_inset Formula $L1$
+\end_inset
+
+-margins that are smaller than the optimal ones.
+ But then we observe the margin loss, which for AdaBoost is also smaller
+ than for classifiers optimising 
+\begin_inset Formula $L1$
+\end_inset
+
+-margin.
+\end_layout
+
+\begin_layout Standard
+\noindent
+The second goal of the thesis is to evaluate these risk bounds in detail,
+ and inspect the contributions of the individual terms.
+ For this we need to estimate Rademacher complexities and we explain how
+ this can be done in practice.
+ Both on artificial and real datasets we see that these risk bounds are
+ very high compared to the error on test sets of the trained classifiers.
+ In particular the generalization terms are too large.
+ We conclude by pointing out some more complex recent theories that provide
+ better risk bounds and might be the start point for further investigations.
+\end_layout
+
+\begin_layout Standard
+\noindent
+For our research we have created two versions of the AdaBoost algorithm,
+ implementing the classical algorithm and optimising the 
+\begin_inset Formula $L1$
+\end_inset
+
+-margin.
+ Then, experiments were performed on artificial and real datasets of different
+ types and sizes.
  The software code used in the experiments is available in 
 \begin_inset CommandInset href
 LatexCommand href
@@ -227,9 +281,9 @@ Introduction
 \end_layout
 
 \begin_layout Standard
-AdaBoost, short for Adaptive boosting, is an classification algorithm that
- proposes to benefit from linear combination of elementary classifiers to
- reduce generalisation error.
+AdaBoost is short for Adaptive boosting and is a classification algorithm
+ that proposes to benefit from linear combination of elementary classifiers
+ to reduce generalisation error.
  At the same time, elementary classifiers can be simple or 
 \begin_inset Quotes eld
 \end_inset
@@ -247,8 +301,8 @@ literal "true"
 \end_inset
 
 .
- This study investigates the task of 2-class classification on a real-values
- features set.
+ This study investigates the task of 2-class classification on a real-value
+ feature set.
  Suppose, there is a set of elementary 
 \begin_inset Quotes eld
 \end_inset
@@ -263,7 +317,7 @@ weak
 \begin_layout Standard
 \begin_inset Formula 
 \begin{equation}
-ℋ={h_{t}(x)},t=1..N\label{eq:hypothesis_set}
+ℋ=\{h_{t}(x):t=1..N\}.\label{eq:hypothesis_set}
 \end{equation}
 
 \end_inset
@@ -285,7 +339,7 @@ In other words,
 \begin_layout Standard
 \begin_inset Formula 
 \begin{equation}
-f(x)=sign(\sum{}_{k=1}^{T}\alpha_{k}h_{k}(x)),\alpha_{k}\ge0\label{eq:adaboost_ensemble}
+f(x)=\mathrm{sign}(\sum{}_{k=1}^{T}\alpha_{k}h_{k}(x)),\alpha_{k}\ge0.\label{eq:adaboost_ensemble}
 \end{equation}
 
 \end_inset
@@ -330,7 +384,7 @@ is insufficient for the result and in the following conclusions we consider
 \end_inset
 
 , with 
-\begin_inset Formula $(x_{t,}y_{t})∈X×{−1,+1}$
+\begin_inset Formula $(x_{t,}y_{t})∈X×\{-1,+1\}$
 \end_inset
 
  and 
@@ -378,11 +432,15 @@ a set of elementary classifiers
 \begin_layout Standard
 \noindent
 Originally, AdaBoost was implemented as an iterative process, when in each
- interation the boosting round selects some specific weak classifier to
- minimize the resulting error.
- Apart from that, the margin in the separable case for the training set
- can be defined and maximised explicitly, e.g.
- by using the lnear programming method.
+ iteration the boosting round selects some specific weak classifier that
+ minimises the error on some specially designed distribution.
+ Alternatively, the 
+\begin_inset Formula $L1$
+\end_inset
+
+-geometric margin in the separable case for the training set can be defined
+ and maximised explicitly, e.g.
+ by using the linear programming method.
  Thus, we obtain two ideas for the classifier essemble implementation and
  moreover the second version is a margin maximiser.
  If it is true that maximising the margin yields a smaller generalisation
@@ -409,17 +467,17 @@ AdaBoost algorithm
 
 \begin_layout Standard
 \noindent
-As it is mentioned in Introduction, original AdaBoost is an iterative algorithm
+As mentioned in Introduction, original AdaBoost is an iterative algorithm
  which selects a week classifier on each boosting round and adds it to the
- resulting essemble with the appropriate weight 
+ resulting ensemble with the appropriate weight 
 \begin_inset Formula $\alpha_{t}$
 \end_inset
 
 .
  Firstly, the hypothesis set for the studying case must be defined.
- As a weak classifier for the real-values features input we consider decision
- stump which is efffectively a one-level decision tree clasifier.
- A decision stamp has a threshold value and takes only one of the features
+ As a weak classifier for the real-valued features input we consider decision
+ stumps which are effectively a one-level decision tree classifiers.
+ A decision stump has a threshold value and takes only one of the features
  for classification.
  It compares the input value with the threshold and returns one of two classes
  after comparison.
@@ -450,7 +508,8 @@ As it is mentioned in Introduction, original AdaBoost is an iterative algorithm
 \noun default
 \color inherit
 m decision stumps which are distinguishable in terms of classification result.
- Finally, for a train set with n features and m samples there are 2
+ Finally, for a train set with n features and m samples there are at most
+ 2
 \family roman
 \series medium
 \shape up
@@ -553,7 +612,7 @@ Further, the selection from the hypothesis set on each boosting round is
  On each iteration the weak classifier is selected to minimize the error:
 \begin_inset Formula 
 \[
-\underset{h\inℋ}{h_{k}=arg\,min}\sum{}_{t\text{=1}}^{m}D_{k}(t)[h(x_{t})≠y_{t}]\,
+\underset{h\inℋ}{h_{k}=\mathrm{arg}\,\mathrm{min}}\sum{}_{t\text{=1}}^{m}D_{k}(t)[h(x_{t})≠y_{t}]\,.
 \]
 
 \end_inset
@@ -571,7 +630,7 @@ The error of the selected classifier
  Then, the coefficient in composition is calculated: 
 \begin_inset Formula 
 \[
-α_{k}=0.5log((1-ɛ_{k})/ɛ_{k})
+α_{k}=0.5·\mathrm{log}((1-ɛ_{k})/ɛ_{k}).
 \]
 
 \end_inset
@@ -590,24 +649,23 @@ Thus,
 \end_inset
 
 , the bigger this coefficient.
- Afrer that, next distribution 
+ After that, the next distribution 
 \begin_inset Formula $D_{k+1}$
 \end_inset
 
-is being calculated such that elements in position with wrong prediction
- of 
+is calculated such that elements with a wrong prediction of 
 \begin_inset Formula $h_{k}$
 \end_inset
 
-are increasing, while all other - decreasing:
+have larger weight, while all others have smaller one:
 \begin_inset Formula 
 \[
-D_{k+1}(t)=D_{k}(t)·exp(-α_{k}·y_{t}·h_{k}(x_{t}))/Z_{t}
+D_{k+1}(t)=D_{k}(t)·\mathrm{exp}(-α_{k}·y_{t}·h_{k}(x_{t}))/Z_{t}.
 \]
 
 \end_inset
 
-Value 
+The value 
 \begin_inset Formula $Z_{t}$
 \end_inset
 
@@ -616,10 +674,10 @@ Value
 \end_inset
 
 .
- Therefore, the algoritm on each iteration tries to get a weak classifiers
- minimizing errors of previously selected ones, the empirical error of AdaBoost
- classifier decreases exponentially fast as a function of the number of
- boosting rounds 
+ Therefore, the algorithm on each iteration tries to get a weak classifier
+ that minimises errors of previously selected ones.
+ The empirical error of AdaBoost classifier decreases exponentially fast
+ as a function of the number of boosting rounds 
 \begin_inset Formula $T$
 \end_inset
 
@@ -642,7 +700,12 @@ literal "true"
 \end_inset
 
 .
- In this study the separarable datasets are explored, more specificly, the
+ 
+\end_layout
+
+\begin_layout Standard
+\noindent
+In this study the separable data sets are explored, more specifically, the
  training set is expected to be labeled by the final classifier without
  errors, i.e.
  
@@ -650,7 +713,7 @@ literal "true"
 \end_inset
 
 .
- For this case we may define 
+ For this case we can define 
 \begin_inset Formula $L_{1}$
 \end_inset
 
@@ -680,14 +743,14 @@ literal "true"
 \uwave default
 \noun default
 \color inherit
- margin, which characterises a confidence of classifier 
+ margin, which characterises a confidence of the classifier 
 \begin_inset Formula $f$
 \end_inset
 
  on the training data set:
 \begin_inset Formula 
 \begin{equation}
-ρ_{f}=\underset{t=1..m}{min}|α·h(x_{t})|/\|α\|_{1}\label{eq:ro_f}
+ρ_{f}=\underset{t=1..m}{\mathrm{min}}|α·h(x_{t})|/\|α\|_{1}.\label{eq:ro_f}
 \end{equation}
 
 \end_inset
@@ -761,7 +824,7 @@ literal "true"
 
 \begin_layout Subsection
 \noindent
-Linear progrmming algorithm
+Linear programming algorithm
 \end_layout
 
 \begin_layout Standard
@@ -796,7 +859,8 @@ The
 \uwave default
 \noun default
 \color inherit
- margin
+ margin which is calculated on a trained AdaBoost classifier by formula
+ 
 \begin_inset CommandInset ref
 LatexCommand eqref
 reference "eq:ro_f"
@@ -806,18 +870,17 @@ noprefix "false"
 
 \end_inset
 
- which is obtained as a parameter of the original AdaBoost can be maximised
- explicitly.
- For this, in separable case the linear programming problem can be formulated
- for the 
+ can be maximised explicitly.
+ For this, in the separable case the linear programming problem can be formulate
+d for the 
 \begin_inset Formula $ρ$
 \end_inset
 
  maximisation:
 \begin_inset Formula 
 \begin{align}
-\underset{α}{max}ρ\label{eq:max_1}\\
-subject\,to: & y_{t}(α·h(x_{t}))/\|α\|_{1}≥ρ,t=1..m\nonumber 
+\underset{α}{\mathrm{\text{maximise}}}\,ρ,\label{eq:max_1}\\
+\text{subject to}: & y_{t}(α·h(x_{t}))/\|α\|_{1}≥ρ,t=1..m.\nonumber 
 \end{align}
 
 \end_inset
@@ -845,7 +908,7 @@ In this problem vectors
 \begin_inset Formula $ℋ$
 \end_inset
 
- consists of 2
+ consists of at most 2
 \family roman
 \series medium
 \shape up
@@ -912,7 +975,7 @@ noprefix "false"
 \begin_inset Formula $\|α\|_{1}=1$
 \end_inset
 
- and get rid of the denomenator in the constraint.
+ and get rid of the denominator in the constraint.
  As a variables of the task a scalar value 
 \begin_inset Formula $ρ$
 \end_inset
