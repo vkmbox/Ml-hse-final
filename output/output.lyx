@@ -971,7 +971,7 @@ noprefix "false"
 
 \end_inset
 
- it is reasonable to add condition 
+ it is reasonable to add the condition 
 \begin_inset Formula $\|α\|_{1}=1$
 \end_inset
 
@@ -1137,7 +1137,7 @@ m as N.
  Then, the target function is as follows:
 \begin_inset Formula 
 \[
-\underset{u}{min}-u_{N+1}
+\underset{u}{\mathrm{min}}-u_{N+1}.
 \]
 
 \end_inset
@@ -1150,7 +1150,7 @@ m as N.
 Next, there are m constraints for each sample from test set:
 \begin_inset Formula 
 \[
-u_{1}(-y_{t}·h_{1}(x_{t}))+...+u_{N}(-y_{t}·h_{N}(x_{t}))+u_{N+1}≤0,t=1..m
+u_{1}(-y_{t}·h_{1}(x_{t}))+...+u_{N}(-y_{t}·h_{N}(x_{t}))+u_{N+1}≤0,t=1..m.
 \]
 
 \end_inset
@@ -1167,7 +1167,7 @@ and constraint
 :
 \begin_inset Formula 
 \[
-\sum{}_{k\text{=1}}^{N}u_{k}=1
+\sum{}_{k\text{=1}}^{N}u_{k}=1.
 \]
 
 \end_inset
@@ -1184,7 +1184,7 @@ On top of that, bounds for
  must be defined:
 \begin_inset Formula 
 \[
-u_{k}≥0,k=1..N
+u_{k}≥0,k=1..N.
 \]
 
 \end_inset
@@ -1324,7 +1324,7 @@ Risk which is also called generalisation error.
  is defined as follows:
 \begin_inset Formula 
 \begin{equation}
-R(h)=\underset{x\sim𝒟}{𝕇}[h(x)≠c(x)]=\underset{x\sim𝒟}{𝔼}[1_{h(x)≠c(x)}]\label{eq:gen_err}
+R(h)=\underset{x\sim𝒟}{𝕇}[h(x)≠c(x)]=\underset{x\sim𝒟}{𝔼}[1_{h(x)≠c(x)}].\label{eq:gen_err}
 \end{equation}
 
 \end_inset
@@ -1358,12 +1358,12 @@ Empirical risk or empirical error.
  is defined by
 \begin_inset Formula 
 \begin{equation}
-\hat{R}_{S}(h)=\frac{1}{m}\sum{}_{t\text{=1}}^{m}1_{h(x)≠c(x)}\label{eq:emp_err}
+\hat{R}_{S}(h)=\frac{1}{m}\sum{}_{t\text{=1}}^{m}1_{h(x)≠c(x).}\label{eq:emp_err}
 \end{equation}
 
 \end_inset
 
-Remarkably, that 
+Note, that 
 \begin_inset Formula $𝔼\hat{R}_{S}(h)=R(h)$
 \end_inset
 
@@ -1371,7 +1371,7 @@ Remarkably, that
 \begin_inset Formula $\hat{R}_{S}(h)$
 \end_inset
 
- is unbiased estimate of 
+ is an unbiased estimate of 
 \begin_inset Formula $R(h)$
 \end_inset
 
@@ -1380,8 +1380,8 @@ Remarkably, that
 \begin_inset Formula $S_{m}$
 \end_inset
 
- are independent and random variable 
-\begin_inset Formula $1(x)=1_{h(x)≠c(x)}$
+ are independent and the random variable 
+\begin_inset Formula $1_{h(x)≠c(x)}$
 \end_inset
 
  has finite expectation value, 
@@ -1442,7 +1442,7 @@ Empirical Rademacher complexity for hypothesis set.
 
 \begin_inset Formula 
 \begin{equation}
-\hat{𝔑_{s}}(ℋ)=\frac{1}{m}\underset{σ}{𝔼}[\underset{h\inℋ}{sup}\sum{}_{t\text{=1}}^{m}σ_{t}·h(x_{t})]\label{eq:rad_h}
+\hat{𝔑_{s}}(ℋ)=\frac{1}{m}\underset{σ}{𝔼}[\underset{h\inℋ}{\mathrm{sup}}\sum{}_{t\text{=1}}^{m}σ_{t}·h(x_{t})].\label{eq:rad_h}
 \end{equation}
 
 \end_inset
@@ -1476,7 +1476,7 @@ Empirical margin loss
 :
 \begin_inset Formula 
 \begin{equation}
-\hat{R}_{S,ρ}(h)=\frac{1}{m}\sum{}_{t\text{=1}}^{m}𝛷_{ρ}(y_{t}·h(x_{t}))\label{eq:mg_loss}
+\hat{R}_{S,ρ}(h)=\frac{1}{m}\sum{}_{t\text{=1}}^{m}𝛷_{ρ}(y_{t}·h(x_{t})).\label{eq:mg_loss}
 \end{equation}
 
 \end_inset
@@ -1487,7 +1487,7 @@ Empirical margin loss
 \begin_layout Standard
 \noindent
 In this formula 
-\begin_inset Formula $𝛷_{ρ}(x)=min(1,max(0,1-x/ρ))$
+\begin_inset Formula $𝛷_{ρ}(x)=\mathrm{min}(1,\mathrm{max}(0,1-x/ρ))$
 \end_inset
 
 , the graph of the function is shown in figure 
@@ -1522,7 +1522,7 @@ status open
 \begin_inset Caption Standard
 
 \begin_layout Plain Layout
-Marging loss function
+Margin loss function
 \begin_inset CommandInset label
 LatexCommand label
 name "fig:Ф_func"
@@ -1544,17 +1544,16 @@ name "fig:Ф_func"
 
 \begin_layout Standard
 \noindent
-Finally, the estimate of the upper limit of the generalisation error is
- as follows.
+Finally, the upper bound of the generalisation error is as follows.
  Let 
 \begin_inset Formula $ℋ$
 \end_inset
 
- be a family of real-valued functions and the non-negative value 
+ be a family of real-valued functions and let the non-negative value 
 \begin_inset Formula $ρ$
 \end_inset
 
- of margin is fixed.
+ of the margin be fixed.
  Then, for any 
 \begin_inset Formula $δ>0$
 \end_inset
@@ -1570,7 +1569,7 @@ Finally, the estimate of the upper limit of the generalisation error is
 :
 \begin_inset Formula 
 \begin{equation}
-R(h)≤\hat{R}_{S,ρ}(h)+\frac{2}{ρ}\hat{𝔑_{s}}(ℋ)+3\sqrt{\frac{log\frac{1}{δ}}{2m}}\label{eq:est_1}
+R(h)≤\hat{R}_{S,ρ}(h)+\frac{2}{ρ}\hat{𝔑_{s}}(ℋ)+3\sqrt{\frac{\mathrm{log}\frac{1}{δ}}{2m}}.\label{eq:est_1}
 \end{equation}
 
 \end_inset
@@ -1606,7 +1605,7 @@ literal "true"
  is:
 \begin_inset Formula 
 \begin{equation}
-conv(ℋ)=\{\sum{}_{t\text{=1}}^{m}µ_{t}h_{t}:m≥1,∀t=1..m,\text{µ}_{t}≥0,h_{t}\inℋ,\sum{}_{t\text{=1}}^{m}\text{µ}_{t}≤1\}\label{eq:conv}
+conv(ℋ)=\{\sum{}_{t\text{=1}}^{m}µ_{t}h_{t}:m≥1,∀t=1..m,\text{µ}_{t}≥0,h_{t}\inℋ,\sum{}_{t\text{=1}}^{m}\text{µ}_{t}≤1\}.\label{eq:conv}
 \end{equation}
 
 \end_inset
@@ -1637,8 +1636,8 @@ noprefix "false"
 
 \end_inset
 
-, the hypothesis set of base classifiers can be used instead of ofiginal
- ada-boost ensembles in 
+, the hypothesis set of base classifiers can be used instead of original
+ AdaBoost ensembles in 
 \begin_inset CommandInset ref
 LatexCommand eqref
 reference "eq:est_1"
@@ -1657,14 +1656,14 @@ noprefix "false"
 \begin_inset Formula $δ$
 \end_inset
 
- value for all experiments, the difference between them depends on margin
+ value for all experiments, the difference between them depends on the margin
  loss term 
 \begin_inset Formula $\hat{R}_{S,ρ}(h)$
 \end_inset
 
  only.
- According to the theory, for marging lost calculation we use the final
- classifier's ansemble 
+ According to the theory, for margin loss calculation we use the final classifie
+r's ensemble 
 \begin_inset CommandInset ref
 LatexCommand eqref
 reference "eq:adaboost_ensemble"
@@ -1685,10 +1684,10 @@ noprefix "false"
 
 \end_inset
 
- can be rewrittern as follows:
+ can be rewritten as follows:
 \begin_inset Formula 
 \begin{equation}
-\hat{R}_{S,ρ}(h)=\frac{1}{m}\sum{}_{t\text{=1}}^{m}𝛷_{ρ}(α·h(x_{t}))\label{eq:mg_loss_sep}
+\hat{R}_{S,ρ}(h)=\frac{1}{m}\sum{}_{t\text{=1}}^{m}𝛷_{ρ}(α·h(x_{t})).\label{eq:mg_loss_sep}
 \end{equation}
 
 \end_inset
@@ -1790,7 +1789,7 @@ noprefix "false"
 
 \end_inset
 
- which reflects the classifier's confidence on train dataset, and the question
+ which reflects the classifier's confidence on train data set, and the question
  is whether greater 
 \begin_inset Formula $L_{1}$
 \end_inset
@@ -1853,7 +1852,8 @@ name "subsec:estimation-l1"
 
 \begin_layout Standard
 Estimations for geometric margin have been performed on synthetic or generated
- and real data sets, results are represented in 
+ and real data sets.
+ Results are represented in 
 \begin_inset CommandInset href
 LatexCommand href
 name "Geometric_Margin_Estimations.ipynb"
@@ -1875,8 +1875,8 @@ s: number of samples=300, total number of features=50, number of informative
  samples X are artificially separated.
  For this, a random vector is generated and the labels {-1, +1} are created
  according to the projection of X onto this vector.
- Moreover, samples X are artificially extended from the hyperplane perpendicular
- to the vector by a gap value, the default gap is 0.1.
+ Moreover, samples X are artificially extended from the hyper-plane perpendicula
+r to the vector by a gap value, the default gap is 0.1.
  Varying the gap we may simulate different kinds of separable or non-separable
  data sets.
  Default splitting of generated data is 
@@ -1891,19 +1891,60 @@ s: number of samples=300, total number of features=50, number of informative
 \end_layout
 
 \begin_layout Subsubsection
-Synthetic datasets with a varying number of properties
+Synthetic data sets with a varying number of properties
 \end_layout
 
 \begin_layout Standard
 \noindent
-In the first experiment, there are data sets on 200 rows with the number
- of features changing from 25 to 500 in increments of 25.
- For each number of features 5 data sets are generated and the results are
- averaged.
+In the first experiment, there are data sets on 300 rows with the number
+ of features ranging from 25 to 500 in increments of 25.
+ For each number of features, 5 data sets are generated and the results
+ are averaged.
  Both version of classifiers (linear and AdaBoost) are learned on subset
  of 200 rows and then empirical risk is estimated on 100 rows set.
- The margin value and empirical risk in the experiments is illustrated by
- figure 2.
+ The 
+\begin_inset Formula $L_{1}$
+\end_inset
+
+
+\family roman
+\series medium
+\shape up
+\size normal
+\emph off
+\bar no
+\strikeout off
+\xout off
+\uuline off
+\uwave off
+\noun off
+\color none
+- 
+\family default
+\series default
+\shape default
+\size default
+\emph default
+\bar default
+\strikeout default
+\xout default
+\uuline default
+\uwave default
+\noun default
+\color inherit
+margin value on the train set and the empirical risk on the test set in
+ the experiments for both versions of the classifier is illustrated in figure
+ 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "fig:300_features_varying"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+.
 \begin_inset Float figure
 wide false
 sideways false
@@ -1932,7 +1973,14 @@ status open
 
 \begin_layout Plain Layout
 Margin and empirical risk depending on features count in experiments with
- 300 samples datasets
+ 300 samples data sets
+\begin_inset CommandInset label
+LatexCommand label
+name "fig:300_features_varying"
+
+\end_inset
+
+
 \end_layout
 
 \end_inset
@@ -1964,15 +2012,16 @@ noprefix "false"
 
 \end_inset
 
- is limited by the quantity of boosting rounds, while in linear algorithm
- version a coefficient of any weak classifier from hypotesis set 
+ is limited by the quantity of boosting rounds, while in the linear algorithm
+ version a coefficient of any weak classifier from hypothesis set 
 \begin_inset Formula $ℋ$
 \end_inset
 
  can be non-zero and set of possible combinations is obviously larger in
  the latter case.
- At the same time, empirical risk does not differ significantly between
- the versions of the classifiers, as can be seen from the right-hand grap.
+ At the same time, the empirical risk on the test set does not differ significan
+tly between the versions of the classifiers, as can be seen from the right-hand
+ graph.
 \end_layout
 
 \begin_layout Standard
@@ -1980,10 +2029,10 @@ noprefix "false"
 Also, in this experiment we can investigate if there is a statically significant
  difference between empirical risks of AdaBoost and linear classifiers.
  For analysis we have two sets of risk values with the corresponding values
- referring to the results of the classifiers on the same dataset.
+ referring to the results of the classifiers on the same data set.
  It is difficult to determine the type of distribution of risk values, however,
  it can be hypothesised that these values has equal median.
- In other words, the main hypothesis of no difference on median 
+ In other words, the null hypothesis of no difference on median 
 \begin_inset Formula $H_{0}$
 \end_inset
 
@@ -2020,23 +2069,33 @@ literal "false"
 \end_inset
 
  and hypothesis 
-\begin_inset Formula $H_{1}$
+\begin_inset Formula $H_{0}$
 \end_inset
 
- is rejected.
+ is not rejected.
  The criterion Mann–Whitney U is not applicable here since error samples
  are dependent.
 \end_layout
 
 \begin_layout Subsubsection
-Synthetic datasets with a varying number of samples
+Synthetic data sets with a varying number of samples
 \end_layout
 
 \begin_layout Standard
 \noindent
-Second experiment is performed with default number of features=50 and varying
- number of samples from 100 to 500 with step 50.
- Results are on figure 3.
+A second experiment is performed with default number of features=50 and
+ varying number of samples from 100 to 500 with step 50.
+ Results are on figure 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "fig:300_samples_varying"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+.
 \begin_inset Float figure
 wide false
 sideways false
@@ -2065,6 +2124,13 @@ status open
 
 \begin_layout Plain Layout
 Margin and empirical risk depending on samples number, 50 features
+\begin_inset CommandInset label
+LatexCommand label
+name "fig:300_samples_varying"
+
+\end_inset
+
+
 \end_layout
 
 \end_inset
@@ -2085,24 +2151,36 @@ Margin and empirical risk depending on samples number, 50 features
 \noindent
 Again, the significant difference in margin values can be seen, which does
  not, however, affect the empirical risk values.
- In this experiment sign test gives positive criterion value with p–value=0.006,
- which leads one to assume that, according to the way the criterion is calculate
-d, hypotesis that empirical risk median for linear algorithm is larger than
- ada-boost's one is true at a significance level of 0.05.
- Wilcoxon test supports the hypothesis of medians unequality with a p-value=0.015.
+ In this experiment sign test gives criterion value = 9 and p–value=0.006.
+ The sign criterion is calculated for linear error minus AdaBoost error,
+ consequently, the positive criterion value indicates that the empirical
+ error of the linear classifier is larger than the AdaBoost's one.
+ Moreover, p–value allows to assume this at a significance level of 0.05.
+ Wilcoxon test supports the hypothesis of medians inequality with a p-value=0.015.
 \end_layout
 
 \begin_layout Subsubsection
-Synthetic datasets with a varying percent of informative features
+Synthetic data sets with a varying percent of informative features
 \end_layout
 
 \begin_layout Standard
 \noindent
-In the next experiment number of samples=300 and features=100 is fixed,
- and the percent of informative features is varying from 10% to 90% with
- the appropriate change of redundant features from 80% to 0%, number of
- repeated features is fixed to 10%.
- Results are shown on figure 4.
+In the next experiment, the number of samples and features are fixed to
+ 300 and 100 respectively.
+ With the fixed 10% of repeated features, the percent of informative features
+ is varying from 10% to 90% and the percent of redundant features is varying
+ from 80% to 0% respectively.
+ Results are shown in figure 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "fig:300_percent_varying"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+.
 \begin_inset Float figure
 wide false
 sideways false
@@ -2132,6 +2210,13 @@ status open
 \begin_layout Plain Layout
 Margin and empirical risk depending on percent of informative features,
  300 samples and 100 features
+\begin_inset CommandInset label
+LatexCommand label
+name "fig:300_percent_varying"
+
+\end_inset
+
+
 \end_layout
 
 \end_inset
@@ -2154,16 +2239,16 @@ The ratio of the data is similar to previous experiments, difference in
  margin doesn't lead to better empirical risk.
  For this experiments, p–value are as follows: sign test - 0.26, Wilcoxon
  - 0.49.
- In both tests the hypotesis 
-\begin_inset Formula $H_{1}$
+ In both tests the hypothesis 
+\begin_inset Formula $H_{0}$
 \end_inset
 
- of difference in empirical risk between classifiers is rejected.
+ of equality in empirical risk between classifiers is accepted.
 \end_layout
 
 \begin_layout Subsubsection
 \noindent
-Breast cancer dataset
+Breast cancer data set
 \begin_inset CommandInset label
 LatexCommand label
 name "subsec:breast-cancer-l1"
@@ -2185,7 +2270,7 @@ literal "true"
 
 \end_inset
 
-, here some of these datasets are retested.
+, here some of these data sets are retested.
  The first date set is Breast cancer
 \begin_inset CommandInset citation
 LatexCommand cite
@@ -2197,15 +2282,43 @@ literal "true"
 , this data set has 9 informative features and 699 rows.
  There are 458 rows for benign and 241 rows for malignant cases, the data
  can be considered broadly balanced.
- To test that the data set is separable, a support vector classifier is
- used.
- After training on the whole dataset, the svm classifier correctly predicts
- class for all samples, i.e.
- it is possible to construct a hyperplane in the feature space separating
- the data.
- The complete data set is splitted 20 times at random into training and
- test samples, with 1/4 of the records for the test, for each split geometric
- margin and empirical risk are calculated, results are in table 
+ After training on the whole data set, both classifier correctly predicts
+ classes for all samples, i.e.
+ the set is separable.
+ The experiment is performed as follows: the complete data set is splitted
+ 20 times at random into training and test samples, with 1/4 of the records
+ for the test, for each split the 
+\begin_inset Formula $L_{1}$
+\end_inset
+
+
+\family roman
+\series medium
+\shape up
+\size normal
+\emph off
+\bar no
+\strikeout off
+\xout off
+\uuline off
+\uwave off
+\noun off
+\color none
+- 
+\family default
+\series default
+\shape default
+\size default
+\emph default
+\bar default
+\strikeout default
+\xout default
+\uuline default
+\uwave default
+\noun default
+\color inherit
+geometric margin value on the train set and the empirical error on the test
+ set is calculated, results are in table 
 \begin_inset CommandInset ref
 LatexCommand ref
 reference "tab:breast-cancer"
@@ -2272,7 +2385,7 @@ Empirical error for linear algorithm
 \begin_inset Text
 
 \begin_layout Plain Layout
-0.0622857143
+0.0623
 \end_layout
 
 \end_inset
@@ -2281,7 +2394,7 @@ Empirical error for linear algorithm
 \begin_inset Text
 
 \begin_layout Plain Layout
-0.0133889994
+0.0134
 \end_layout
 
 \end_inset
@@ -2301,7 +2414,7 @@ Empirical error for ada boost algorithm
 \begin_inset Text
 
 \begin_layout Plain Layout
-0.0517142857
+0.0517
 \end_layout
 
 \end_inset
@@ -2310,7 +2423,7 @@ Empirical error for ada boost algorithm
 \begin_inset Text
 
 \begin_layout Plain Layout
-0.0096425926
+0.0096
 \end_layout
 
 \end_inset
@@ -2330,7 +2443,7 @@ Geometric margin for linear algorithm
 \begin_inset Text
 
 \begin_layout Plain Layout
-0.0380784851
+0.0381
 \end_layout
 
 \end_inset
@@ -2339,7 +2452,7 @@ Geometric margin for linear algorithm
 \begin_inset Text
 
 \begin_layout Plain Layout
-0.0104855946
+0.0105
 \end_layout
 
 \end_inset
@@ -2359,7 +2472,7 @@ Geometric margin for ada boost algorithm
 \begin_inset Text
 
 \begin_layout Plain Layout
-0.0166040126
+0.0166
 \end_layout
 
 \end_inset
@@ -2368,7 +2481,7 @@ Geometric margin for ada boost algorithm
 \begin_inset Text
 
 \begin_layout Plain Layout
-0.0141669141
+0.0142
 \end_layout
 
 \end_inset
@@ -2416,7 +2529,7 @@ For two sets of errors, 20 measurements for each classifiers, we apply statistic
 \end_inset
 
  about error median equality at 0.05 significance level.
- Finaly, since the hypotheses of equality are rejected for the two-sided
+ Finally, since the hypotheses of equality are rejected for the two-sided
  criterion and the error results are higher for the linear algorithm, we
  can accept the hypothesis of a larger error for the linear algorithm at
  the 0.05 significance level.
@@ -2424,7 +2537,7 @@ For two sets of errors, 20 measurements for each classifiers, we apply statistic
 
 \begin_layout Subsubsection
 \noindent
-Ionosphere dataset
+Ionosphere data set
 \begin_inset CommandInset label
 LatexCommand label
 name "subsec:Ionosphere-l1"
@@ -2436,7 +2549,7 @@ name "subsec:Ionosphere-l1"
 
 \begin_layout Standard
 \noindent
-Second studying real data set is Ionosphere
+The second real data set that is studied is Ionosphere
 \begin_inset CommandInset citation
 LatexCommand cite
 key "Ionosphere"
@@ -2444,11 +2557,41 @@ literal "true"
 
 \end_inset
 
-, there are 351 rows and 34 features there, The set includes 126 rows for
- good and 225 rows for bad cases, data are quite balanced.
+, there are 351 rows and 34 features in it.
+ The set includes 126 rows for good and 225 rows for bad cases, thus the
+ data is quite balanced.
  Since the set is relatively small, 50 splitting are performed with 1/4
- of the records for the test with the calculation of geometric margin and
- empirical risk for each splitting.
+ of the records for the test with the calculation of 
+\begin_inset Formula $L_{1}$
+\end_inset
+
+
+\family roman
+\series medium
+\shape up
+\size normal
+\emph off
+\bar no
+\strikeout off
+\xout off
+\uuline off
+\uwave off
+\noun off
+\color none
+-
+\family default
+\series default
+\shape default
+\size default
+\emph default
+\bar default
+\strikeout default
+\xout default
+\uuline default
+\uwave default
+\noun default
+\color inherit
+ geometric margin and empirical error for each splitting.
  Results are collected in table 
 \begin_inset CommandInset ref
 LatexCommand ref
@@ -2516,7 +2659,7 @@ Empirical error for linear algorithm
 \begin_inset Text
 
 \begin_layout Plain Layout
-0.1020454545
+0.1020
 \end_layout
 
 \end_inset
@@ -2525,7 +2668,7 @@ Empirical error for linear algorithm
 \begin_inset Text
 
 \begin_layout Plain Layout
-0.0280651912
+0.0280
 \end_layout
 
 \end_inset
@@ -2545,7 +2688,7 @@ Empirical error for ada boost algorithm
 \begin_inset Text
 
 \begin_layout Plain Layout
-0.0931818182
+0.0931
 \end_layout
 
 \end_inset
@@ -2554,7 +2697,7 @@ Empirical error for ada boost algorithm
 \begin_inset Text
 
 \begin_layout Plain Layout
-0.0280200636
+0.0280
 \end_layout
 
 \end_inset
@@ -2574,7 +2717,7 @@ Geometric margin for linear algorithm
 \begin_inset Text
 
 \begin_layout Plain Layout
-0.1096625957
+0.1097
 \end_layout
 
 \end_inset
@@ -2583,7 +2726,7 @@ Geometric margin for linear algorithm
 \begin_inset Text
 
 \begin_layout Plain Layout
-0.0050373506
+0.0050
 \end_layout
 
 \end_inset
@@ -2603,7 +2746,7 @@ Geometric margin for ada boost algorithm
 \begin_inset Text
 
 \begin_layout Plain Layout
-0.0961726663
+0.0962
 \end_layout
 
 \end_inset
@@ -2612,7 +2755,7 @@ Geometric margin for ada boost algorithm
 \begin_inset Text
 
 \begin_layout Plain Layout
-0.0054469719
+0.0054
 \end_layout
 
 \end_inset
@@ -2654,7 +2797,7 @@ Empirical error and geometric margin in experiments with breast cancer data
 Statistical criteria for two sets of errors with 50 measurements for each
  classifiers give p–values as follows: sign test - 6.96e-05, Wilcoxon - pvalue=0.0
 002.
- Thus, both criteria reject hypothesis 
+ Thus, both criteria reject the hypothesis 
 \begin_inset Formula $H_{0}$
 \end_inset
 
@@ -2663,7 +2806,7 @@ Statistical criteria for two sets of errors with 50 measurements for each
 
 \begin_layout Subsubsection
 \noindent
-Conclusions on the dependence of the empirial error from 
+Conclusions on the dependence of the empirical error from 
 \begin_inset Formula $L_{1}$
 \end_inset
 
@@ -2678,18 +2821,24 @@ name "subsec:conclusions_l1"
 \end_layout
 
 \begin_layout Standard
-No experiment described above shows a smaller error for a linear algorithm
- classifier in comparison with ada-boost one, though it always has larger
- 
+No experiment described above shows a smaller empirical error on the test
+ set for a linear algorithm classifier in comparison with AdaBoost one,
+ though it always has larger 
 \begin_inset Formula $L_{1}$
 \end_inset
 
 - geometric margin value on the training set.
- Conversely, in experiments with real datasets we get a statistically significan
-t difference in favour of a smaller empirical error in the ada-boost case.
- To summarise, higher margin value on training set doesn't guarantee lower
- error in the considered case of comparison of ada-boost and linear algorithm
- classifiers.
+ Conversely, in experiments with real data sets we get a statistically significa
+nt difference in favour of a smaller empirical error in the AdaBoost case.
+ To summarise, in comparison of AdaBoost and linear algorithm classifiers
+ the higher 
+\begin_inset Formula $L_{1}$
+\end_inset
+
+- geometric margin value on the training set doesn't guarantee the lower
+ error on the test set.
+ Moreover, on the same data AdaBoost typically gives error less than a linear
+ algorithm classifier.
 \end_layout
 
 \begin_layout Subsection
@@ -2719,7 +2868,7 @@ noprefix "false"
  For analysis of this inequality, it is presented here again:
 \begin_inset Formula 
 \begin{equation}
-R(h)≤\hat{R}_{S,ρ}(h)+\frac{2}{ρ}\hat{𝔑_{s}}(ℋ)+3\sqrt{\frac{log\frac{1}{δ}}{2m}}\label{eq:est_1_dub}
+R(h)≤\hat{R}_{S,ρ}(h)+\frac{2}{ρ}\hat{𝔑_{s}}(ℋ)+3\sqrt{\frac{\mathrm{log}\frac{1}{δ}}{2m}}.\label{eq:est_1_dub}
 \end{equation}
 
 \end_inset
@@ -2742,7 +2891,7 @@ The inequality holds for any classifier
 \end_inset
 
 .
- As it is already discuss in paragraph 
+ As it is already discussed in paragraph 
 \begin_inset CommandInset ref
 LatexCommand ref
 reference "sec:Theoretical-basis"
@@ -2752,7 +2901,7 @@ noprefix "false"
 
 \end_inset
 
-, both ada-boost and linear algorithms work with the same hypothesis set
+, both AdaBoost and linear algorithms work with the same hypothesis set
  
 \begin_inset Formula $ℋ$
 \end_inset
@@ -2801,7 +2950,7 @@ noprefix "false"
 
 \begin_inset Formula 
 \begin{equation}
-U(ρ)=\hat{R}_{S,ρ}(h)+\frac{2}{ρ}\hat{𝔑_{s}}(ℋ)+3\sqrt{\frac{log\frac{1}{δ}}{2m}}\label{eq:up_rho}
+U(ρ)=\hat{R}_{S,ρ}(h)+\frac{2}{ρ}\hat{𝔑_{s}}(ℋ)+3\sqrt{\frac{\mathrm{log}\frac{1}{δ}}{2m}}.\label{eq:up_rho}
 \end{equation}
 
 \end_inset
@@ -2876,7 +3025,7 @@ noprefix "false"
 :
 \begin_inset Formula 
 \begin{equation}
-\hat{𝔑_{s}}(ℋ)=\frac{1}{m}\underset{σ}{𝔼}[\underset{h\inℋ}{sup}\sum{}_{t\text{=1}}^{m}σ_{t}·h(x_{t})]\label{eq:rad_empirical_2}
+\hat{𝔑_{s}}(ℋ)=\frac{1}{m}\underset{σ}{𝔼}[\underset{h\inℋ}{\mathrm{sup}}\sum{}_{t\text{=1}}^{m}σ_{t}·h(x_{t})].\label{eq:rad_empirical_2}
 \end{equation}
 
 \end_inset
@@ -2934,18 +3083,18 @@ Hoeffding’s inequality: Let
 :
 \begin_inset Formula 
 \begin{align}
-P[(S−E[S_{n}]≥ε)≤e^{-2ε^{2}/\sum{}_{k=1}^{n}(b_{k}-a_{k})^{2}}\label{eq:hoeffding-ineq}\\
-P(S_{n}−E[S_{n}]≤-ε)≤e^{-2ε^{2}/\sum{}_{k=1}^{n}(b_{k}-a_{k})^{2}}\nonumber 
+P[(S−E[S_{n}]≥ε)≤e^{-2ε^{2}/\sum{}_{k=1}^{n}(b_{k}-a_{k})^{2}},\label{eq:hoeffding-ineq}\\
+P(S_{n}−E[S_{n}]≤-ε)≤e^{-2ε^{2}/\sum{}_{k=1}^{n}(b_{k}-a_{k})^{2}}.\nonumber 
 \end{align}
 
 \end_inset
 
-Then, сonsider the space of events 
+Then, consider the space of events 
 \begin_inset Formula $Ω=\{σ=(σ_{1},...,σ_{m})\},P(σ)=\frac{1}{2^{m}}$
 \end_inset
 
 , and random variable 
-\begin_inset Formula $X_{k}(σ)=\underset{h\inℋ}{\frac{1}{m}sup}\sum{}_{t\text{=1}}^{m}σ_{t}·h(x_{t})$
+\begin_inset Formula $X_{k}(σ)=\underset{h\inℋ}{\frac{1}{m}\mathrm{sup}}\sum{}_{t\text{=1}}^{m}σ_{t}·h(x_{t})$
 \end_inset
 
 .
@@ -2962,7 +3111,7 @@ Then, сonsider the space of events
 \begin_inset Formula $Ω$
 \end_inset
 
- whith returning, then 
+ with repetition, then 
 \begin_inset Formula $X_{k}=X(σ_{k})$
 \end_inset
 
@@ -2986,12 +3135,12 @@ noprefix "false"
  as follows:
 \begin_inset Formula 
 \[
-P(S_{n}−E[S_{n}]≥nε)=P(S_{n}/n−E[S_{n}]/n≥ε)≤e^{-2ε^{2}n^{2}/4n}=e^{-nε^{2}/2}
+P(S_{n}−E[S_{n}]≥nε)=P(S_{n}/n−E[S_{n}]/n≥ε)≤e^{-2ε^{2}n^{2}/4n}=e^{-nε^{2}/2}.
 \]
 
 \end_inset
 
-Notice, that due to linearity of the mathematical expectation and by defenition
+Notice, that due to linearity of the mathematical expectation and by definition
  of Rademacher empirical complexity 
 \begin_inset CommandInset ref
 LatexCommand eqref
@@ -3024,7 +3173,7 @@ noprefix "false"
 , it can be concluded that
 \begin_inset Formula 
 \[
-P(|S_{n}/n−\hat{𝔑_{s}}(ℋ)|≥ε)≤2e^{-nε^{2}/2}
+P(|S_{n}/n−\hat{𝔑_{s}}(ℋ)|≥ε)≤2e^{-nε^{2}/2}.
 \]
 
 \end_inset
@@ -3040,7 +3189,7 @@ Setting the level of significance
 :
 \begin_inset Formula 
 \[
-2e^{-nε^{2}/2}≤δ;n≥\frac{2}{ε^{2}}ln\frac{2}{δ}
+2e^{-nε^{2}/2}≤δ;n≥\frac{2}{ε^{2}}\mathrm{ln}\frac{2}{δ}.
 \]
 
 \end_inset
@@ -3095,10 +3244,10 @@ name "subsec:3000_2"
 \end_layout
 
 \begin_layout Standard
-First experiment is performed on synthetic data sampled from bivariate normal
- distribtion.
+First experiment is performed on synthetic data sampled from bi-variate
+ normal distribution.
  3000 samples from the distribution provide features data set X.
- Then, similarily to experiments in 
+ Then, similarly to experiments in 
 \begin_inset CommandInset ref
 LatexCommand ref
 reference "subsec:estimation-l1"
@@ -3110,7 +3259,7 @@ noprefix "false"
 
 , a random vector is generated and the labels {-1, +1} are created according
  to the projection of X onto this vector.
- Also, rows from X are artificially extended from the hyperplane perpendicular
+ Also, rows from X are artificially extended from the hyper-plane perpendicular
  to the generated vector by a gap value with the default gap 0.1.
  Results of this and subsequent experiments of paragraph 
 \begin_inset CommandInset ref
@@ -3164,7 +3313,7 @@ noprefix "false"
 \begin_inset Formula $U(ρ)$
 \end_inset
 
- and separately emperical margin loss 
+ and separately empirical margin loss 
 \begin_inset Formula $\hat{R}_{S,ρ}$
 \end_inset
 
@@ -3214,8 +3363,8 @@ status open
 \begin_inset Caption Standard
 
 \begin_layout Plain Layout
-Generalisation error estimation and empirical margin loss on synthetic datasets
- with 2 features and 3000 samples
+Generalisation error estimation and empirical margin loss on synthetic data
+ sets with 2 features and 3000 samples
 \begin_inset CommandInset label
 LatexCommand label
 name "fig:3000_2"
@@ -3328,7 +3477,7 @@ Empirical error for linear algorithm
 \begin_inset Text
 
 \begin_layout Plain Layout
-Empirical error for ada boost algorithm
+Empirical error for AdaBoost algorithm
 \end_layout
 
 \end_inset
@@ -3363,7 +3512,7 @@ Empirical error for ada boost algorithm
 \begin_inset Caption Standard
 
 \begin_layout Plain Layout
-Empirical error in experiments on synthetic datasets with 2 features and
+Empirical error in experiments on synthetic data sets with 2 features and
  3000 samples
 \begin_inset CommandInset label
 LatexCommand label
@@ -3394,7 +3543,7 @@ It can be seen from results that generalisation error estimations
 \begin_inset Formula $U(ρ)$
 \end_inset
 
- for ada-boost and linear classifiers are much larger than their empirical
+ for AdaBoost and linear classifiers are much larger than their empirical
  errors: the estimation of the generalisation error does not take values
  below 0.5, while the empirical error of the classifiers is 0.0036 and 0.0054
  in average.
@@ -3490,8 +3639,8 @@ status open
 \begin_inset Caption Standard
 
 \begin_layout Plain Layout
-Generalisation error estimation and empirical margin loss on synthetic datasets
- with 2 features and 10000 samples
+Generalisation error estimation and empirical margin loss on synthetic data
+ sets with 2 features and 10000 samples
 \begin_inset CommandInset label
 LatexCommand label
 name "fig:10000_2"
@@ -3604,7 +3753,7 @@ Empirical error for linear algorithm
 \begin_inset Text
 
 \begin_layout Plain Layout
-Empirical error for ada boost algorithm
+Empirical error for AdaBoost algorithm
 \end_layout
 
 \end_inset
@@ -3639,7 +3788,7 @@ Empirical error for ada boost algorithm
 \begin_inset Caption Standard
 
 \begin_layout Plain Layout
-Empirical error in experiments on synthetic datasets with 2 features and
+Empirical error in experiments on synthetic data sets with 2 features and
  10000 samples
 \begin_inset CommandInset label
 LatexCommand label
@@ -3706,13 +3855,13 @@ The previous two experiments were performed on data sets with a simple structure
  function sklearn.datasets.make_classification with parameters: total number
  of features=5, number of informative features=2, number of redundant features=2
 , number of duplicated features=1, number of clusters per class=2.
- To obtain a separable dataset, labels for samples X are created similarly
+ To obtain a separable data set, labels for samples X are created similarly
  to the previous cases according to the projection of X onto a randomly
  generated vector.
  The purpose of this experiment is to check if additional complexity of
  data such as redundant an duplicated features affects the result of error
  evaluation.
- Similarily to experiment in paragraph 
+ Similarly to experiment in paragraph 
 \begin_inset CommandInset ref
 LatexCommand ref
 reference "subsec:3000_2"
@@ -3763,8 +3912,8 @@ status open
 \begin_inset Caption Standard
 
 \begin_layout Plain Layout
-Generalisation error estimation and empirical margin loss on synthetic datasets
- with 5 features and 3000 samples
+Generalisation error estimation and empirical margin loss on synthetic data
+ sets with 5 features and 3000 samples
 \begin_inset CommandInset label
 LatexCommand label
 name "fig:3000_5"
@@ -4049,7 +4198,7 @@ status open
 
 \begin_layout Plain Layout
 Generalisation error estimation and empirical margin loss on Ionosphere
- dataset
+ data set
 \begin_inset CommandInset label
 LatexCommand label
 name "fig:iono_risk"
@@ -4225,7 +4374,7 @@ noprefix "false"
 \end_inset
 
  do not demonstrate simple patterns.
- The study compares the classical aba-boost algorithm with a linear programming
+ The study compares the classical AdaBoost algorithm with a linear programming
  version, which explicitly maximises geometric margin for the standard AdaBoost
  ensemble of base classifiers 
 \begin_inset CommandInset ref
@@ -4238,7 +4387,7 @@ noprefix "false"
 \end_inset
 
 .
- However, aba-boost demonstrates mostly better empirical error on synthetic
+ However, AdaBoost demonstrates mostly better empirical error on synthetic
  and real data sets as shown in section 
 \begin_inset CommandInset ref
 LatexCommand ref
@@ -4250,7 +4399,7 @@ noprefix "false"
 \end_inset
 
 .
- Moreover, aba-boost provides better empirical margin loss values, although
+ Moreover, AdaBoost provides better empirical margin loss values, although
  an estimate of generalisation error based on margin loss is overestimated
  and not practically applicable.
  The next conclusion of this study is regarding the minimum of 
@@ -4338,8 +4487,8 @@ literal "true"
 :
 \begin_inset Formula 
 \begin{align}
-R(h)≤\hat{R}_{S,ρ}(h)+2𝔑_{m}(ℋ^{*})+\sqrt{\frac{log\frac{1}{δ}}{2m},}\\
-ℋ^{*}=\{z=(x,y)⟼𝛷_{ρ}(y·h(x)):h\inℋ)\label{eq:H_hat}
+R(h)≤\hat{R}_{S,ρ}(h)+2𝔑_{m}(ℋ^{*})+\sqrt{\frac{\mathrm{log}\frac{1}{δ}}{2m},}\\
+ℋ^{*}=\{z=(x,y)⟼𝛷_{ρ}(y·h(x)):h\inℋ).\label{eq:H_hat}
 \end{align}
 
 \end_inset
@@ -4348,7 +4497,7 @@ In this formula
 \begin_inset Formula $𝛷_{ρ}(x)$
 \end_inset
 
- is a marging loss function with graph in figure 
+ is a margin loss function with graph in figure 
 \begin_inset CommandInset ref
 LatexCommand ref
 reference "fig:Ф_func"
@@ -4403,7 +4552,7 @@ noprefix "false"
 \end_inset
 
  it is possible to use the hypothesis set of base classifiers instead of
- original ada-boost ensembles when the 
+ original AdaBoost ensembles when the 
 \begin_inset Formula $\hat{𝔑_{s}}(ℋ)$
 \end_inset
 
@@ -4442,7 +4591,7 @@ noprefix "false"
 \uwave default
 \noun default
 \color inherit
-ada-boost ensemble, and similar substitution cannot be used for hypothesis
+AdaBoost ensemble, and similar substitution cannot be used for hypothesis
  set 
 \begin_inset Formula $ℋ^{*}$
 \end_inset
@@ -4465,7 +4614,7 @@ ada-boost ensemble, and similar substitution cannot be used for hypothesis
 \begin_inset Formula $ℋ$
 \end_inset
 
- of ada-boost ensembles.
+ of AdaBoost ensembles.
 \end_layout
 
 \begin_layout Standard
@@ -4533,13 +4682,13 @@ noprefix "false"
 \begin_inset Formula $h(x_{t})$
 \end_inset
 
- vectors to the hyperplane of equation 
+ vectors to the hyper-plane of equation 
 \begin_inset Formula $α·x=0$
 \end_inset
 
 .
  However, we observed that larger margin of linear algorithm does not ensure
- a lower value of error and margin loss, which would suggest that ada-boost
+ a lower value of error and margin loss, which would suggest that AdaBoost
  version generates better margins 
 \begin_inset Quotes cld
 \end_inset
