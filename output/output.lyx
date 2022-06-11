@@ -109,7 +109,7 @@ MASTER’S THESIS
 \begin_inset Newline newline
 \end_inset
 
-Evaluating risk bounds for AdaBoost on real datasets
+Evaluating Risk Bounds for AdaBoost on Real Datasets
 \begin_inset VSpace 6.5cm
 \end_inset
 
@@ -121,7 +121,7 @@ Student: Krivodub Viacheslav Nikolaevich
 \begin_inset Newline newline
 \end_inset
 
-Supervisor: Bruno Frederik Bauwens
+Supervisor: PhD, Associate Professor, Bruno Frederik Bauwens
 \end_layout
 
 \begin_layout Standard
@@ -130,7 +130,7 @@ Supervisor: Bruno Frederik Bauwens
 
 
 \begin_inset space \hspace{}
-\length 70mm
+\length 67mm
 \end_inset
 
 Moscow, 2022
@@ -199,7 +199,7 @@ literal "true"
 \begin_inset Formula $L1$
 \end_inset
 
--margin, and they perform worse than AdaBoost on real datasets.
+-margin, and they perform worse than AdaBoost on real data sets.
  Our first aim is to reproduce these experiments.
  We confirm that AdaBoost produce 
 \begin_inset Formula $L1$
@@ -220,7 +220,7 @@ The second goal of the thesis is to evaluate these risk bounds in detail,
  and inspect the contributions of the individual terms.
  For this we need to estimate Rademacher complexities and we explain how
  this can be done in practice.
- Both on artificial and real datasets we see that these risk bounds are
+ Both on artificial and real data sets we see that these risk bounds are
  very high compared to the error on test sets of the trained classifiers.
  In particular the generalization terms are too large.
  We conclude by pointing out some more complex recent theories that provide
@@ -235,7 +235,7 @@ For our research we have created two versions of the AdaBoost algorithm,
 \end_inset
 
 -margin.
- Then, experiments were performed on artificial and real datasets of different
+ Then, experiments were performed on artificial and real data sets of different
  types and sizes.
  The software code used in the experiments is available in 
 \begin_inset CommandInset href
@@ -1204,7 +1204,7 @@ To formulate the task, all classifiers from
 \begin_inset Formula $N·m=2·n·m^{2}$
 \end_inset
 
- values which is a big value in real experiments.
+ values which is a big number in real experiments.
  Nevertheless, the linear algorithm directly maximises 
 \begin_inset Formula $L_{1}$
 \end_inset
@@ -1254,7 +1254,7 @@ literal "false"
 \end_inset
 
 .
- It implements standard classifier method, also, 
+ It implements standard classifier methods, also, 
 \begin_inset Formula $L_{1}$
 \end_inset
 
@@ -2405,7 +2405,7 @@ Empirical error for linear algorithm
 \begin_inset Text
 
 \begin_layout Plain Layout
-Empirical error for ada boost algorithm
+Empirical error for AdaBoost algorithm
 \end_layout
 
 \end_inset
@@ -2463,7 +2463,7 @@ Geometric margin for linear algorithm
 \begin_inset Text
 
 \begin_layout Plain Layout
-Geometric margin for ada boost algorithm
+Geometric margin for AdaBoost algorithm
 \end_layout
 
 \end_inset
@@ -2679,7 +2679,7 @@ Empirical error for linear algorithm
 \begin_inset Text
 
 \begin_layout Plain Layout
-Empirical error for ada boost algorithm
+Empirical error for AdaBoost algorithm
 \end_layout
 
 \end_inset
@@ -2737,7 +2737,7 @@ Geometric margin for linear algorithm
 \begin_inset Text
 
 \begin_layout Plain Layout
-Geometric margin for ada boost algorithm
+Geometric margin for AdaBoost algorithm
 \end_layout
 
 \end_inset
@@ -3244,7 +3244,7 @@ name "subsec:3000_2"
 \end_layout
 
 \begin_layout Standard
-First experiment is performed on synthetic data sampled from bi-variate
+The first experiment is performed on synthetic data sampled from the bi-variate
  normal distribution.
  3000 samples from the distribution provide features data set X.
  Then, similarly to experiments in 
@@ -3313,7 +3313,7 @@ noprefix "false"
 \begin_inset Formula $U(ρ)$
 \end_inset
 
- and separately empirical margin loss 
+ and separately the empirical margin loss 
 \begin_inset Formula $\hat{R}_{S,ρ}$
 \end_inset
 
@@ -3457,7 +3457,7 @@ Empirical error for linear algorithm
 \begin_inset Text
 
 \begin_layout Plain Layout
-0.0054
+0.0048
 \end_layout
 
 \end_inset
@@ -3466,7 +3466,7 @@ Empirical error for linear algorithm
 \begin_inset Text
 
 \begin_layout Plain Layout
-0.0030066593
+0.0021
 \end_layout
 
 \end_inset
@@ -3486,7 +3486,7 @@ Empirical error for AdaBoost algorithm
 \begin_inset Text
 
 \begin_layout Plain Layout
-0.0036
+0.0034
 \end_layout
 
 \end_inset
@@ -3495,7 +3495,7 @@ Empirical error for AdaBoost algorithm
 \begin_inset Text
 
 \begin_layout Plain Layout
-0.0012000000
+0.0025
 \end_layout
 
 \end_inset
@@ -3545,7 +3545,7 @@ It can be seen from results that generalisation error estimations
 
  for AdaBoost and linear classifiers are much larger than their empirical
  errors: the estimation of the generalisation error does not take values
- below 0.5, while the empirical error of the classifiers is 0.0036 and 0.0054
+ below 0.6, while the empirical error of the classifiers is 0.0048 and 0.0034
  in average.
  Also, it is noticeable that despite the fact that linear algorithm ensures
  larger 
@@ -3580,7 +3580,7 @@ noprefix "false"
 \end_inset
 
  has a pronounced minimum on the interval (0,1), however, the value of this
- minimum is approximately 10 times higher than the empirical error values
+ minimum is approximately 100 times higher than the empirical error values
  obtained in the experiments.
  Thus, we cannot rely on an estimate from this inequality in the current
  experiment.
@@ -3733,7 +3733,7 @@ Empirical error for linear algorithm
 \begin_inset Text
 
 \begin_layout Plain Layout
-0.0013997201
+0.0043
 \end_layout
 
 \end_inset
@@ -3742,7 +3742,7 @@ Empirical error for linear algorithm
 \begin_inset Text
 
 \begin_layout Plain Layout
-0.0009271764
+0.0003
 \end_layout
 
 \end_inset
@@ -3762,7 +3762,7 @@ Empirical error for AdaBoost algorithm
 \begin_inset Text
 
 \begin_layout Plain Layout
-0.0011997600
+0.0013
 \end_layout
 
 \end_inset
@@ -3771,7 +3771,7 @@ Empirical error for AdaBoost algorithm
 \begin_inset Text
 
 \begin_layout Plain Layout
-0.0006479445
+0.0008
 \end_layout
 
 \end_inset
@@ -3816,7 +3816,7 @@ It can be observed from the graphics and the table that results are mostly
  0.4 but is still several times larger than the empirical error from the
  experiments.
  From the comparison of the results of this and previous experiments, it
- can be concluded that as the number of samples in the training set increases,
+ can be assumed that as the number of samples in the training set increases,
  the estimate of generalisation error given by 
 \begin_inset CommandInset ref
 LatexCommand eqref
@@ -3829,7 +3829,7 @@ noprefix "false"
 
  will be more accurate.
  From this perspective, the generalisation error estimation for the linear
- programming algorithm is expected to be higher (see right-hand graph on
+ programming algorithm is expected to be higher (see left-hand graph on
  figure 
 \begin_inset CommandInset ref
 LatexCommand ref
@@ -3871,7 +3871,7 @@ noprefix "false"
 
 \end_inset
 
-, data with 3000 samples is generated and using three different splitting
+, data with 3000 samples is generated and using three different splittings
  the generalisation error estimation and empirical margin loss is calculated,
  then results are averaged.
  Results of the experiment are on figure 
@@ -4006,7 +4006,7 @@ Empirical error for linear algorithm
 \begin_inset Text
 
 \begin_layout Plain Layout
-0.0026666667
+0.0027
 \end_layout
 
 \end_inset
@@ -4015,7 +4015,7 @@ Empirical error for linear algorithm
 \begin_inset Text
 
 \begin_layout Plain Layout
-0.0012472191
+0.0005
 \end_layout
 
 \end_inset
@@ -4026,7 +4026,7 @@ Empirical error for linear algorithm
 \begin_inset Text
 
 \begin_layout Plain Layout
-Empirical error for ada boost algorithm
+Empirical error for AdaBoost algorithm
 \end_layout
 
 \end_inset
@@ -4035,7 +4035,7 @@ Empirical error for ada boost algorithm
 \begin_inset Text
 
 \begin_layout Plain Layout
-0.0033333333
+0.0060
 \end_layout
 
 \end_inset
@@ -4044,7 +4044,7 @@ Empirical error for ada boost algorithm
 \begin_inset Text
 
 \begin_layout Plain Layout
-0.0012472191
+0.0001
 \end_layout
 
 \end_inset
@@ -4088,10 +4088,10 @@ name "tab:3000_5"
 
 \begin_layout Standard
 \noindent
-In comparison with the analogous experiment with 2 features it is can be
- observed that the minimum on the generalisation error estimation curve
- is now less pronounced and the estimation itself has deteriorated significantly
- to around 0.8.
+In comparison with the analogous experiment with 2 features it can be observed
+ that the minimum on the generalisation error estimation curve is now less
+ pronounced and the estimation itself has deteriorated significantly to
+ around 0.8.
  Thus, we may conclude that estimation based on the inequality 
 \begin_inset CommandInset ref
 LatexCommand eqref
@@ -4108,7 +4108,7 @@ noprefix "false"
 
 \begin_layout Subsubsection
 \noindent
-Experiments on real datasets
+Experiments on real data sets
 \end_layout
 
 \begin_layout Standard
@@ -4124,7 +4124,7 @@ noprefix "false"
 \end_inset
 
  is checked on real data sets.
- First data set is Ionosphere
+ The first data set is Ionosphere
 \begin_inset CommandInset citation
 LatexCommand cite
 key "Ionosphere"
@@ -4224,10 +4224,10 @@ name "fig:iono_risk"
 
 \begin_layout Standard
 \noindent
-As the right-hand graph shows, the generalisation error estimation curve
+As the left-hand graph shows, the generalisation error estimation curve
  does not even reach a value of 1 and thus this estimation is not suitable
  for practical application.
- The same situation applies to the Breast cancer dataset
+ The same situation applies to the Breast cancer data set
 \begin_inset CommandInset citation
 LatexCommand cite
 key "Breast_Cancer"
@@ -4286,7 +4286,7 @@ status open
 
 \begin_layout Plain Layout
 Generalisation error estimation and empirical margin loss on Breast cancer
- dataset
+ data set
 \begin_inset CommandInset label
 LatexCommand label
 name "fig:breast_cancer_risk"
@@ -4307,7 +4307,7 @@ name "fig:breast_cancer_risk"
 
 \end_inset
 
-From experiments on real datasets, it follows that the estimate 
+From experiments on real data sets, it follows that the estimate 
 \begin_inset CommandInset ref
 LatexCommand eqref
 reference "eq:est_1_dub"
@@ -4349,6 +4349,9 @@ noprefix "false"
  than the empirical error.
  In addition, the experiment with redundant and duplicate attributes shows
  that the estimate is not robust to increasing data complexity.
+ At the same time, the risk estimation for AdaBoost is lower than for the
+ linear programming algorithm, which reflects the same ratio for the empirical
+ error in the experiments conducted.
 \end_layout
 
 \begin_layout Section
@@ -4465,8 +4468,8 @@ noprefix "false"
 \end_inset
 
  raises the question of how to improve it.
- Firstly, there are several intermediate inequation which are obtained during
- the prove of 
+ Firstly, there are several intermediate inequalities which are obtained
+ inside the proof of 
 \begin_inset CommandInset ref
 LatexCommand eqref
 reference "eq:est_1"
@@ -4488,7 +4491,7 @@ literal "true"
 \begin_inset Formula 
 \begin{align}
 R(h)≤\hat{R}_{S,ρ}(h)+2𝔑_{m}(ℋ^{*})+\sqrt{\frac{\mathrm{log}\frac{1}{δ}}{2m},}\\
-ℋ^{*}=\{z=(x,y)⟼𝛷_{ρ}(y·h(x)):h\inℋ).\label{eq:H_hat}
+ℋ^{*}=\{(x,y)⟼𝛷_{ρ}(y·h(x)):h\inℋ).\label{eq:H_hat}
 \end{align}
 
 \end_inset
@@ -4552,7 +4555,7 @@ noprefix "false"
 \end_inset
 
  it is possible to use the hypothesis set of base classifiers instead of
- original AdaBoost ensembles when the 
+ original AdaBoost ensembles when 
 \begin_inset Formula $\hat{𝔑_{s}}(ℋ)$
 \end_inset
 
@@ -4701,7 +4704,8 @@ in average
  In the article the idea of whole margin distribution is studied in connection
  with average margin and variance.
  Also, there are some promising empirical error estimations in this work,
- for example theorem 10 proposes the bound decreasing proportionately 
+ for example theorem (10) proposes the bound decreasing proportionately
+ 
 \begin_inset Formula $\frac{1}{m}$
 \end_inset
 
