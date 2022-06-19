@@ -1909,7 +1909,7 @@ noprefix "false"
  can be rewritten as follows:
 \begin_inset Formula 
 \begin{equation}
-\hat{R}_{S,ρ}(h)=\frac{1}{m}\sum{}_{t\text{=1}}^{m}𝛷_{ρ}(α·h(x_{t})).\label{eq:mg_loss_sep}
+\hat{R}_{S,ρ}(h)=\frac{1}{m}\sum{}_{t\text{=1}}^{m}𝛷_{ρ}(|α·h(x_{t})|).\label{eq:mg_loss_sep}
 \end{equation}
 
 \end_inset
